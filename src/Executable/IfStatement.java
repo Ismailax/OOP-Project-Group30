@@ -1,11 +1,11 @@
 package Executable;
 import Evaluable.*;
-
+import java.util.Map;
 
 public class IfStatement implements Executable{
-    Executable trueStatement;
-    Executable falseStatement;
-    Evaluable expression;
+    private Executable trueStatement;
+    private Executable falseStatement;
+    private Evaluable expression;
 
     public IfStatement(Executable trueStatement, Executable falseStatement, Evaluable expression) {
         this.trueStatement = trueStatement;
@@ -14,8 +14,8 @@ public class IfStatement implements Executable{
     }
 
     @Override
-    public void execute() {
-        if (expression.eval() > 0) trueStatement.execute();
-        else falseStatement.execute();
+    public void execute(Map<String, Integer> bindings) {
+        if (expression.eval(bindings) > 0) trueStatement.execute(bindings);
+        else falseStatement.execute(bindings);
     }
 }

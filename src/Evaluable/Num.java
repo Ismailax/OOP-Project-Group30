@@ -2,9 +2,9 @@ package Evaluable;
 
 import java.util.Map;
 
-public class Int implements Evaluable {
+public class Num implements Evaluable {
     int num;
-    public Int(int num){
+    public Num(int num){
         this.num = num;
     }
     @Override
