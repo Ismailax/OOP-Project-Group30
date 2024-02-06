@@ -1,8 +1,19 @@
 import Evaluable.*;
 import Executable.*;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 public class Parser {
     private Tokenizer tkz;
+    private final String[] reservedWordList = {"collect", "done", "down", "downleft", "downright", "else", "if", "invest", "move", "nearby", "opponent", "relocate", "shoot", "then", "up", "upleft", "upright", "while"
+};
+    private final Set<String> reservedWords = new HashSet<>(List.of(reservedWordList));
+    private final String[] specialVarList = {"rows", "cols", "currow", "curcol", "budget", "deposit", "int", "maxdeposit", "random"};
+    private final Set<String> specialVariables = new HashSet<>(List.of(specialVarList));
+    private final String[] directionList = {"up", "down", "upleft", "upright", "downleft", "downright"};
+    private final Set<String> directions = new HashSet<>(List.of(directionList));
     public Parser(Tokenizer tkz){
         this.tkz = tkz;
     }
@@ -29,7 +40,6 @@ public class Parser {
         Executable trueStatement = parseStatement();
         tkz.consume("else");
         Executable falseStatement = parseStatement();
-
         return new IfStatement(trueStatement, falseStatement, expression);
     }
 
@@ -39,7 +49,6 @@ public class Parser {
         Evaluable expression = parseExpression();
         tkz.consume(")");
         Executable statement = parseStatement();
-
         return new WhileStatement(statement, expression);
     }
 
@@ -49,7 +58,6 @@ public class Parser {
         while (!tkz.peek("}"))
             block.addStatement(parseStatement());
         tkz.consume("}");
-
         return block;
     }
 
@@ -62,30 +70,51 @@ public class Parser {
 
     private Executable parseActionCommand() throws SyntaxError {
         if(tkz.peek("move")) return parseMoveCommand();
-        if(tkz.peek("invest") || tkz.peek("collect")) return parseRegionCommand();
-        if(tkz.peek("shoot")) return parseAttackCommand();
-        if(tkz.peek("done")){
-            // done
-        }
-        if(tkz.peek("relocate")){
-            // relocate
-        }
+        else if(tkz.peek("invest") || tkz.peek("collect")) return parseRegionCommand();
+        else if(tkz.peek("shoot")) return parseAttackCommand();
+        else if(tkz.peek("done")) return new Done();
+        else if(tkz.peek("relocate")) return new Relocate();
+        else throw new SyntaxError("Invalid command");
+    }
+
+    private Executable parseMoveCommand() throws SyntaxError{
+        tkz.consume("move");
+        String direction = tkz.consume();
+        if (!directions.contains(direction)) throw new SyntaxError("Invalid direction");
+        return new MoveCommand(direction);
+    }
+
+    private Executable parseRegionCommand() throws SyntaxError{
+        String command = tkz.consume();
+        Evaluable amount = parseExpression();
+        if(command.equals("invest")) return new InvestCommand(amount);
+        else if (command.equals("collect")) return new CollectCommand(amount);
+        else throw new SyntaxError("Invalid command");
+    }
+
+    private Executable parseAttackCommand() throws SyntaxError{
+        tkz.consume("shoot");
+        String direction = tkz.consume();
+        if (!directions.contains(direction)) throw new SyntaxError("Invalid direction");
+        Evaluable expenditure = parseExpression();
+        return new AttackCommand(direction, expenditure);
     }
 
     private Executable parseAssignmentStatement() throws SyntaxError{
         String identifier = tkz.consume();
         tkz.consume("=");
         Evaluable expression = parseExpression();
-        if (reservedWords.contains(identifier))
+        if(specialVariables.contains(identifier)) return new NoOp();
+        if(reservedWords.contains(identifier))
             throw new SyntaxError("Use reserved word as identifier: " + identifier);
-        return new AssignmentStatement(identifier, expression, bindings);
+        return new AssignmentStatement(identifier, expression);
     }
 
     private Evaluable parseExpression() throws SyntaxError{
         Evaluable term = parseTerm();
         while (tkz.peek("+") || tkz.peek("-")) {
-            String ops = tkz.consume();
-            term = new BinaryArith(term, ops, parseTerm());
+            String op = tkz.consume();
+            term = new BinaryArith(term, op, parseTerm());
         }
         return term;
     }
@@ -93,8 +122,8 @@ public class Parser {
     private Evaluable parseTerm() throws SyntaxError{
         Evaluable factor = parseFactor();
         while (tkz.peek("*") || tkz.peek("/") || tkz.peek("%")) {
-            String ops = tkz.consume();
-            factor = new BinaryArith(factor, ops, parseFactor());
+            String op = tkz.consume();
+            factor = new BinaryArith(factor, op, parseFactor());
         }
         return factor;
     }
@@ -102,15 +131,15 @@ public class Parser {
     private Evaluable parseFactor() throws SyntaxError {
         Evaluable power = parsePower();
         while (tkz.peek("^")) {
-            String ops = tkz.consume();
-            power = new BinaryArith(power, ops, parsePower());
+            String op = tkz.consume();
+            power = new BinaryArith(power, op, parsePower());
         }
         return power;
     }
 
     private Evaluable parsePower() throws SyntaxError{
-        if (isNumeric(tkz.peek())) return new Int(Integer.parseInt(tkz.consume()));
-        else if (tkz.peek("(")) { // brackets
+        if (isNumeric(tkz.peek())) return new Num(Integer.parseInt(tkz.consume()));
+        else if (tkz.peek("(")) {
             tkz.consume("(");
             Evaluable expression = parseExpression();
             tkz.consume(")");
@@ -130,14 +159,14 @@ public class Parser {
             tkz.consume();
             return new Opponent();
         }
-        else if (tkz.peek("nearby") {
+        else if (tkz.peek("nearby")) {
             tkz.consume("nearby");
             String direction = tkz.consume();
+            if (!directions.contains(direction)) throw new SyntaxError("Invalid direction");
             return new Nearby(direction);
         }
+        else throw new SyntaxError("Invalid expression");
     }
-
-
 
     public static boolean isNumeric(String num){
         if(num == null) return false;
@@ -148,7 +177,5 @@ public class Parser {
         }
         return true;
     }
-
-
 
 }

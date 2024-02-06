@@ -4,17 +4,27 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="58048a60-a2dd-4e70-bc89-f0cd98bfe888" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Evaluable/BinaryArith.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Evaluable/Evaluable.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Evaluable/Identifier.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Evaluable/Int.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Executable/BlockStatement.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Executable/Executable.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Executable/IfStatement.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Executable/WhileStatement.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Parser.java" afterDir="false" />
+    <list default="true" id="58048a60-a2dd-4e70-bc89-f0cd98bfe888" name="Changes" comment="add Parser, Executable, Evaluable">
+      <change afterPath="$PROJECT_DIR$/src/Evaluable/Nearby.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Evaluable/Opponent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Executable/AssignmentStatement.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Executable/AttackCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Executable/CollectCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Executable/Done.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Executable/InvestCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Executable/MoveCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Executable/NoOp.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Executable/Relocate.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Player.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/plan.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Evaluable/Int.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Evaluable/Num.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Executable/BlockStatement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Executable/BlockStatement.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Executable/Executable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Executable/Executable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Executable/IfStatement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Executable/IfStatement.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Executable/WhileStatement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Executable/WhileStatement.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Parser.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,12 +47,12 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "Ismailax"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Ismailax&quot;
   }
-}]]></component>
+}</component>
   <component name="GithubPullRequestsUISettings">
     <option name="selectedUrlAndAccountId">
       <UrlAndAccount>
@@ -74,6 +84,20 @@
       <recent name="Evaluable" />
     </key>
   </component>
+  <component name="RunManager">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Main" />
+      <module name="OOP-Project-Group30" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Main" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -99,12 +123,21 @@
       <option name="project" value="LOCAL" />
       <updated>1707127675163</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="add Parser, Executable, Evaluable">
+      <option name="closed" value="true" />
+      <created>1707207375529</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1707207375529</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="initial commit" />
     <MESSAGE value="implement Tonkenizer class" />
-    <option name="LAST_COMMIT_MESSAGE" value="implement Tonkenizer class" />
+    <MESSAGE value="add Parser, Executable, Evaluable" />
+    <option name="LAST_COMMIT_MESSAGE" value="add Parser, Executable, Evaluable" />
   </component>
 </project>
