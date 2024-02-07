@@ -9,6 +9,9 @@ public class AttackCommand implements Executable{
     public AttackCommand(String direction, Evaluable expenditure) {
         this.direction = direction;
         this.expenditure = expenditure;
+        int value = expenditure.eval(null);
+        System.out.println("Shooting in direction: " + direction);
+        System.out.println("Expenditure: " + value);
     }
 
     @Override

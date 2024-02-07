@@ -9,6 +9,8 @@ public class CollectCommand implements Executable{
 
     public CollectCommand(Evaluable amount) {
         this.amount = amount;
+        int value = amount.eval(null);
+        System.out.println("collect: " + value);
     }
 
     @Override

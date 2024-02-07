@@ -27,6 +27,30 @@ public class Tokenizer {
         return result;
     }
 
+//    private void computeNext(){
+//        StringBuilder s = new StringBuilder();
+//        while(pos < src.length() && Character.isWhitespace(src.charAt(pos))) pos++;
+//        if(pos == src.length()){
+//            next = null;
+//            return;
+//        }
+//        char c = src.charAt(pos);
+//        if(Character.isDigit(c)){
+//            s.append(c);
+//            for(pos++; pos < src.length() && Character.isDigit(src.charAt(pos)); pos++)
+//                s.append(src.charAt(pos));
+//        }else if(c == '+' || c == '-' || c == '*' || c == '/' ||c == '%' || c == '^' || c == '(' || c == ')' || c == '{' || c == '}' || c == '='){
+//            s.append(c);
+//            pos++;
+//        }else if(Character.isLetter(c)){
+//            s.append(c);
+//            for(pos++; pos < src.length() && Character.isLetter(src.charAt(pos)); pos++)
+//                s.append(src.charAt(pos));
+//        }
+//        else throw new SyntaxError("unknown character: " + c);
+//        next = s.toString();
+//    }
+
     private void computeNext(){
         StringBuilder s = new StringBuilder();
         while(pos < src.length() && Character.isWhitespace(src.charAt(pos))) pos++;
@@ -39,17 +63,29 @@ public class Tokenizer {
             s.append(c);
             for(pos++; pos < src.length() && Character.isDigit(src.charAt(pos)); pos++)
                 s.append(src.charAt(pos));
-        }else if(c == '+' || c == '-' || c == '*' || c == '/' ||c == '%' || c == '^' || c == '(' || c == ')' || c == '{' || c == '}' || c == '='){
+            next = s.toString();
+            return;
+        } else if (Character.isLetter(c)) {
+            s.append(c);
+            for(pos++; pos < src.length(); pos++) {
+                char nextChar = src.charAt(pos);
+                if(Character.isLetterOrDigit(nextChar)) {
+                    s.append(nextChar);
+                } else {
+                    break;
+                }
+            }
+            next = s.toString();
+            return;
+        } else if(c == '+' || c == '-' || c == '*' || c == '/' ||c == '%' || c == '^' || c == '(' || c == ')' || c == '{' || c == '}' || c == '='){
             s.append(c);
             pos++;
-        }else if(Character.isLetter(c)){
-            s.append(c);
-            for(pos++; pos < src.length() && Character.isLetter(src.charAt(pos)); pos++)
-                s.append(src.charAt(pos));
+        } else {
+            throw new SyntaxError("unknown character: " + c);
         }
-        else throw new SyntaxError("unknown character: " + c);
         next = s.toString();
     }
+
 
     public boolean peek(String s){
         if (!hasNextToken()) return false;
