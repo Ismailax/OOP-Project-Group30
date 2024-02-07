@@ -7,12 +7,13 @@ public class MoveCommand implements Executable {
 
     public MoveCommand(String direction) {
         this.direction = direction;
+        System.out.println("Moving in direction: " + direction);
     }
 
     @Override
     public void execute(Map<String, Integer> bindings) {
         // Implement move logic here based on the direction
-        System.out.println("Moving in direction: " + direction);
+
     }
 }
 

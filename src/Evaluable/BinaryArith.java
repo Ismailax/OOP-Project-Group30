@@ -16,12 +16,34 @@ public class BinaryArith implements Evaluable{
     public int eval(Map<String, Integer> bindings) {
         int lv = leftEval.eval(bindings);
         int rv = rightEval.eval(bindings);
-        if(operator.equals("+")) return lv + rv;
-        else if(operator.equals("-")) return lv - rv;
-        else if(operator.equals("*")) return lv * rv;
-        else if(operator.equals("/")) return lv / rv;
-        else if(operator.equals("%")) return lv % rv;
-        else if(operator.equals("^")) return (int) Math.pow(lv, rv);
-        else return 0;
+        switch (operator) {
+            case "+" -> {
+                System.out.println(lv + " + " + rv);
+                return lv + rv;
+            }
+            case "-" -> {
+                System.out.println(lv + " - " + rv);
+                return lv - rv;
+            }
+            case "*" -> {
+                System.out.println(lv + " * " + rv);
+                return lv * rv;
+            }
+            case "/" -> {
+                System.out.println(lv + " / " + rv);
+                return lv / rv;
+            }
+            case "%" -> {
+                System.out.println(lv + " % " + rv);
+                return lv % rv;
+            }
+            case "^" -> {
+                System.out.println(lv + " ^ " + rv);
+                return (int) Math.pow(lv, rv);
+            }
+            default -> {
+                return 0;
+            }
+        }
     }
 }

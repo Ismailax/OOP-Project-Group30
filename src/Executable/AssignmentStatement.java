@@ -10,9 +10,12 @@ public class AssignmentStatement implements Executable{
     public AssignmentStatement(String identifier, Evaluable expression){
         this.identifier = identifier;
         this.expression = expression;
+        int value = expression.eval(null);
+        System.out.println(identifier + " = " + value);
     }
     @Override
     public void execute(Map<String, Integer> bindings) {
-
+        int value = expression.eval(bindings);
+        bindings.put(identifier, value);
     }
 }

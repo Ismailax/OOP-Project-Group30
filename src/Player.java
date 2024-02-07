@@ -11,7 +11,7 @@ public class Player {
     }
     public void eval(){
         Parser p = new Parser(new Tokenizer(plan));
-        p.parse();
+        p.parse(bindings);
     }
 
     public void setPlan(String plan) {
