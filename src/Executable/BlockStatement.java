@@ -5,9 +5,11 @@ import java.util.Map;
 
 public class BlockStatement implements Executable{
     private List<Executable> statements;
+    Map<String, Integer> bindings;
 
-    public BlockStatement() {
+    public BlockStatement(Map<String, Integer> bindings) {
         statements = new LinkedList<>();
+        this.bindings = bindings;
     }
 
     public void addStatement(Executable statement) {

@@ -3,7 +3,7 @@ import java.util.Map;
 
 public class Player {
     private final String name;
-    Map<String, Integer> bindings;
+    private Map<String, Integer> bindings;
     private String plan;
     public Player(String name){
         this.name = name;

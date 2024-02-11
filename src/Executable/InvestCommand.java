@@ -8,10 +8,11 @@ public class InvestCommand implements  Executable{
     public InvestCommand(Evaluable amount){
         this.amount = amount;
         int value = amount.eval(null);
-        System.out.println("invest: " + value);
+        System.out.println("Parse invest: " + value);
     }
     @Override
     public void execute(Map<String, Integer> bindings) {
-
+        int value = amount.eval(null);
+        System.out.println("Execute invest: " + value);
     }
 }

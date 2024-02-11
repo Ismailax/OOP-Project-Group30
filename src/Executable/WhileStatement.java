@@ -7,9 +7,10 @@ public class WhileStatement implements Executable{
     private Executable statement;
     private Evaluable expression;
 
-    public WhileStatement(Executable statement, Evaluable expression) {
+    public WhileStatement(Executable statement, Evaluable expression, Map<String, Integer> bindings) {
         this.statement = statement;
         this.expression = expression;
+        this.execute(bindings);
     }
 
     @Override

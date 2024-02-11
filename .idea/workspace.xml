@@ -5,21 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="58048a60-a2dd-4e70-bc89-f0cd98bfe888" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/Error/EvalError.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Evaluable/BinaryArith.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Evaluable/BinaryArith.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Evaluable/Identifier.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Evaluable/Identifier.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Executable/AssignmentStatement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Executable/AssignmentStatement.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Executable/AttackCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Executable/AttackCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Executable/CollectCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Executable/CollectCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Executable/Done.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Executable/Done.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Executable/BlockStatement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Executable/BlockStatement.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Executable/IfStatement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Executable/IfStatement.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Executable/InvestCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Executable/InvestCommand.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Executable/MoveCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Executable/MoveCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Executable/NoOp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Executable/NoOp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Executable/Relocate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Executable/Relocate.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Executable/WhileStatement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Executable/WhileStatement.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Parser.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SyntaxError.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Error/SyntaxError.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Tokenizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Tokenizer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/plan.txt" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -90,6 +90,7 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.Main" />
+        <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
   </component>
@@ -147,11 +148,10 @@
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Tokenizer.java</url>
-          <line>29</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.NullPointerException" package="java.lang" />
+          <option name="timeStamp" value="2" />
+        </breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>

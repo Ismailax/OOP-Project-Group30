@@ -1,5 +1,6 @@
 package Evaluable;
 
+import Error.*;
 import java.util.Map;
 
 public class BinaryArith implements Evaluable{
@@ -18,31 +19,31 @@ public class BinaryArith implements Evaluable{
         int rv = rightEval.eval(bindings);
         switch (operator) {
             case "+" -> {
-                System.out.println(lv + " + " + rv);
+//                System.out.println(lv + " + " + rv);
                 return lv + rv;
             }
             case "-" -> {
-                System.out.println(lv + " - " + rv);
+//                System.out.println(lv + " - " + rv);
                 return lv - rv;
             }
             case "*" -> {
-                System.out.println(lv + " * " + rv);
+//                System.out.println(lv + " * " + rv);
                 return lv * rv;
             }
             case "/" -> {
-                System.out.println(lv + " / " + rv);
+//                System.out.println(lv + " / " + rv);
                 return lv / rv;
             }
             case "%" -> {
-                System.out.println(lv + " % " + rv);
+//                System.out.println(lv + " % " + rv);
                 return lv % rv;
             }
             case "^" -> {
-                System.out.println(lv + " ^ " + rv);
+//                System.out.println(lv + " ^ " + rv);
                 return (int) Math.pow(lv, rv);
             }
             default -> {
-                return 0;
+                throw new EvalError("unknown operator " + operator);
             }
         }
     }

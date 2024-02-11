@@ -1,5 +1,6 @@
 import Evaluable.*;
 import Executable.*;
+import Error.*;
 
 import java.util.*;
 
@@ -18,14 +19,16 @@ public class Parser {
         this.bindings = new HashMap<>();
     }
 
-    public Executable parse(Map<String, Integer> bindings) throws SyntaxError{
+    public Executable parse(Map<String, Integer> bindings) throws SyntaxError {
         this.bindings = bindings;
-        Executable exc = parseStatement();
-        if(tkz.hasNextToken()) throw new SyntaxError("leftover token");
-        else return exc;
+        BlockStatement statements = new BlockStatement(bindings);
+        statements.addStatement(parseStatement());
+        while (tkz.hasNextToken())
+            statements.addStatement(parseStatement());
+        return statements;
     }
 
-    public Executable parseStatement() throws SyntaxError{
+    public Executable parseStatement() throws SyntaxError {
         if(tkz.peek("if")) return parseIfStatement();
         if(tkz.peek("while")) return parseWhileStatement();
         if (tkz.peek("{")) return parseBlockStatement();
@@ -36,33 +39,35 @@ public class Parser {
         tkz.consume("if");
         tkz.consume("(");
         Evaluable expression = parseExpression();
+//        System.out.println(expression.eval(bindings));
         tkz.consume(")");
         tkz.consume("then");
         Executable trueStatement = parseStatement();
         tkz.consume("else");
         Executable falseStatement = parseStatement();
-        return new IfStatement(trueStatement, falseStatement, expression);
+//        System.out.println(bindings.values());
+        return new IfStatement(trueStatement, falseStatement, expression, bindings);
     }
 
-    private Executable parseWhileStatement() throws SyntaxError{
+    private Executable parseWhileStatement() throws SyntaxError {
         tkz.consume("while");
         tkz.consume("(");
         Evaluable expression = parseExpression();
         tkz.consume(")");
         Executable statement = parseStatement();
-        return new WhileStatement(statement, expression);
+        return new WhileStatement(statement, expression, bindings);
     }
 
     private Executable parseBlockStatement() throws SyntaxError {
         tkz.consume("{");
-        BlockStatement block = new BlockStatement();
+        BlockStatement block = new BlockStatement(bindings);
         while (!tkz.peek("}"))
             block.addStatement(parseStatement());
         tkz.consume("}");
         return block;
     }
 
-    private Executable parseCommand() throws SyntaxError{
+    private Executable parseCommand() throws SyntaxError {
         if (tkz.peek("move") || tkz.peek("shoot") || tkz.peek("collect") || tkz.peek("invest") || tkz.peek("done") || tkz.peek("relocate"))
             return parseActionCommand();
         else
@@ -84,14 +89,14 @@ public class Parser {
         else throw new SyntaxError("Invalid command");
     }
 
-    private Executable parseMoveCommand() throws SyntaxError{
+    private Executable parseMoveCommand() throws SyntaxError {
         tkz.consume("move");
         String direction = tkz.consume();
         if (!directions.contains(direction)) throw new SyntaxError("Invalid direction");
         return new MoveCommand(direction);
     }
 
-    private Executable parseRegionCommand() throws SyntaxError{
+    private Executable parseRegionCommand() throws SyntaxError {
         String command = tkz.consume();
         Evaluable amount = parseExpression();
         if(command.equals("invest")) return new InvestCommand(amount);
@@ -99,7 +104,7 @@ public class Parser {
         else throw new SyntaxError("Invalid command");
     }
 
-    private Executable parseAttackCommand() throws SyntaxError{
+    private Executable parseAttackCommand() throws SyntaxError {
         tkz.consume("shoot");
         String direction = tkz.consume();
         if (!directions.contains(direction)) throw new SyntaxError("Invalid direction");
@@ -107,7 +112,7 @@ public class Parser {
         return new AttackCommand(direction, expenditure);
     }
 
-    private Executable parseAssignmentStatement() throws SyntaxError{
+    private Executable parseAssignmentStatement() throws SyntaxError {
         String identifier = tkz.consume();
         tkz.consume("=");
         Evaluable expression = parseExpression();
@@ -115,11 +120,12 @@ public class Parser {
         if(reservedWords.contains(identifier))
             throw new SyntaxError("Use reserved word as identifier: " + identifier);
         int value = expression.eval(bindings);
+//        System.out.println(value);
         bindings.put(identifier, value);
-        return new AssignmentStatement(identifier, expression);
+        return new AssignmentStatement(identifier, expression, bindings);
     }
 
-    private Evaluable parseExpression() throws SyntaxError{
+    private Evaluable parseExpression() throws SyntaxError {
         Evaluable term = parseTerm();
         while (tkz.peek("+") || tkz.peek("-")) {
             String op = tkz.consume();
@@ -128,7 +134,7 @@ public class Parser {
         return term;
     }
 
-    private Evaluable parseTerm() throws SyntaxError{
+    private Evaluable parseTerm() throws SyntaxError {
         Evaluable factor = parseFactor();
         while (tkz.peek("*") || tkz.peek("/") || tkz.peek("%")) {
             String op = tkz.consume();
@@ -146,8 +152,10 @@ public class Parser {
         return power;
     }
 
-    private Evaluable parsePower() throws SyntaxError{
-        if (isNumeric(tkz.peek())) return new Num(Integer.parseInt(tkz.consume()));
+    private Evaluable parsePower() throws SyntaxError {
+        if (isNumeric(tkz.peek())){
+            return new Num(Integer.parseInt(tkz.consume()));
+        }
         else if (tkz.peek("(")) {
             tkz.consume("(");
             Evaluable expression = parseExpression();
@@ -158,12 +166,12 @@ public class Parser {
             String identifier = tkz.consume();
             if (reservedWords.contains(identifier))
                 throw new SyntaxError("Use reserved word as variable name: " + identifier);
-            return new Identifier(identifier);
+            return new Identifier(identifier,bindings);
         } else
-            throw new SyntaxError("Missing Number, Identifier, SensorExpression or RandomValue");
+            throw new SyntaxError("");
     }
 
-    private Evaluable parseInfoExpression() throws SyntaxError{
+    private Evaluable parseInfoExpression() throws SyntaxError {
         if(tkz.peek("opponent")){
             tkz.consume();
             return new Opponent();
