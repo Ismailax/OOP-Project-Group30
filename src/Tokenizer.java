@@ -1,4 +1,5 @@
 import java.util.NoSuchElementException;
+import Error.*;
 
 public class Tokenizer {
     private String src, next;
@@ -26,30 +27,6 @@ public class Tokenizer {
         computeNext();
         return result;
     }
-
-//    private void computeNext(){
-//        StringBuilder s = new StringBuilder();
-//        while(pos < src.length() && Character.isWhitespace(src.charAt(pos))) pos++;
-//        if(pos == src.length()){
-//            next = null;
-//            return;
-//        }
-//        char c = src.charAt(pos);
-//        if(Character.isDigit(c)){
-//            s.append(c);
-//            for(pos++; pos < src.length() && Character.isDigit(src.charAt(pos)); pos++)
-//                s.append(src.charAt(pos));
-//        }else if(c == '+' || c == '-' || c == '*' || c == '/' ||c == '%' || c == '^' || c == '(' || c == ')' || c == '{' || c == '}' || c == '='){
-//            s.append(c);
-//            pos++;
-//        }else if(Character.isLetter(c)){
-//            s.append(c);
-//            for(pos++; pos < src.length() && Character.isLetter(src.charAt(pos)); pos++)
-//                s.append(src.charAt(pos));
-//        }
-//        else throw new SyntaxError("unknown character: " + c);
-//        next = s.toString();
-//    }
 
     private void computeNext(){
         StringBuilder s = new StringBuilder();
@@ -92,7 +69,7 @@ public class Tokenizer {
         return peek().equals(s);
     }
 
-    public void consume(String s) throws SyntaxError{
+    public void consume(String s) throws SyntaxError {
         if(peek(s)) consume();
         else throw new SyntaxError(s + " expected");
     }

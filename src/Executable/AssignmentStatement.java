@@ -7,11 +7,13 @@ import java.util.Map;
 public class AssignmentStatement implements Executable{
     private String identifier;
     private Evaluable expression;
-    public AssignmentStatement(String identifier, Evaluable expression){
+    Map<String, Integer> bindings;
+
+    public AssignmentStatement(String identifier, Evaluable expression ,Map<String, Integer> bindings){
         this.identifier = identifier;
         this.expression = expression;
-        int value = expression.eval(null);
-        System.out.println(identifier + " = " + value);
+        this.bindings = bindings;
+//        System.out.println(identifier + " = " + bindings.get(identifier));
     }
     @Override
     public void execute(Map<String, Integer> bindings) {

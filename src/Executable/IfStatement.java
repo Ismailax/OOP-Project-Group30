@@ -7,10 +7,12 @@ public class IfStatement implements Executable{
     private Executable falseStatement;
     private Evaluable expression;
 
-    public IfStatement(Executable trueStatement, Executable falseStatement, Evaluable expression) {
+
+    public IfStatement(Executable trueStatement, Executable falseStatement, Evaluable expression , Map<String, Integer> bindings) {
         this.trueStatement = trueStatement;
         this.falseStatement = falseStatement;
         this.expression = expression;
+        this.execute(bindings);
     }
 
     @Override
