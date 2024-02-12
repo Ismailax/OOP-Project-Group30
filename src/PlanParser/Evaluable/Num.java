@@ -1,14 +1,14 @@
-package Evaluable;
+package PlanParser.Evaluable;
 
 import java.util.Map;
 
 public class Num implements Evaluable {
-    int num;
-    public Num(int num){
+    long num;
+    public Num(long num){
         this.num = num;
     }
     @Override
-    public int eval(Map<String, Integer> bindings) {
+    public long eval(Map<String, Long> bindings) {
         return num;
     }
 }

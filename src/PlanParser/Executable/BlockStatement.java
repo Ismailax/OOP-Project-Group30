@@ -1,13 +1,13 @@
-package Executable;
+package PlanParser.Executable;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 public class BlockStatement implements Executable{
     private List<Executable> statements;
-    Map<String, Integer> bindings;
+    Map<String, Long> bindings;
 
-    public BlockStatement(Map<String, Integer> bindings) {
+    public BlockStatement(Map<String, Long> bindings) {
         statements = new LinkedList<>();
         this.bindings = bindings;
     }
@@ -17,7 +17,7 @@ public class BlockStatement implements Executable{
     }
 
     @Override
-    public void execute(Map<String, Integer> bindings) {
+    public void execute(Map<String, Long> bindings) {
         for (Executable statement : statements)
             statement.execute(bindings);
     }

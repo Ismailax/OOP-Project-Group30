@@ -1,5 +1,5 @@
-package Executable;
-import Evaluable.*;
+package PlanParser.Executable;
+import PlanParser.Evaluable.*;
 import java.util.Map;
 
 public class IfStatement implements Executable{
@@ -8,7 +8,7 @@ public class IfStatement implements Executable{
     private Evaluable expression;
 
 
-    public IfStatement(Executable trueStatement, Executable falseStatement, Evaluable expression , Map<String, Integer> bindings) {
+    public IfStatement(Executable trueStatement, Executable falseStatement, Evaluable expression , Map<String, Long> bindings) {
         this.trueStatement = trueStatement;
         this.falseStatement = falseStatement;
         this.expression = expression;
@@ -16,7 +16,7 @@ public class IfStatement implements Executable{
     }
 
     @Override
-    public void execute(Map<String, Integer> bindings) {
+    public void execute(Map<String, Long> bindings) {
         if (expression.eval(bindings) > 0) trueStatement.execute(bindings);
         else falseStatement.execute(bindings);
     }

@@ -4,22 +4,57 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="58048a60-a2dd-4e70-bc89-f0cd98bfe888" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Error/EvalError.java" afterDir="false" />
+    <list default="true" id="58048a60-a2dd-4e70-bc89-f0cd98bfe888" name="Changes" comment="แก้ไขให้ทำคำสั่งต่อกันได้+แก้ส่วนที่ส่งวันที่ 7/2/67 (ยังไม่เสร็จ)">
+      <change afterPath="$PROJECT_DIR$/src/GameState/Player.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/GameState/Region.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/GameState/Territory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/PlanParser/Error/EvalError.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/PlanParser/Error/SyntaxError.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/PlanParser/Evaluable/BinaryArith.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/PlanParser/Evaluable/Evaluable.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/PlanParser/Evaluable/Identifier.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/PlanParser/Evaluable/Nearby.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/PlanParser/Evaluable/Num.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/PlanParser/Evaluable/Opponent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/PlanParser/Executable/AssignmentStatement.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/PlanParser/Executable/AttackCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/PlanParser/Executable/BlockStatement.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/PlanParser/Executable/CollectCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/PlanParser/Executable/Done.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/PlanParser/Executable/Executable.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/PlanParser/Executable/IfStatement.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/PlanParser/Executable/InvestCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/PlanParser/Executable/MoveCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/PlanParser/Executable/NoOp.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/PlanParser/Executable/Relocate.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/PlanParser/Executable/WhileStatement.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/PlanParser/Parser.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/PlanParser/Tokenizer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Evaluable/BinaryArith.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Evaluable/BinaryArith.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Evaluable/Identifier.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Evaluable/Identifier.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Executable/AssignmentStatement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Executable/AssignmentStatement.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Executable/BlockStatement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Executable/BlockStatement.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Executable/IfStatement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Executable/IfStatement.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Executable/InvestCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Executable/InvestCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Executable/MoveCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Executable/MoveCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Executable/WhileStatement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Executable/WhileStatement.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Error/EvalError.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Error/SyntaxError.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Evaluable/BinaryArith.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Evaluable/Evaluable.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Evaluable/Identifier.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Evaluable/Nearby.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Evaluable/Num.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Evaluable/Opponent.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Executable/AssignmentStatement.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Executable/AttackCommand.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Executable/BlockStatement.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Executable/CollectCommand.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Executable/Done.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Executable/Executable.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Executable/IfStatement.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Executable/InvestCommand.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Executable/MoveCommand.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Executable/NoOp.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Executable/Relocate.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Executable/WhileStatement.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Parser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SyntaxError.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Error/SyntaxError.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Tokenizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Tokenizer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Parser.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Player.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Tokenizer.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,23 +95,32 @@
   &quot;associatedIndex&quot;: 4
 }</component>
   <component name="ProjectId" id="2bGEadgs3SvgJ6YCU1gT4aXXljN" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;planParser(demo)&quot;,
-    &quot;onboarding.tips.debug.path&quot;: &quot;/Users/macintosh/Desktop/OOP/OOP-Project-Group30/src/Main.java&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "planParser(demo)",
+    "onboarding.tips.debug.path": "/Users/macintosh/Desktop/OOP/OOP-Project-Group30/src/Main.java",
+    "project.structure.last.edited": "SDKs",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.2"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="Evaluable" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src" />
     </key>
   </component>
   <component name="RunManager">
@@ -135,15 +179,25 @@
       <option name="project" value="LOCAL" />
       <updated>1707221064140</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="แก้ไขให้ทำคำสั่งต่อกันได้+แก้ส่วนที่ส่งวันที่ 7/2/67 (ยังไม่เสร็จ)">
+      <option name="closed" value="true" />
+      <created>1707666981442</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1707666981443</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="initial commit" />
     <MESSAGE value="implement Tonkenizer class" />
     <MESSAGE value="add Parser, Executable, Evaluable" />
     <MESSAGE value="เพิ่มส่วน Executable, Evaluable + เพิ่ม class Player + text เล็กน้อย" />
-    <option name="LAST_COMMIT_MESSAGE" value="เพิ่มส่วน Executable, Evaluable + เพิ่ม class Player + text เล็กน้อย" />
+    <MESSAGE value="แก้ไขให้ทำคำสั่งต่อกันได้+แก้ส่วนที่ส่งวันที่ 7/2/67 (ยังไม่เสร็จ)" />
+    <option name="LAST_COMMIT_MESSAGE" value="แก้ไขให้ทำคำสั่งต่อกันได้+แก้ส่วนที่ส่งวันที่ 7/2/67 (ยังไม่เสร็จ)" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

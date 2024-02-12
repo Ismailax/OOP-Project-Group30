@@ -1,12 +1,14 @@
-import Evaluable.*;
-import Executable.*;
-import Error.*;
+package PlanParser;
 
 import java.util.*;
 
+import PlanParser.Error.*;
+import PlanParser.Executable.*;
+import PlanParser.Evaluable.*;
+
 public class Parser {
     private Tokenizer tkz;
-    private Map<String, Integer> bindings;
+    private Map<String, Long> bindings;
     private final String[] reservedWordList = {"collect", "done", "down", "downleft", "downright", "else", "if", "invest", "move", "nearby", "opponent", "relocate", "shoot", "then", "up", "upleft", "upright", "while"};
     private final Set<String> reservedWords = new HashSet<>(List.of(reservedWordList));
     private final String[] specialVarList = {"rows", "cols", "currow", "curcol", "budget", "deposit", "int", "maxdeposit", "random"};
@@ -19,7 +21,7 @@ public class Parser {
         this.bindings = new HashMap<>();
     }
 
-    public Executable parse(Map<String, Integer> bindings) throws SyntaxError {
+    public Executable parse(Map<String, Long> bindings) throws SyntaxError {
         this.bindings = bindings;
         BlockStatement statements = new BlockStatement(bindings);
         statements.addStatement(parseStatement());
@@ -119,8 +121,7 @@ public class Parser {
         if(specialVariables.contains(identifier)) return new NoOp();
         if(reservedWords.contains(identifier))
             throw new SyntaxError("Use reserved word as identifier: " + identifier);
-        int value = expression.eval(bindings);
-//        System.out.println(value);
+        long value = expression.eval(bindings);
         bindings.put(identifier, value);
         return new AssignmentStatement(identifier, expression, bindings);
     }
@@ -154,7 +155,7 @@ public class Parser {
 
     private Evaluable parsePower() throws SyntaxError {
         if (isNumeric(tkz.peek())){
-            return new Num(Integer.parseInt(tkz.consume()));
+            return new Num(Long.parseLong(tkz.consume()));
         }
         else if (tkz.peek("(")) {
             tkz.consume("(");
@@ -185,14 +186,15 @@ public class Parser {
         else throw new SyntaxError("Invalid expression");
     }
 
-    public static boolean isNumeric(String num){
-        if(num == null) return false;
-        try{
-            Integer.parseInt(num);
-        }catch (NumberFormatException e){
+    public static boolean isNumeric(String num) {
+        if (num == null) return false;
+        try {
+            Long.parseLong(num);
+        } catch (NumberFormatException e) {
             return false;
         }
         return true;
     }
+
 
 }

@@ -1,4 +1,4 @@
-package Evaluable;
+package PlanParser.Evaluable;
 
 import java.util.Map;
 
@@ -10,7 +10,7 @@ public class Nearby implements Evaluable {
     }
 
     @Override
-    public int eval(Map<String, Integer> bindings) {
+    public long eval(Map<String, Long> bindings) {
         // Logic to evaluate the Nearby expression
         // This can involve accessing game state to determine nearby opponent regions
         System.out.println("Evaluating Nearby expression in direction: " + direction);

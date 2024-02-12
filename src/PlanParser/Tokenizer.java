@@ -1,5 +1,6 @@
+package PlanParser;
 import java.util.NoSuchElementException;
-import Error.*;
+import PlanParser.Error.*;
 
 public class Tokenizer {
     private String src, next;
