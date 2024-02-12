@@ -1,6 +1,6 @@
-package Executable;
+package PlanParser.Executable;
 
-import Evaluable.*;
+import PlanParser.Evaluable.*;
 
 import java.util.Map;
 
@@ -9,12 +9,12 @@ public class CollectCommand implements Executable{
 
     public CollectCommand(Evaluable amount) {
         this.amount = amount;
-        int value = amount.eval(null);
+        long value = amount.eval(null);
         System.out.println("collect: " + value);
     }
 
     @Override
-    public void execute(Map<String, Integer> bindings) {
+    public void execute(Map<String, Long> bindings) {
 
     }
 }

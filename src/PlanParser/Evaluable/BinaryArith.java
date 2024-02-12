@@ -1,6 +1,6 @@
-package Evaluable;
+package PlanParser.Evaluable;
 
-import Error.*;
+import PlanParser.Error.*;
 import java.util.Map;
 
 public class BinaryArith implements Evaluable{
@@ -14,9 +14,9 @@ public class BinaryArith implements Evaluable{
     }
 
     @Override
-    public int eval(Map<String, Integer> bindings) {
-        int lv = leftEval.eval(bindings);
-        int rv = rightEval.eval(bindings);
+    public long eval(Map<String, Long> bindings) {
+        long lv = leftEval.eval(bindings);
+        long rv = rightEval.eval(bindings);
         switch (operator) {
             case "+" -> {
 //                System.out.println(lv + " + " + rv);

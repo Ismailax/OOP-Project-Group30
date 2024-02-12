@@ -1,4 +1,4 @@
-package Executable;
+package PlanParser.Executable;
 
 import java.util.Map;
 
@@ -11,7 +11,7 @@ public class MoveCommand implements Executable {
     }
 
     @Override
-    public void execute(Map<String, Integer> bindings) {
+    public void execute(Map<String, Long> bindings) {
         System.out.println("Execute move " + direction);
 
     }
