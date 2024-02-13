@@ -7,7 +7,7 @@ import PlanParser.Executable.*;
 import PlanParser.Evaluable.*;
 
 public class Parser {
-    private Tokenizer tkz;
+    private final Tokenizer tkz;
     private Map<String, Long> bindings;
     private final String[] reservedWordList = {"collect", "done", "down", "downleft", "downright", "else", "if", "invest", "move", "nearby", "opponent", "relocate", "shoot", "then", "up", "upleft", "upright", "while"};
     private final Set<String> reservedWords = new HashSet<>(List.of(reservedWordList));
@@ -21,13 +21,12 @@ public class Parser {
         this.bindings = new HashMap<>();
     }
 
-    public Executable parse(Map<String, Long> bindings) throws SyntaxError {
+    public void parse(Map<String, Long> bindings) throws SyntaxError {
         this.bindings = bindings;
         BlockStatement statements = new BlockStatement(bindings);
         statements.addStatement(parseStatement());
         while (tkz.hasNextToken())
             statements.addStatement(parseStatement());
-        return statements;
     }
 
     public Executable parseStatement() throws SyntaxError {

@@ -3,7 +3,8 @@ import java.util.NoSuchElementException;
 import PlanParser.Error.*;
 
 public class Tokenizer {
-    private String src, next;
+    private final String src;
+    private String next;
     private int pos;
 
     public Tokenizer(String src) {
