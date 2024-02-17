@@ -10,6 +10,7 @@ public class CollectCommand implements Executable{
     public CollectCommand(Evaluable amount, Map<String, Long> bindings) {
         this.amount = amount;
         long value = amount.eval(bindings);
+        // collect(value);
         System.out.println("Parse collect: " + value);
     }
 

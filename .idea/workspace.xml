@@ -4,14 +4,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="58048a60-a2dd-4e70-bc89-f0cd98bfe888" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/lib.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Configuration/Config.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Configuration/Configuration.txt" afterDir="false" />
+    <list default="true" id="58048a60-a2dd-4e70-bc89-f0cd98bfe888" name="Changes" comment="add configuration class &amp; file">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OOP-Project-Group30.iml" beforeDir="false" afterPath="$PROJECT_DIR$/OOP-Project-Group30.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GameState/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GameState/Player.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/PlanParser/Evaluable/Nearby.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PlanParser/Evaluable/Nearby.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/PlanParser/Evaluable/Opponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PlanParser/Evaluable/Opponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/PlanParser/Executable/AssignmentStatement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PlanParser/Executable/AssignmentStatement.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/PlanParser/Executable/AttackCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PlanParser/Executable/AttackCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/PlanParser/Executable/BlockStatement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PlanParser/Executable/BlockStatement.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/PlanParser/Executable/CollectCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PlanParser/Executable/CollectCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/PlanParser/Executable/Done.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PlanParser/Executable/Done.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/PlanParser/Executable/InvestCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PlanParser/Executable/InvestCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/PlanParser/Executable/MoveCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PlanParser/Executable/MoveCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/PlanParser/Executable/RandomValue.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PlanParser/Evaluable/RandomValue.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/PlanParser/Executable/Relocate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PlanParser/Executable/Relocate.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/PlanParser/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PlanParser/Parser.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -149,7 +157,15 @@
       <option name="project" value="LOCAL" />
       <updated>1707666981443</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="add configuration class &amp; file">
+      <option name="closed" value="true" />
+      <created>1708174091884</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1708174091885</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -159,7 +175,8 @@
     <MESSAGE value="add Parser, Executable, Evaluable" />
     <MESSAGE value="เพิ่มส่วน Executable, Evaluable + เพิ่ม class Player + text เล็กน้อย" />
     <MESSAGE value="แก้ไขให้ทำคำสั่งต่อกันได้+แก้ส่วนที่ส่งวันที่ 7/2/67 (ยังไม่เสร็จ)" />
-    <option name="LAST_COMMIT_MESSAGE" value="แก้ไขให้ทำคำสั่งต่อกันได้+แก้ส่วนที่ส่งวันที่ 7/2/67 (ยังไม่เสร็จ)" />
+    <MESSAGE value="add configuration class &amp; file" />
+    <option name="LAST_COMMIT_MESSAGE" value="add configuration class &amp; file" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

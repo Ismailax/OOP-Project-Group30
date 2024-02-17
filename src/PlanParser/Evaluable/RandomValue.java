@@ -1,6 +1,4 @@
-package PlanParser.Executable;
-
-import PlanParser.Evaluable.Evaluable;
+package PlanParser.Evaluable;
 
 import java.util.Map;
 import java.util.Random;
