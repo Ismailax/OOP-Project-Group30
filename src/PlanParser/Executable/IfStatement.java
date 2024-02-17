@@ -12,7 +12,6 @@ public class IfStatement implements Executable{
         this.trueStatement = trueStatement;
         this.falseStatement = falseStatement;
         this.expression = expression;
-        this.execute(bindings);
     }
 
     @Override

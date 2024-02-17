@@ -2,11 +2,11 @@ import GameState.Player;
 
 public class Main {
     public static void main(String[] args) {
-        String constructionPlan_A = "x = x + 1 if(x) then move up else {}";
+        String constructionPlan_A = "x = 3 if(x-4) then move up else if (x-3) then move down else move upleft";
         Player p1 = new Player("A");
         p1.setPlan(constructionPlan_A);
         p1.eval();
-        System.out.println(p1.getBindings("x"));
+        System.out.println(p1.getBindings("dir"));
     }
 }
 

@@ -55,8 +55,7 @@ public class Parser {
         tkz.consume("(");
         Evaluable expression = parseExpression();
         tkz.consume(")");
-        Executable statement = parseStatement();
-        return new WhileStatement(statement, expression, bindings);
+        return new WhileStatement(parseStatement(), expression, bindings);
     }
 
     private Executable parseBlockStatement() throws SyntaxError {
@@ -100,8 +99,8 @@ public class Parser {
     private Executable parseRegionCommand() throws SyntaxError {
         String command = tkz.consume();
         Evaluable amount = parseExpression();
-        if(command.equals("invest")) return new InvestCommand(amount);
-        else if (command.equals("collect")) return new CollectCommand(amount);
+        if(command.equals("invest")) return new InvestCommand(amount, bindings);
+        else if (command.equals("collect")) return new CollectCommand(amount, bindings);
         else throw new SyntaxError("Invalid command");
     }
 
@@ -110,7 +109,7 @@ public class Parser {
         String direction = tkz.consume();
         if (!directions.contains(direction)) throw new SyntaxError("Invalid direction");
         Evaluable expenditure = parseExpression();
-        return new AttackCommand(direction, expenditure);
+        return new AttackCommand(direction, expenditure, bindings);
     }
 
     private Executable parseAssignmentStatement() throws SyntaxError {
@@ -153,7 +152,10 @@ public class Parser {
     }
 
     private Evaluable parsePower() throws SyntaxError {
-        if (isNumeric(tkz.peek())){
+        if (tkz.peek("random")) {
+            tkz.consume("random");
+            return new RandomValue();
+        }else if (isNumeric(tkz.peek())){
             return new Num(Long.parseLong(tkz.consume()));
         }
         else if (tkz.peek("(")) {

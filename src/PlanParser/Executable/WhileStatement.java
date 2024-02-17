@@ -10,7 +10,6 @@ public class WhileStatement implements Executable{
     public WhileStatement(Executable statement, Evaluable expression, Map<String, Long> bindings) {
         this.statement = statement;
         this.expression = expression;
-        this.execute(bindings);
     }
 
     @Override
