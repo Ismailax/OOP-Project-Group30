@@ -13,6 +13,7 @@ public class InvestCommand implements Executable{
     @Override
     public void execute(Map<String, Long> bindings) {
         long value = amount.eval(bindings);
+        // invest(value);
         System.out.println("Execute invest: " + value);
     }
 }

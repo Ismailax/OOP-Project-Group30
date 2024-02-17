@@ -1,5 +1,6 @@
 import Configuration.Config;
 import GameState.Player;
+import PlanParser.Executable.Executable;
 import PlanParser.Parser;
 import PlanParser.Tokenizer;
 
@@ -12,14 +13,23 @@ import java.util.TreeMap;
 
 public class Main {
     public static void main(String[] args) {
-//        String constructionPlan_A = "x = 3 if(x-4) then move up else if (x-3) then move down else move upleft";
-//        Player p1 = new Player("A");
-//        p1.setPlan(constructionPlan_A);
-//        p1.eval();
-//        System.out.println(p1.getBindings("dir"));
+        String constructionPlan_A = "invest 2";
+        Player p1 = new Player("A");
+        p1.setPlan(constructionPlan_A);
+        p1.setStatements(p1.eval());
+
+        p1.executeStmt();
+//        System.out.println(p1.getBindings("x"));
+
 
     }
 }
+
+//        System.out.println(p1.getBindings("x"));
+
+//        for(int i = 0; i < 5; i++){
+//            p1.executeStmt();
+//        }
 
 //        Tokenizer tkz = new Tokenizer(constructionPlan_A);
 //        while (tkz.hasNextToken()) {

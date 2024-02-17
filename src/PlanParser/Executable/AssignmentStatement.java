@@ -13,7 +13,6 @@ public class AssignmentStatement implements Executable{
         this.identifier = identifier;
         this.expression = expression;
         this.bindings = bindings;
-//        System.out.println(identifier + " = " + bindings.get(identifier));
     }
     @Override
     public void execute(Map<String, Long> bindings) {

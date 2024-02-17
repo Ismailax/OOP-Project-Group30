@@ -21,12 +21,12 @@ public class Parser {
         this.bindings = new HashMap<>();
     }
 
-    public void parse(Map<String, Long> bindings) throws SyntaxError {
+    public Executable parse(Map<String, Long> bindings) throws SyntaxError {
         this.bindings = bindings;
         BlockStatement statements = new BlockStatement(bindings);
         statements.addStatement(parseStatement());
-        while (tkz.hasNextToken())
-            statements.addStatement(parseStatement());
+        while (tkz.hasNextToken()) statements.addStatement(parseStatement());
+        return statements;
     }
 
     public Executable parseStatement() throws SyntaxError {
@@ -40,13 +40,11 @@ public class Parser {
         tkz.consume("if");
         tkz.consume("(");
         Evaluable expression = parseExpression();
-//        System.out.println(expression.eval(bindings));
         tkz.consume(")");
         tkz.consume("then");
         Executable trueStatement = parseStatement();
         tkz.consume("else");
         Executable falseStatement = parseStatement();
-//        System.out.println(bindings.values());
         return new IfStatement(trueStatement, falseStatement, expression, bindings);
     }
 
@@ -119,8 +117,8 @@ public class Parser {
         if(specialVariables.contains(identifier)) return new NoOp();
         if(reservedWords.contains(identifier))
             throw new SyntaxError("Use reserved word as identifier: " + identifier);
-        long value = expression.eval(bindings);
-        bindings.put(identifier, value);
+//        long value = expression.eval(bindings);
+//        bindings.put(identifier, value);
         return new AssignmentStatement(identifier, expression, bindings);
     }
 
