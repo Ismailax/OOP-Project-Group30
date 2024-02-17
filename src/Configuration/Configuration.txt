@@ -1,0 +1,11 @@
+totalRows=20
+totalCols=20
+initPlanMin=5
+initPlanSec=0
+initBudget=10000
+initCCDep=100
+planRevMin=30
+planRevSec=0
+revCost=100
+maxDep=1000000
+interestPct=5
