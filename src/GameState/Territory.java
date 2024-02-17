@@ -10,4 +10,8 @@ public class Territory {
         this.cols = cols;
         region = new Region[(int) rows][(int) cols];
     }
+
+    public Region getRegion(long cols, long rows){
+        return region[(int)cols][(int)rows];
+    }
 }

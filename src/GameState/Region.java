@@ -1,5 +1,5 @@
 package GameState;
-import java.lang.Math;
+
 /* spec พื้นที่ในแต่ละ cell*/
 public class Region {
     private final long row;
@@ -18,7 +18,20 @@ public class Region {
         return deposit;
     }
 
-    public void relocate(){
-
+    public long getRow(){
+        return row;
     }
+    public long getCol(){
+        return col;
+    }
+
+    public void setOwner(Player player) {
+        this.ownner = player;
+    }
+
+    public Player getOwner(){
+        return ownner;
+    }
+
+
 }
