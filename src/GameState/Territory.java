@@ -11,7 +11,7 @@ public class Territory {
         region = new Region[(int) rows][(int) cols];
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
-                region[i][j] = new Region(i, j, 0);
+                region[i][j] = new Region(i+1, j+1, 0);
             }
         }
     }

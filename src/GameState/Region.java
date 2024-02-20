@@ -19,10 +19,10 @@ public class Region {
     }
 
     public long getRow(){
-        return row+1;
+        return row;
     }
     public long getCol(){
-        return col+1;
+        return col;
     }
 
     public void setOwner(Player player) {
