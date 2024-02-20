@@ -88,121 +88,177 @@ public class Player {
     }
 
     public long opponent(){
-
-
-//            for(sightcol = 1+currentRegion.getCol() ; sightcol < 100 ; sightcol++){
             long distance = 1;
-            while(!territory.getRegion()){
-                if(territory.getRegion(currentRegion.getCol(),currentRegion.getRow()-distance))  {
-                    if (isOtherOwnRegion) { // Region คนอื่น ??
-                        String str_comb_dd = Long.toString(distance) + Long.toString(1);
-                        return Long.parseLong(str_comb_dd);
-                    }
-                }else if(territory.getRegion(currentRegion.getCol(),currentRegion.getRow()-distance)
-
-//            for(sightrow = 1+currentRegion.getRow() ; sightrow <= 6 ; sightrow++){ // distance ไม่รู้ว่าจะ set loop ไปจบไหนเพราะรอเช็คว่าตก null หรือป่าว
-//                if(territory.getRegion(sightcol,sightrow) == null){ // ตก map แล้ว
-//                    break;
-//                }
-//                if(isOtherOwnRegion){ // Region คนอื่น ??
-//                    String str_comb_dd = Long.toString(sightcol-currentRegion.getCol()) + Long.toString(sightrow-currentRegion.getRow());
-//                    return Long.parseLong(str_comb_dd);
-//                }
-//            }
-//        }
-//        return 0; // กรณีไม่เจอเมืองใครเลย ไว้ตรงนี้มั้ยวะ
+            boolean hasReturn = false;
+            Region check = territory.getRegion(currentRegion.getRow(),currentRegion.getCol());
+            while (true) { // up
+                if(check == null){
+                    continue;
+                }
+                check = territory.getRegion(currentRegion.getRow() - distance, currentRegion.getCol());
+                if (check.getOwner() != null && check.getOwner() != this) {
+                    String str_comb_dd = Long.toString(distance) + Long.toString(1);
+                    return Long.parseLong(str_comb_dd);
+                } // down
+                check = territory.getRegion(currentRegion.getRow() + distance, currentRegion.getCol());
+                if (check.getOwner() != null && check.getOwner() != this) {
+                    String str_comb_dd = Long.toString(distance) + Long.toString(4);
+                    return Long.parseLong(str_comb_dd);
+                } // upleft
+                    if(currentRegion.getCol() %2 == 0) {
+                        check = territory.getRegion(currentRegion.getRow() - distance, currentRegion.getCol() - distance);
+                    }else check = territory.getRegion(currentRegion.getRow() , currentRegion.getCol() - distance);
+                if (check.getOwner() != null && check.getOwner() != this) {
+                    String str_comb_dd = Long.toString(distance) + Long.toString(6);
+                    return Long.parseLong(str_comb_dd);
+                } // upright
+                    if(currentRegion.getCol() %2 == 0) {
+                        check = territory.getRegion(currentRegion.getRow() - distance, currentRegion.getCol() + distance);
+                    }else check = territory.getRegion(currentRegion.getRow(), currentRegion.getCol() + distance);
+                if (check.getOwner() != null && check.getOwner() != this) {
+                    String str_comb_dd = Long.toString(distance) + Long.toString(2);
+                    return Long.parseLong(str_comb_dd);
+                } // downleft
+                    if(currentRegion.getCol() %2 == 0) {
+                        check = territory.getRegion(currentRegion.getRow(), currentRegion.getCol() - distance);
+                    }else check = territory.getRegion(currentRegion.getRow() + distance, currentRegion.getCol() - distance);
+                if (check.getOwner() != null && check.getOwner() != this) {
+                    String str_comb_dd = Long.toString(distance) + Long.toString(5);
+                    return Long.parseLong(str_comb_dd);
+                } // downright
+                    if(currentRegion.getCol() %2 == 0) {
+                        check = territory.getRegion(currentRegion.getRow(), currentRegion.getCol() + distance);
+                    }else check = territory.getRegion(currentRegion.getRow() + distance, currentRegion.getCol() + distance);
+                    if (check.getOwner() != null && check.getOwner() != this) {
+                    String str_comb_dd = Long.toString(distance) + Long.toString(3);
+                    return Long.parseLong(str_comb_dd);
+                }
+                distance++;
+            }
+            return 0;
     }
-    }
 
-    public long nearby(int instantdirection){
+    public long nearby(int instantdirection){ // แก้ direction ตาม move % 2
         switch (instantdirection){
             case 1 : // up
-                for (long i = currentRegion.getRow()-1 ; i < 100 ; i++){
-                    otherRegion(territory.getRegion(currentRegion.getCol(),i));
+                for (long i = currentRegion.getRow()-1 ; i < 12 ; i++){
+                    otherRegion(territory.getRegion(i,currentRegion.getCol()));
                     if(isOtherOwnRegion){
-                        return  100*(currentRegion.getRow() - i) + (long)String.valueOf(territory.getRegion(currentRegion.getCol(),i).getDeposit()).length();
+                        return  100*(currentRegion.getRow() - i) + (long)String.valueOf(territory.getRegion(i,currentRegion.getCol()).getDeposit()).length();
                     }
                     else return 0;
                 }
             case 4 : // down
-                for (long i = currentRegion.getRow()+1 ; i < 100 ; i++){
-                    otherRegion(territory.getRegion(currentRegion.getCol(),i));
+                for (long i = currentRegion.getRow()+1 ; i < 12 ; i++){
+                    otherRegion(territory.getRegion(i,currentRegion.getCol()));
                     if(isOtherOwnRegion){
-                        return  100*(i - currentRegion.getRow()) + (long)String.valueOf(territory.getRegion(currentRegion.getCol(),i).getDeposit()).length();
+                        return  100*(i - currentRegion.getRow()) + (long)String.valueOf(territory.getRegion(i,currentRegion.getCol()).getDeposit()).length();
                     }
                     else return 0;
                 }
             case 6 : // upleft
-                for (long i = currentRegion.getRow()-1 ; i < 100 ; i++){
-                    for(long j = currentRegion.getCol()-1 ; j < 100 ; j++){
-                        otherRegion(territory.getRegion(j,i));
-                        if(isOtherOwnRegion){
-                            return  100*(currentRegion.getRow() - i) + (long)String.valueOf(territory.getRegion(j,i).getDeposit()).length();
+                    Region check = currentRegion;
+                    long distance = 1;
+                    while(check != null){
+                        if(check.getCol() %2 == 0){
+                            check = territory.getRegion(currentRegion.getRow()-distance , currentRegion.getCol()-distance);
+                            otherRegion(check);
+                            if(isOtherOwnRegion){
+                                return 100*(distance)+(long)String.valueOf(check.getDeposit()).length();
+                            }
+                        }else {
+                            check = territory.getRegion(currentRegion.getRow(), currentRegion.getCol() - distance);
+                            otherRegion(check);
+                            if (isOtherOwnRegion) {
+                                return 100 * (distance) + (long) String.valueOf(check.getDeposit()).length();
+                            }
                         }
-                        else return 0;
+                        distance++;
                     }
-                }
             case 2 : // upright
-                for (long i = currentRegion.getRow()-1 ; i < 100 ; i++){
-                    for(long j = currentRegion.getCol()+1 ; j < 100 ; j++){
-                        otherRegion(territory.getRegion(j,i));
+                for (long i = currentRegion.getRow()-1 ; i < 12 ; i++){
+                    for(long j = currentRegion.getCol()+1 ; j < 12 ; j++){
+                        otherRegion(territory.getRegion(i,j));
                         if(isOtherOwnRegion){
-                            return  100*(currentRegion.getRow() - i) + (long)String.valueOf(territory.getRegion(j,i).getDeposit()).length();
+                            return  100*(currentRegion.getRow() - i) + (long)String.valueOf(territory.getRegion(i,j).getDeposit()).length();
                         }
                         else return 0;
                     }
                 }
             case 5 : // downleft
-                for (long i = currentRegion.getRow()+1 ; i < 100 ; i++){
-                    for(long j = currentRegion.getCol()-1 ; j < 100 ; j++){
-                        otherRegion(territory.getRegion(j,i));
+                for (long i = currentRegion.getRow()+1 ; i < 12 ; i++){
+                    for(long j = currentRegion.getCol()-1 ; j < 12 ; j++){
+                        otherRegion(territory.getRegion(i,j));
                         if(isOtherOwnRegion){
-                            return  100*(i - currentRegion.getRow()) + (long)String.valueOf(territory.getRegion(j,i).getDeposit()).length();
+                            return  100*(i - currentRegion.getRow()) + (long)String.valueOf(territory.getRegion(i,j).getDeposit()).length();
                         }
                         else return 0;
                     }
                 }
             case 3 : // downright
-                for (long i = currentRegion.getRow()+1 ; i < 100 ; i++){
-                    for(long j = currentRegion.getCol()+1 ; j < 100 ; j++){
-                        otherRegion(territory.getRegion(j,i));
+                for (long i = currentRegion.getRow()+1 ; i < 12 ; i++){
+                    for(long j = currentRegion.getCol()+1 ; j < 12 ; j++){
+                        otherRegion(territory.getRegion(i,j));
                         if(isOtherOwnRegion){
-                            return  100*(i - currentRegion.getRow()) + (long)String.valueOf(territory.getRegion(j,i).getDeposit()).length();
+                            return  100*(i - currentRegion.getRow()) + (long)String.valueOf(territory.getRegion(i,j).getDeposit()).length();
                         }
                         else return 0;
                     }
                 }
         }
+        return 0;
     }
 
     public void move(int instantdirection){
         switch (instantdirection){
             case 1 : // up
                 this.currow -= 1;
+                setCurrentRegion(currow, curcol);
                 break;
             case 4 : // down
                 this.currow += 1;
+                setCurrentRegion(currow,curcol);
                 break;
             case 6 : // upleft
-                this.currow -= 1;
-                this.curcol -= 1;
+                if(curcol %2 == 0) {
+                    this.currow -= 1;
+                    this.curcol -= 1;
+                }
+                else this.currow -= 1;
+                setCurrentRegion(currow,curcol);
                 break;
             case 2 : // upright
-                this.currow -= 1;
-                this.curcol += 1;
+                if(curcol %2 == 0) {
+                    this.currow -= 1;
+                    this.curcol += 1;
+                }
+                else this.curcol += 1;
+                setCurrentRegion(currow,curcol);
                 break;
             case 5 : // downleft
-                this.currow += 1;
-                this.curcol -= 1;
+                if(curcol %2 == 0) {
+                    this.curcol -= 1;
+                }
+                else {
+                    this.currow += 1;
+                    this.curcol -= 1;
+                }
+                setCurrentRegion(currow,curcol);
                 break;
             case 3 : // downright
-                this.currow += 1;
-                this.curcol += 1;
+                if(curcol %2 == 0) {
+                    this.curcol += 1;
+                }
+                else {
+                    this.curcol += 1;
+                    this.currow += 1;
+                }
+                setCurrentRegion(currow,curcol);
                 break;
         }
     }
 
-    public void invest(long num){
+    public void invest(long num){ // แก้แล้ว
         if(!myRegion(currentRegion) && !otherRegion(currentRegion) && isMyRegionAroundHere()); /* player nearby แล้วมีพื้นที่ตัวเองอยู่ */) { //ถ้าไม่ใช่ region เรา (ว่าง) ต้องแบ่งมั้ยว่า isRegion เรา isRegion คนอื่น
             if (this.budget > currentRegion.getDeposit() + 1){
                 this.budget -= currentRegion.getDeposit() + 1;
@@ -214,15 +270,15 @@ public class Player {
         }
     }
 
-    public void shoot(int instantdirection , long stake){
+    public void shoot(int instantdirection , long stake){ // แก้ direction ตาม move % 2
         switch (instantdirection){
             case 1: // up
                 if(this.budget < stake+1){
 
                 }
                 else {
-                    if(territory.getRegion(currentRegion.getCol(),currentRegion.getRow()-1).getDeposit() - stake < 0){
-                        removeRegion(territory.getRegion(currentRegion.getCol(),currentRegion.getRow()-1));
+                    if(territory.getRegion(currentRegion.getRow()-1,currentRegion.getCol()).getDeposit() - stake < 0){
+                        removeRegion(territory.getRegion(currentRegion.getRow()-1,currentRegion.getCol()));
                     }
                 }
             case 4: // down
@@ -230,8 +286,8 @@ public class Player {
 
                 }
                 else {
-                    if(territory.getRegion(currentRegion.getCol(),currentRegion.getRow()+1).getDeposit() - stake < 0){
-                        removeRegion(territory.getRegion(currentRegion.getCol(),currentRegion.getRow()+1));
+                    if(territory.getRegion(currentRegion.getRow()+1,currentRegion.getCol()).getDeposit() - stake < 0){
+                        removeRegion(territory.getRegion(currentRegion.getRow()+1,currentRegion.getCol()));
                     }
                 }
             case 6: // upleft
@@ -239,8 +295,8 @@ public class Player {
 
                 }
                 else {
-                    if(territory.getRegion(currentRegion.getCol()-1,currentRegion.getRow()-1).getDeposit() - stake < 0){
-                        removeRegion(territory.getRegion(currentRegion.getCol()-1,currentRegion.getRow()-1));
+                    if(territory.getRegion(currentRegion.getRow()-1,currentRegion.getCol()-1).getDeposit() - stake < 0){
+                        removeRegion(territory.getRegion(currentRegion.getRow()-1,currentRegion.getCol()-1));
                     }
                 }
             case 2: //upright
@@ -248,8 +304,8 @@ public class Player {
 
                 }
                 else {
-                    if(territory.getRegion(currentRegion.getCol()+1,currentRegion.getRow()-1).getDeposit() - stake < 0){
-                        removeRegion(territory.getRegion(currentRegion.getCol()+1,currentRegion.getRow()-1));
+                    if(territory.getRegion(currentRegion.getRow()-1,currentRegion.getCol()+1).getDeposit() - stake < 0){
+                        removeRegion(territory.getRegion(currentRegion.getRow()-1,currentRegion.getCol()+1));
                     }
                 }
             case 5: //downleft
@@ -257,8 +313,8 @@ public class Player {
 
                 }
                 else {
-                    if(territory.getRegion(currentRegion.getCol()-1,currentRegion.getRow()+1).getDeposit() - stake < 0){
-                        removeRegion(territory.getRegion(currentRegion.getCol()-1,currentRegion.getRow()+1));
+                    if(territory.getRegion(currentRegion.getRow(),currentRegion.getCol()-1).getDeposit() - stake < 0){
+                        removeRegion(territory.getRegion(currentRegion.getRow(),currentRegion.getCol()-1));
                     }
                 }
             case 3: //downright
@@ -266,16 +322,16 @@ public class Player {
 
                 }
                 else {
-                    if(territory.getRegion(currentRegion.getCol()+1,currentRegion.getRow()+1).getDeposit() - stake < 0){
-                        removeRegion(territory.getRegion(currentRegion.getCol()+1,currentRegion.getRow()+1));
+                    if(territory.getRegion(currentRegion.getRow(),currentRegion.getCol()+1).getDeposit() - stake < 0){
+                        removeRegion(territory.getRegion(currentRegion.getRow(),currentRegion.getCol()+1));
                     }
                 }
         }
 
     }
 
-    public Region setCurrentRegion(long curcol, long currow){
-        return currentRegion = territory.getRegion(curcol,currow);
+    public Region setCurrentRegion(long currow, long curcol){
+        return currentRegion = territory.getRegion(currow,curcol);
     }
 
     public long getCurrentRow() {
@@ -286,14 +342,14 @@ public class Player {
         return currentRegion.getCol();
     }
 
-    public boolean isMyRegionAroundHere(){
+    public boolean isMyRegionAroundHere(){ // แก้ direction ตาม move % 2
         int distance = 1;
         for(long row = currentRegion.getRow() - distance ; row <= currentRegion.getRow() + distance ; row++){
             for (long col = currentRegion.getCol() - distance ; col <= currentRegion.getCol() + distance ; col++){
                 if(row == currentRegion.getRow() && col == currentRegion.getCol()){
                     continue;
                 }
-                Region region = territory.getRegion(col,row);
+                Region region = territory.getRegion(row,col);
                 if(myRegion(region)){
                     return true;
                 }

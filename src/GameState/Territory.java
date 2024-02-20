@@ -11,7 +11,7 @@ public class Territory {
         region = new Region[(int) rows][(int) cols];
     }
 
-    public Region getRegion(long cols, long rows){
-        return region[(int)cols][(int)rows];
+    public Region getRegion(long rows, long cols){
+        return region[(int)rows][(int)cols];
     }
 }
