@@ -33,5 +33,4 @@ public class Region {
         return ownner;
     }
 
-
 }
