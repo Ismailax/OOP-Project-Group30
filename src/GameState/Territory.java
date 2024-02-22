@@ -38,6 +38,17 @@ public class Territory {
         return null;
     }
 
+    public Region getUpLeft(long row, long col){
+        if(col < cols){
+            if(col % 2 != 0){
+                return getRegion(row, col - 1);
+            }else{
+                return getRegion(row-1, col - 1);
+            }
+        }
+        return null;
+    }
+
     public Region getDownRight(long row, long col){
         if (row < rows){
             if(col % 2 != 0){
@@ -62,17 +73,6 @@ public class Territory {
                 return getRegion(row+1, col - 1);
             }else{
                 return getRegion(row, col - 1);
-            }
-        }
-        return null;
-    }
-
-    public Region getUpLeft(long row, long col){
-        if (row > 1) {
-            if(col % 2 != 0){
-                return getRegion(row, col - 1);
-            }else{
-                return getRegion(row - 1, col - 1);
             }
         }
         return null;
