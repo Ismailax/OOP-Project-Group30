@@ -18,6 +18,10 @@ public class Region {
         return deposit;
     }
 
+    public void setDeposit(long money){
+        deposit = money;
+    }
+
     public long getRow(){
         return row;
     }

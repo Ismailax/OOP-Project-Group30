@@ -1,9 +1,11 @@
 package PlanParser.Executable;
+import GameState.Player;
 import PlanParser.Evaluable.*;
 
 import java.util.Map;
 
 public class InvestCommand implements Executable{
+    Player player;
     private Evaluable amount;
     public InvestCommand(Evaluable amount, Map<String, Long> bindings){
         this.amount = amount;

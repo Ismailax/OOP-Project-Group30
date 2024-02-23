@@ -1,5 +1,7 @@
 package PlanParser.Executable;
 
+import GameState.Player;
+
 import java.util.Map;
 
 public class Relocate implements Executable{

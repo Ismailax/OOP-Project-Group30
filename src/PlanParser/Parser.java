@@ -2,11 +2,13 @@ package PlanParser;
 
 import java.util.*;
 
+import GameState.Player;
 import PlanParser.Error.*;
 import PlanParser.Executable.*;
 import PlanParser.Evaluable.*;
 
 public class Parser {
+    private Player player;
     private final Tokenizer tkz;
     private Map<String, Long> bindings;
     private final String[] reservedWordList = {"collect", "done", "down", "downleft", "downright", "else", "if", "invest", "move", "nearby", "opponent", "relocate", "shoot", "then", "up", "upleft", "upright", "while"};
@@ -19,6 +21,10 @@ public class Parser {
     public Parser(Tokenizer tkz){
         this.tkz = tkz;
         this.bindings = new HashMap<>();
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
     }
 
     public Executable parse(Map<String, Long> bindings) throws SyntaxError {
@@ -91,7 +97,7 @@ public class Parser {
         tkz.consume("move");
         String direction = tkz.consume();
         if (!directions.contains(direction)) throw new SyntaxError("Invalid direction");
-        return new MoveCommand(direction);
+        return new MoveCommand(player,direction);
     }
 
     private Executable parseRegionCommand() throws SyntaxError {
@@ -107,7 +113,7 @@ public class Parser {
         String direction = tkz.consume();
         if (!directions.contains(direction)) throw new SyntaxError("Invalid direction");
         Evaluable expenditure = parseExpression();
-        return new AttackCommand(direction, expenditure, bindings);
+        return new AttackCommand(direction, expenditure, bindings, player);
     }
 
     private Executable parseAssignmentStatement() throws SyntaxError {
@@ -117,8 +123,6 @@ public class Parser {
         if(specialVariables.contains(identifier)) return new NoOp();
         if(reservedWords.contains(identifier))
             throw new SyntaxError("Use reserved word as identifier: " + identifier);
-//        long value = expression.eval(bindings);
-//        bindings.put(identifier, value);
         return new AssignmentStatement(identifier, expression, bindings);
     }
 
