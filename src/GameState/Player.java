@@ -20,6 +20,7 @@ public class Player {
     private long turns;
     private long base;
     private long budget;
+    private Region cityCenter;
     private Region currentRegion;
     private Territory territory;
 
@@ -32,6 +33,7 @@ public class Player {
 
     public Executable eval(){
         Parser p = new Parser(new Tokenizer(plan));
+        p.setPlayer(this);
         return p.parse(bindings);
     }
 
@@ -50,6 +52,14 @@ public class Player {
     public long getBindings(String variable) {
         if(bindings.get(variable) != null) return bindings.get(variable);
         return 0;
+    }
+
+    public Map<String, Long> getAllBindings(){
+        return this.bindings;
+    }
+
+    public void setTerritory(Territory territory) {
+        this.territory = territory;
     }
 
     public boolean myRegion(Region region){ // เช็คว่าใช่ region เราไหม
@@ -246,8 +256,8 @@ public class Player {
         return 0;
     }
 
-    public void instmove(int instantdirection , long row , long col) { // แก้แล้ว
-        switch (instantdirection) {
+    public void instmove(long instantdirection , long row , long col) { // แก้แล้ว
+        switch ((int) instantdirection) {
             case 1:
                 row -= 1;
                 break;
@@ -293,14 +303,61 @@ public class Player {
         }
     }
 
-    public void move(int instantdirection){ // แก้แล้ว
-        instmove(instantdirection,currow,curcol);
-        setCurrentRegion(currow,curcol);
-//
+    public void move(long direction){ // ok
+        Region des;
+        if(direction == 1){
+            des = territory.getUp(currow,curcol);
+            if(des == null){
+                System.out.println("Cannot move to an out-of-territory region.");
+            }else{
+                System.out.println("move up: (" + currow + "," + curcol + ") -> ("+ des.getRow() + "," + des.getCol() + ")");
+                setCurrentRegion(des.getRow(), des.getCol());
+            }
+        } else if (direction == 2) {
+            des = territory.getUpRight(currow,curcol);
+            if(des == null){
+                System.out.println("Cannot move to an out-of-territory region.");
+            }else{
+                System.out.println("move upright: (" + currow + "," + curcol + ") -> ("+ des.getRow() + "," + des.getCol() + ")");
+                setCurrentRegion(des.getRow(), des.getCol());
+            }
+        } else if (direction == 3){
+            des = territory.getDownRight(currow,curcol);
+            if(des == null){
+                System.out.println("Cannot move to an out-of-territory region.");
+            }else{
+                System.out.println("move downright: (" + currow + "," + curcol + ") -> ("+ des.getRow() + "," + des.getCol() + ")");
+                setCurrentRegion(des.getRow(), des.getCol());
+            }
+        } else if (direction == 4){
+            des = territory.getDown(currow,curcol);
+            if(des == null){
+                System.out.println("Cannot move to an out-of-territory region.");
+            }else{
+                System.out.println("move down: (" + currow + "," + curcol + ") -> ("+ des.getRow() + "," + des.getCol() + ")");
+                setCurrentRegion(des.getRow(), des.getCol());
+            }
+        } else if (direction == 5){
+            des = territory.getDownLeft(currow,curcol);
+            if(des == null){
+                System.out.println("Cannot move to an out-of-territory region.");
+            }else{
+                System.out.println("move downleft: (" + currow + "," + curcol + ") -> ("+ des.getRow() + "," + des.getCol() + ")");
+                setCurrentRegion(des.getRow(), des.getCol());
+            }
+        }else {
+            des = territory.getUpLeft(currow,curcol);
+            if(des == null){
+                System.out.println("Cannot move to an out-of-territory region.");
+            }else{
+                System.out.println("move upleft: (" + currow + "," + curcol + ") -> ("+ des.getRow() + "," + des.getCol() + ")");
+                setCurrentRegion(des.getRow(), des.getCol());
+            }
+        }
     }
 
     public void invest(long num){ // แก้แล้ว
-        if(!myRegion(currentRegion) && !otherRegion(currentRegion) && isMyRegionAroundHere()); /* player nearby แล้วมีพื้นที่ตัวเองอยู่ */) { //ถ้าไม่ใช่ region เรา (ว่าง) ต้องแบ่งมั้ยว่า isRegion เรา isRegion คนอื่น
+        if(!myRegion(currentRegion) && !otherRegion(currentRegion) && isMyRegionAroundHere()); /* player nearby แล้วมีพื้นที่ตัวเองอยู่ */ { //ถ้าไม่ใช่ region เรา (ว่าง) ต้องแบ่งมั้ยว่า isRegion เรา isRegion คนอื่น
             if (this.budget > currentRegion.getDeposit() + 1){
                 this.budget -= currentRegion.getDeposit() + 1;
                 addRegion(currentRegion);
@@ -311,61 +368,72 @@ public class Player {
         }
     }
 
-    public void shoot(int instantdirection , long stake) { // แก้แล้ว final
-        switch (instantdirection) {
-            case 1: // up
-                if (this.budget < stake + 1) {
+    public void shoot(long instantdirection , long stake) { // แก้แล้ว final
+        if(budget < stake+1) return;
+        budget -= stake+1;
+//        switch ((int) instantdirection) {
+//            case 1: // up
+//                if (this.budget < stake + 1) {}
+//                else {
+//                    if (territory.getUp(currow, curcol).getDeposit() - stake < 0) {
+//                        removeRegion(territory.getUp(currentRegion.getRow(), currentRegion.getCol()));
+//                    }
+//                }
+//            case 4: // down
+//                if (this.budget < stake + 1) {
+//
+//                } else {
+//                    if (territory.getDown(currentRegion.getRow(), currentRegion.getCol()).getDeposit() - stake < 0) {
+//                        removeRegion(territory.getDown(currentRegion.getRow(), currentRegion.getCol()));
+//                    }
+//                }
+//            case 6: // upleft
+//                if (this.budget < stake + 1) {
+//
+//                } else {
+//                        if (territory.getUpLeft(currentRegion.getRow(), currentRegion.getCol()).getDeposit() - stake < 0) {
+//                            removeRegion(territory.getUpLeft(currentRegion.getRow(), currentRegion.getCol()));
+//                        }
+//                }
+//            case 2: //upright
+//                if (this.budget < stake + 1) {
+//
+//                } else {
+//                        if (territory.getUpRight(currentRegion.getRow(), currentRegion.getCol()).getDeposit() - stake < 0) {
+//                            removeRegion(territory.getUpRight(currentRegion.getRow(), currentRegion.getCol()));
+//                        }
+//                }
+//            case 5: //downleft
+//                if (this.budget < stake + 1) {
+//
+//                } else {
+//                        if (territory.getDownLeft(currentRegion.getRow(), currentRegion.getCol()).getDeposit() - stake < 0) {
+//                            removeRegion(territory.getDownLeft(currentRegion.getRow(), currentRegion.getCol()));
+//                        }
+//                }
+//            case 3: //downright
+//                if (this.budget < stake + 1) {
+//
+//                } else {
+//                        if (territory.getDownRight(currentRegion.getRow(), currentRegion.getCol()).getDeposit() - stake < 0) {
+//                            removeRegion(territory.getDownRight(currentRegion.getRow(), currentRegion.getCol()));
+//                        }
+//                }
+//
+//        }
+    }
 
-                } else {
-                    if (territory.getUp(currentRegion.getRow(), currentRegion.getCol()).getDeposit() - stake < 0) {
-                        removeRegion(territory.getUp(currentRegion.getRow(), currentRegion.getCol()));
-                    }
-                }
-            case 4: // down
-                if (this.budget < stake + 1) {
+    public long getCurrow(){
+        return this.currow;
+    }
 
-                } else {
-                    if (territory.getDown(currentRegion.getRow(), currentRegion.getCol()).getDeposit() - stake < 0) {
-                        removeRegion(territory.getDown(currentRegion.getRow(), currentRegion.getCol()));
-                    }
-                }
-            case 6: // upleft
-                if (this.budget < stake + 1) {
-
-                } else {
-                        if (territory.getUpLeft(currentRegion.getRow(), currentRegion.getCol()).getDeposit() - stake < 0) {
-                            removeRegion(territory.getUpLeft(currentRegion.getRow(), currentRegion.getCol()));
-                        }
-                }
-            case 2: //upright
-                if (this.budget < stake + 1) {
-
-                } else {
-                        if (territory.getUpRight(currentRegion.getRow(), currentRegion.getCol()).getDeposit() - stake < 0) {
-                            removeRegion(territory.getUpRight(currentRegion.getRow(), currentRegion.getCol()));
-                        }
-                }
-            case 5: //downleft
-                if (this.budget < stake + 1) {
-
-                } else {
-                        if (territory.getDownLeft(currentRegion.getRow(), currentRegion.getCol()).getDeposit() - stake < 0) {
-                            removeRegion(territory.getDownLeft(currentRegion.getRow(), currentRegion.getCol()));
-                        }
-                }
-            case 3: //downright
-                if (this.budget < stake + 1) {
-
-                } else {
-                        if (territory.getDownRight(currentRegion.getRow(), currentRegion.getCol()).getDeposit() - stake < 0) {
-                            removeRegion(territory.getDownRight(currentRegion.getRow(), currentRegion.getCol()));
-                        }
-                }
-
-        }
+    public long getCurcol(){
+        return this.curcol;
     }
 
     public void setCurrentRegion(long currow, long curcol){
+        this.currow = currow;
+        this.curcol = curcol;
         currentRegion = territory.getRegion(currow, curcol);
     }
 
@@ -374,8 +442,27 @@ public class Player {
             return true;
         } else return false;
     }
+
+    public long getBudget() {
+        return budget;
+    }
+
+    public void setBudget(long money){
+        budget = money;
+    }
+
+    public Region getCityCenter(){
+        return cityCenter;
+    }
+
+    public void setCityCenter(Region cc){
+        cityCenter = cc;
+    }
+
+    public List<Region> getOwnedRegion() {
+        return ownedRegion;
+    }
 }
 
-    // time to edit plan
 
 

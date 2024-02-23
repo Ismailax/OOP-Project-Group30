@@ -1,5 +1,6 @@
 import Configuration.Config;
 import GameState.Player;
+import GameState.Territory;
 import PlanParser.Executable.Executable;
 import PlanParser.Parser;
 import PlanParser.Tokenizer;
@@ -10,15 +11,26 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.TreeMap;
+import java.util.Random;
 
 public class Main {
     public static void main(String[] args) {
-        String constructionPlan_A = "invest 2";
-        Player p1 = new Player("A");
-        p1.setPlan(constructionPlan_A);
-        p1.setStatements(p1.eval());
 
-        p1.executeStmt();
+
+//        Territory t = new Territory(10,10);
+//
+//        String constructionPlan_A = "move upleft";
+//        Player p1 = new Player("A");
+//        p1.setTerritory(t);
+//        p1.setCurrentRegion(3,4);
+//        p1.setPlan(constructionPlan_A);
+//        p1.setStatements(p1.eval());
+//        p1.executeStmt();
+//        System.out.println(p1.getCurrow() + " " + p1.getCurcol());
+
+        Random rand = new Random();
+        System.out.println(rand.nextLong(1,10));
+
 //        System.out.println(p1.getBindings("x"));
 
 

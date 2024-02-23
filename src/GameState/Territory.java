@@ -16,8 +16,9 @@ public class Territory {
         }
     }
 
-    public Region getRegion(long rows, long cols) {
-        return region[((int) rows) - 1][((int) cols) - 1];
+    public Region getRegion(long row, long col) {
+        if(row < 1 || col < 1 || row > rows || col > cols) return null;
+        return region[((int) row) - 1][((int) col) - 1];
     }
 
     public Region getUp(long row, long col){

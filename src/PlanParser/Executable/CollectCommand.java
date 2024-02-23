@@ -1,10 +1,12 @@
 package PlanParser.Executable;
 
+import GameState.Player;
 import PlanParser.Evaluable.*;
 
 import java.util.Map;
 
 public class CollectCommand implements Executable{
+    Player player;
     private Evaluable amount;
 
     public CollectCommand(Evaluable amount, Map<String, Long> bindings) {

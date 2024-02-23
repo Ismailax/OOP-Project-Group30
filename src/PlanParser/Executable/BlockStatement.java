@@ -20,8 +20,10 @@ public class BlockStatement implements Executable{
     @Override
     public void execute(Map<String, Long> bindings) {
         for (Executable statement : statements) {
-            if(statement instanceof Done) break;
-            else statement.execute(bindings);
+            if(statement instanceof Done){
+                statement.execute(bindings);
+                break;
+            } else statement.execute(bindings);
         }
     }
 }
