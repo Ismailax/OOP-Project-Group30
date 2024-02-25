@@ -88,6 +88,19 @@ public class Gameplay {
         }
     }
 
+    public boolean myRegion(Region region){ // set ค่า yourTurn ด้วย
+        return currentPlayer.getOwnedRegion().contains(region);
+    }
+
+    public boolean otherRegion(Region region){
+        return anotherPlayer.getOwnedRegion().contains(region);
+    }
+
+    public boolean isMyRegionAroundHere(){ // แก้ isMyRegionAroundHere
+        return myRegion(territory.getUp(currentPlayer.getCurrow(), currentPlayer.getCurcol())) && myRegion(territory.getUpRight(currentPlayer.getCurrow(), currentPlayer.getCurcol())) && myRegion(territory.getDownRight(currentPlayer.getCurrow(), currentPlayer.getCurcol())) && myRegion(territory.getDownLeft(currentPlayer.getCurrow(), currentPlayer.getCurcol())) && myRegion(territory.getUpLeft(currentPlayer.getCurrow(), currentPlayer.getCurcol())) && myRegion(territory.getDown(currentPlayer.getCurrow(), currentPlayer.getCurcol()));
+    }
+
+
     public void collectInterest(){
         long interest = 0;
         for(Region r : currentPlayer.getOwnedRegion()){
@@ -172,20 +185,43 @@ public class Gameplay {
     }
 
     public void invest(long amount){
-        if (currentPlayer.getBudget() < amount + 1){
-            System.out.println("Not enough budget to invest.");
-            if(currentPlayer.getBudget() < 1) return;
-            currentPlayer.setBudget(currentPlayer.getBudget()-1);
-            return;
+        if(!myRegion(cityCrew) && isMyRegionAroundHere() && !otherRegion(cityCrew)) {
+            if (currentPlayer.getBudget() < amount + 1) {
+                System.out.println("Not enough budget to invest.");
+                if (currentPlayer.getBudget() < 1) return;
+                currentPlayer.setBudget(currentPlayer.getBudget() - 1);
+                return;
+            }
+            if (territory.getRegion(cityCrew.getRow(), cityCrew.getCol()).getDeposit() + amount > config.getMaxDep()) {
+                currentPlayer.setBudget(currentPlayer.getBudget() - (config.getMaxDep() - territory.getRegion(cityCrew.getRow(), cityCrew.getCol()).getDeposit() + 1));
+                territory.getRegion(cityCrew.getRow(), cityCrew.getCol()).setDeposit(config.getMaxDep());
+                currentPlayer.addRegion(cityCrew);
+                cityCrew.setOwner(currentPlayer);
+                System.out.println("Invest at (" + cityCrew.getRow() + "," + cityCrew.getCol() + "): " + (config.getMaxDep() - territory.getRegion(cityCrew.getRow(), cityCrew.getCol()).getDeposit()));
+            } else {
+                currentPlayer.setBudget(currentPlayer.getBudget() - (amount + 1));
+                territory.getRegion(cityCrew.getRow(), cityCrew.getCol()).setDeposit(territory.getRegion(cityCrew.getRow(), cityCrew.getCol()).getDeposit() + amount);
+                currentPlayer.addRegion(cityCrew);
+                cityCrew.setOwner(currentPlayer);
+                System.out.println("Invest at (" + cityCrew.getRow() + "," + cityCrew.getCol() + "): " + amount);
+            }
         }
-        if (territory.getRegion(cityCrew.getRow(), cityCrew.getCol()).getDeposit() + amount > config.getMaxDep()){
-            currentPlayer.setBudget(currentPlayer.getBudget()- (config.getMaxDep()-territory.getRegion(cityCrew.getRow(), cityCrew.getCol()).getDeposit()+1));
-            territory.getRegion(cityCrew.getRow(), cityCrew.getCol()).setDeposit(config.getMaxDep());
-            System.out.println("Invest at (" + cityCrew.getRow() + "," + cityCrew.getCol() + "): " + (config.getMaxDep() - territory.getRegion(cityCrew.getRow(), cityCrew.getCol()).getDeposit()));
-        }else{
-            currentPlayer.setBudget(currentPlayer.getBudget()-(amount + 1));
-            territory.getRegion(cityCrew.getRow(), cityCrew.getCol()).setDeposit(territory.getRegion(cityCrew.getRow(), cityCrew.getCol()).getDeposit()+amount);
-            System.out.println("Invest at (" + cityCrew.getRow() + "," + cityCrew.getCol() + "): " + amount);
+        if(territory.getRegion(cityCrew.getRow(),cityCrew.getCol()).getOwner() == currentPlayer) {
+            if (currentPlayer.getBudget() < amount + 1) {
+                System.out.println("Not enough budget to invest.");
+                if (currentPlayer.getBudget() < 1) return;
+                currentPlayer.setBudget(currentPlayer.getBudget() - 1);
+                return;
+            }
+            if (territory.getRegion(cityCrew.getRow(), cityCrew.getCol()).getDeposit() + amount > config.getMaxDep()) {
+                currentPlayer.setBudget(currentPlayer.getBudget() - (config.getMaxDep() - territory.getRegion(cityCrew.getRow(), cityCrew.getCol()).getDeposit() + 1));
+                territory.getRegion(cityCrew.getRow(), cityCrew.getCol()).setDeposit(config.getMaxDep());
+                System.out.println("Invest at (" + cityCrew.getRow() + "," + cityCrew.getCol() + "): " + (config.getMaxDep() - territory.getRegion(cityCrew.getRow(), cityCrew.getCol()).getDeposit()));
+            } else {
+                currentPlayer.setBudget(currentPlayer.getBudget() - (amount + 1));
+                territory.getRegion(cityCrew.getRow(), cityCrew.getCol()).setDeposit(territory.getRegion(cityCrew.getRow(), cityCrew.getCol()).getDeposit() + amount);
+                System.out.println("Invest at (" + cityCrew.getRow() + "," + cityCrew.getCol() + "): " + amount);
+            }
         }
     }
 
@@ -203,4 +239,302 @@ public class Gameplay {
             currentPlayer.setBudget(currentPlayer.getBudget()+amount-1);
         }
     }
+
+    public void opponent(){
+        long distance = 0;
+        String str_comb_dd;
+        Region check = cityCrew;
+        boolean opponentFound;
+        while (true) { // up
+            if(check == null){
+                continue;
+            }
+            check = territory.getUp(cityCrew.getRow()-distance,cityCrew.getCol());
+            if (check.getOwner() != null && check.getOwner() == anotherPlayer) {
+                str_comb_dd = distance + Long.toString(1);
+                opponentFound = true;
+                break;
+            } // down
+            check = territory.getRegion(cityCrew.getRow() + distance, cityCrew.getCol());
+            if (check.getOwner() != null && check.getOwner() == anotherPlayer) {
+                str_comb_dd = distance + Long.toString(4);
+                opponentFound = true;
+                break;
+            } // upleft
+            if(cityCrew.getCol() %2 == 0) {
+                check = territory.getRegion(cityCrew.getRow() - distance, cityCrew.getCol() - distance);
+            }else check = territory.getRegion(cityCrew.getRow() , cityCrew.getCol() - distance);
+            if (check.getOwner() != null && check.getOwner() == anotherPlayer) {
+                str_comb_dd = distance + Long.toString(6);
+                opponentFound = true;
+                break;
+            } // upright
+            if(cityCrew.getCol() %2 == 0) {
+                check = territory.getRegion(cityCrew.getRow() - distance, cityCrew.getCol() + distance);
+            }else check = territory.getRegion(cityCrew.getRow(), cityCrew.getCol() + distance);
+            if (check.getOwner() != null && check.getOwner() == anotherPlayer) {
+                str_comb_dd = distance + Long.toString(2);
+                opponentFound = true;
+                break;
+            } // downleft
+            if(cityCrew.getCol() %2 == 0) {
+                check = territory.getRegion(cityCrew.getRow(), cityCrew.getCol() - distance);
+            }else check = territory.getRegion(cityCrew.getRow() + distance, cityCrew.getCol() - distance);
+            if (check.getOwner() != null && check.getOwner() == anotherPlayer) {
+                str_comb_dd = distance + Long.toString(5);
+                opponentFound = true;
+                break;
+            } // downright
+            if(cityCrew.getCol() %2 == 0) {
+                check = territory.getRegion(cityCrew.getRow(), cityCrew.getCol() + distance);
+            }else check = territory.getRegion(cityCrew.getRow() + distance, cityCrew.getCol() + distance);
+            if (check.getOwner() != null && check.getOwner() == anotherPlayer) {
+                str_comb_dd = distance + Long.toString(3);
+                opponentFound = true;
+                break;
+            }
+            distance++;
+        }
+
+        if(opponentFound){
+            System.out.println("That another cityCrew is" + Long.parseLong(str_comb_dd));
+        }else{
+            System.out.println("Sorry, I can't see another cityCrew");
+        }
+    }
+
+    public void nearby(int instantdirection){ // แก้แล้ว
+        Region check = cityCrew;
+        long distance = 1;
+        boolean found = false;
+        switch (instantdirection){
+            case 1 : // up
+                while(check != null){
+                    check = territory.getRegion(cityCrew.getRow() - distance,cityCrew.getCol());
+                    if(otherRegion(check)){
+                        found = true;
+                        System.out.println("That another cityCrew is "+100*(distance) + (long)String.valueOf(check.getDeposit()).length());
+                    }
+                    else distance++;
+                }
+                if(!found) {
+                    System.out.println("Sorry, I can't see another cityCrew");
+                }
+            case 4 : // down
+                while(check != null){
+                    check = territory.getRegion(cityCrew.getRow() + distance,cityCrew.getCol());
+                    if(otherRegion(check)){
+                        found = true;
+                        System.out.println("That another cityCrew is" + 100*(distance) + (long)String.valueOf(check.getDeposit()).length());
+                    }
+                    else distance++;
+                }
+            case 6 : // upleft
+                while(check != null){
+                    if(check.getCol() %2 == 0){
+                        check = territory.getRegion(cityCrew.getRow()-distance , cityCrew.getCol()-distance);
+                        otherRegion(check);
+                        if(otherRegion(check)){
+                            found = true;
+                            System.out.println("That another cityCrew is" + 100*(distance) + (long)String.valueOf(check.getDeposit()).length());
+                        }
+                    }else {
+                        check = territory.getRegion(cityCrew.getRow(), cityCrew.getCol() - distance);
+                        otherRegion(check);
+                        if (otherRegion(check)) {
+                            found = true;
+                            System.out.println("That another cityCrew is" + 100*(distance) + (long)String.valueOf(check.getDeposit()).length());
+                        }
+                    }
+                    distance++;
+                }
+            case 2 : // upright
+                while(check != null){
+                    if(check.getCol() %2 == 0){
+                        check = territory.getRegion(cityCrew.getRow() - distance , cityCrew.getCol() + distance);
+                        otherRegion(check);
+                        if(otherRegion(check)){
+                            found = true;
+                            System.out.println("That another cityCrew is" + 100*(distance) + (long)String.valueOf(check.getDeposit()).length());
+
+                        }
+                    }else {
+                        check = territory.getRegion(cityCrew.getRow(), cityCrew.getCol() + distance);
+                        otherRegion(check);
+                        if (otherRegion(check)) {
+                            found = true;
+                            System.out.println("That another cityCrew is" + 100*(distance) + (long)String.valueOf(check.getDeposit()).length());
+                        }
+                    }
+                    distance++;
+                }
+            case 5 : // downleft
+                while(check != null){
+                    if(check.getCol() %2 == 0){
+                        check = territory.getRegion(cityCrew.getRow(), cityCrew.getCol() - distance);
+                        otherRegion(check);
+                        if(otherRegion(check)){
+                            found = true;
+                            System.out.println("That another cityCrew is" + 100*(distance) + (long)String.valueOf(check.getDeposit()).length());
+
+                        }
+                    }else {
+                        check = territory.getRegion(cityCrew.getRow() + distance, cityCrew.getCol() - distance);
+                        otherRegion(check);
+                        if (otherRegion(check)) {
+                            found = true;
+                            System.out.println("That another cityCrew is" + 100*(distance) + (long)String.valueOf(check.getDeposit()).length());
+                        }
+                    }
+                    distance++;
+                }
+            case 3 : // downright
+                while(check != null){
+                    if(check.getCol() %2 == 0){
+                        check = territory.getRegion(cityCrew.getRow() , cityCrew.getCol() + distance);
+                        otherRegion(check);
+                        if(otherRegion(check)){
+                            found = true;
+                            System.out.println("That another cityCrew is" + 100*(distance) + (long)String.valueOf(check.getDeposit()).length());
+                        }
+                    }else {
+                        check = territory.getRegion(cityCrew.getRow() + distance, cityCrew.getCol() + distance);
+                        otherRegion(check);
+                        if (otherRegion(check)) {
+                            found = true;
+                            System.out.println("That another cityCrew is" + 100*(distance) + (long)String.valueOf(check.getDeposit()).length());
+                        }
+                    }
+                    distance++;
+                }
+        }
+        if(!found) {
+            System.out.println("Sorry, I can't see another cityCrew");
+        }
+    }
+
+    public void shoot(long instantdirection , long stake) { // แก้แล้ว final
+        if(currentPlayer.getBudget() < stake+1) return;
+        currentPlayer.setBudget(currentPlayer.getBudget() - stake+1);
+        switch ((int) instantdirection) {
+            case 1: // up
+                if (currentPlayer.getBudget() < stake + 1) {
+                    System.out.println("Sorry, your money not enough to SHOOT !!!");
+                }
+                else {
+                    if(territory.getUp(cityCrew.getRow(), cityCrew.getCol()).getDeposit() - stake < territory.getUp(cityCrew.getRow(), cityCrew.getCol()).getDeposit()) {
+                        territory.getUp(cityCrew.getRow(), cityCrew.getCol()).setDeposit(territory.getUp(cityCrew.getRow(), cityCrew.getCol()).getDeposit() - stake);
+                        currentPlayer.setBudget(currentPlayer.getBudget() - stake - 1);
+                        System.out.println("You SHOOT on up with " + stake + " damage");
+                    }
+                    if(stake >= territory.getUp(cityCrew.getRow(), cityCrew.getCol()).getDeposit()){
+                        long haveLeft = config.getMaxDep() - territory.getUp(cityCrew.getRow(), cityCrew.getCol()).getDeposit(); // เลือดที่เหลือที่ควรจะตี
+                        long stackLeft = stake - haveLeft; // stake จริงๆที่ควรจะตี
+                        currentPlayer.setBudget(stake - stackLeft - 1);
+                        anotherPlayer.removeRegion(territory.getUp(cityCrew.getRow(), cityCrew.getCol()));
+                    }
+                    if(territory.getUp(cityCrew.getRow(), cityCrew.getCol()).getDeposit() <= 0){
+                        System.out.println("You have SHOOT on up and another player lose region");
+                    }
+                }
+            case 4: // down
+                if (currentPlayer.getBudget() < stake + 1) {
+                    System.out.println("Sorry, your money not enough to SHOOT !!!");
+                } else {
+                    if(territory.getDown(cityCrew.getRow(), cityCrew.getCol()).getDeposit() - stake < territory.getDown(cityCrew.getRow(), cityCrew.getCol()).getDeposit()) {
+                        territory.getDown(cityCrew.getRow(), cityCrew.getCol()).setDeposit(territory.getDown(cityCrew.getRow(), cityCrew.getCol()).getDeposit() - stake);
+                        currentPlayer.setBudget(currentPlayer.getBudget() - stake - 1);
+                        System.out.println("You SHOOT on down with " + stake + " damage and another player not lose region");
+                    }
+                    if(stake >= territory.getDown(cityCrew.getRow(), cityCrew.getCol()).getDeposit()){
+                        long haveLeft = config.getMaxDep() - territory.getDown(cityCrew.getRow(), cityCrew.getCol()).getDeposit(); // เลือดที่เหลือที่ควรจะตี
+                        long stackLeft = stake - haveLeft; // stake จริงๆที่ควรจะตี
+                        currentPlayer.setBudget(stake - stackLeft - 1);
+                        anotherPlayer.removeRegion(territory.getDown(cityCrew.getRow(), cityCrew.getCol()));
+                    }
+                    if(territory.getUp(cityCrew.getRow(), cityCrew.getCol()).getDeposit() <= 0){
+                        System.out.println("You have SHOOT on down and another player lose region");
+                    }
+                }
+            case 6: // upleft
+                if (currentPlayer.getBudget() < stake + 1) {
+                    System.out.println("Sorry, your money not enough to SHOOT !!!");
+                } else {
+                    if(territory.getUpLeft(cityCrew.getRow(), cityCrew.getCol()).getDeposit() - stake < territory.getUpLeft(cityCrew.getRow(), cityCrew.getCol()).getDeposit()) {
+                        territory.getUpLeft(cityCrew.getRow(), cityCrew.getCol()).setDeposit(territory.getUpLeft(cityCrew.getRow(), cityCrew.getCol()).getDeposit() - stake);
+                        currentPlayer.setBudget(currentPlayer.getBudget() - stake - 1);
+                        System.out.println("You SHOOT on upleft with " + stake + " damage and another player not lose region");
+                    }
+                    if(stake >= territory.getUpLeft(cityCrew.getRow(), cityCrew.getCol()).getDeposit()){
+                        long haveLeft = config.getMaxDep() - territory.getUpLeft(cityCrew.getRow(), cityCrew.getCol()).getDeposit(); // เลือดที่เหลือที่ควรจะตี
+                        long stackLeft = stake - haveLeft; // stake จริงๆที่ควรจะตี
+                        currentPlayer.setBudget(stake - stackLeft -1);
+                        anotherPlayer.removeRegion(territory.getUpLeft(cityCrew.getRow(), cityCrew.getCol()));
+                    }
+                    if(territory.getUp(cityCrew.getRow(), cityCrew.getCol()).getDeposit() <= 0){
+                        System.out.println("You have SHOOT on upleft and another player lose region");
+                    }
+                }
+            case 2: //upright
+                if (currentPlayer.getBudget() < stake + 1) {
+                    System.out.println("Sorry, your money not enough to SHOOT !!!");
+                } else {
+                    if(territory.getUpRight(cityCrew.getRow(), cityCrew.getCol()).getDeposit() - stake < territory.getUpRight(cityCrew.getRow(), cityCrew.getCol()).getDeposit()) {
+                        territory.getUpRight(cityCrew.getRow(), cityCrew.getCol()).setDeposit(territory.getUpRight(cityCrew.getRow(), cityCrew.getCol()).getDeposit() - stake);
+                        currentPlayer.setBudget(currentPlayer.getBudget() - stake - 1);
+                        System.out.println("You SHOOT on upright with " + stake + " damage and another player not lose region");
+                    }
+                    if(stake >= territory.getUpRight(cityCrew.getRow(), cityCrew.getCol()).getDeposit()){
+                        long haveLeft = config.getMaxDep() - territory.getUpRight(cityCrew.getRow(), cityCrew.getCol()).getDeposit(); // เลือดที่เหลือที่ควรจะตี
+                        long stackLeft = stake - haveLeft; // stake จริงๆที่ควรจะตี
+                        currentPlayer.setBudget(stake - stackLeft -1);
+                        anotherPlayer.removeRegion(territory.getUpRight(cityCrew.getRow(), cityCrew.getCol()));
+                    }
+                    if(territory.getUp(cityCrew.getRow(), cityCrew.getCol()).getDeposit() <= 0){
+                        System.out.println("You have SHOOT on upright and another player lose region");
+                    }
+                }
+            case 5: //downleft
+                if (currentPlayer.getBudget() < stake + 1) {
+                    System.out.println("Sorry, your money not enough to SHOOT !!!");
+                } else {
+                    if(territory.getDownLeft(cityCrew.getRow(), cityCrew.getCol()).getDeposit() - stake < territory.getDownLeft(cityCrew.getRow(), cityCrew.getCol()).getDeposit()) {
+                        territory.getDownLeft(cityCrew.getRow(), cityCrew.getCol()).setDeposit(territory.getDownLeft(cityCrew.getRow(), cityCrew.getCol()).getDeposit() - stake);
+                        currentPlayer.setBudget(currentPlayer.getBudget() - stake - 1);
+                        System.out.println("You SHOOT on downleft with " + stake + " damage and another player not lose region");
+                    }
+                    if(stake >= territory.getDownLeft(cityCrew.getRow(), cityCrew.getCol()).getDeposit()){
+                        long haveLeft = config.getMaxDep() - territory.getDownLeft(cityCrew.getRow(), cityCrew.getCol()).getDeposit(); // เลือดที่เหลือที่ควรจะตี
+                        long stackLeft = stake - haveLeft; // stake จริงๆที่ควรจะตี
+                        currentPlayer.setBudget(stake - stackLeft -1);
+                        anotherPlayer.removeRegion(territory.getDownLeft(cityCrew.getRow(), cityCrew.getCol()));
+                    }
+                    if(territory.getUp(cityCrew.getRow(), cityCrew.getCol()).getDeposit() <= 0){
+                        System.out.println("You have SHOOT on downleft and another player lose region");
+                    }
+                }
+            case 3: //downright
+                if (currentPlayer.getBudget() < stake + 1) {
+                    System.out.println("Sorry, your money not enough to SHOOT !!!");
+                } else {
+                    if(territory.getDownRight(cityCrew.getRow(), cityCrew.getCol()).getDeposit() - stake < territory.getDownRight(cityCrew.getRow(), cityCrew.getCol()).getDeposit()) {
+                        territory.getDownRight(cityCrew.getRow(), cityCrew.getCol()).setDeposit(territory.getDownRight(cityCrew.getRow(), cityCrew.getCol()).getDeposit() - stake);
+                        currentPlayer.setBudget(currentPlayer.getBudget() - stake - 1);
+                        System.out.println("You SHOOT on downright with " + stake + " damage and another player not lose region");
+                    }
+                    if(stake >= territory.getDownRight(cityCrew.getRow(), cityCrew.getCol()).getDeposit()){
+                        long haveLeft = config.getMaxDep() - territory.getDownRight(cityCrew.getRow(), cityCrew.getCol()).getDeposit(); // เลือดที่เหลือที่ควรจะตี
+                        long stackLeft = stake - haveLeft; // stake จริงๆที่ควรจะตี
+                        currentPlayer.setBudget(stake - stackLeft -1);
+                        anotherPlayer.removeRegion(territory.getDownRight(cityCrew.getRow(), cityCrew.getCol()));
+                    }
+                    if(territory.getUp(cityCrew.getRow(), cityCrew.getCol()).getDeposit() <= 0){
+                        System.out.println("You have SHOOT on downright and another player lose region");
+                    }
+                }
+
+        }
+    }
+
+
 }
