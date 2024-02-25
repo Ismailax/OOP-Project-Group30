@@ -1,13 +1,15 @@
 package PlanParser.Executable;
+import Game.Gameplay;
 import GameState.Player;
 import PlanParser.Evaluable.*;
 
 import java.util.Map;
 
 public class InvestCommand implements Executable{
-    Player player;
+    Gameplay game;
     private Evaluable amount;
-    public InvestCommand(Evaluable amount, Map<String, Long> bindings){
+    public InvestCommand(Evaluable amount, Map<String, Long> bindings, Gameplay game){
+        this.game = game;
         this.amount = amount;
         long value = amount.eval(bindings);
         System.out.println("Parse invest: " + value);
@@ -15,7 +17,6 @@ public class InvestCommand implements Executable{
     @Override
     public void execute(Map<String, Long> bindings) {
         long value = amount.eval(bindings);
-        // invest(value);
-        System.out.println("Execute invest: " + value);
+        game.invest(value);
     }
 }

@@ -1,17 +1,18 @@
 package PlanParser.Executable;
+import Game.Gameplay;
 import GameState.Player;
 import PlanParser.Evaluable.*;
 import java.util.Map;
 
 public class AttackCommand implements Executable{
-    Player player;
+    Gameplay game;
     private String direction;
     private Evaluable expenditure;
 
-    public AttackCommand(String direction, Evaluable expenditure, Map<String, Long> bindings, Player player) {
+    public AttackCommand(String direction, Evaluable expenditure, Map<String, Long> bindings, Gameplay game) {
         this.direction = direction;
         this.expenditure = expenditure;
-        this.player = player;
+        this.game = game;
         long value = expenditure.eval(bindings);
         System.out.println("Parse shoot " + direction + " " + value);
     }
@@ -26,6 +27,6 @@ public class AttackCommand implements Executable{
             case "downleft" -> 5;
             default -> 6;
         };
-        player.shoot(dir,expenditure.eval(bindings));
+//        game.shoot(dir,expenditure.eval(bindings));
     }
 }

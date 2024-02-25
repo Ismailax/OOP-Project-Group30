@@ -1,15 +1,16 @@
 package PlanParser.Executable;
 
+import Game.Gameplay;
 import GameState.Player;
 
 import java.util.Map;
 
 public class MoveCommand implements Executable {
-    Player player;
+    Gameplay game;
     private String direction;
 
-    public MoveCommand(Player player,String direction) {
-        this.player = player;
+    public MoveCommand(Gameplay game,String direction) {
+        this.game = game;
         this.direction = direction;
         System.out.println("Parse move " + direction);
     }
@@ -24,8 +25,7 @@ public class MoveCommand implements Executable {
             case "downleft" -> 5;
             default -> 6;
         };
-        player.move(dir);
-//        System.out.println("Execute move " + direction);
+        game.move(dir);
     }
 }
 
