@@ -58,9 +58,10 @@ public class Config {
     private Map<String, Long> parseConfigFile(String text){
         Map<String, Long> configBindings = new HashMap<>();
         Parser p = new Parser(new Tokenizer(text));
-        p.parse(configBindings);
+        p.parse(configBindings).execute(configBindings);
         return configBindings;
     }
+
 
     public long getTotalRows(){
         return this.totalRows;

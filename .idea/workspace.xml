@@ -5,20 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="58048a60-a2dd-4e70-bc89-f0cd98bfe888" name="Changes" comment="drafting class #4">
-      <change afterPath="$PROJECT_DIR$/src/Game/Gameplay.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Configuration/Config.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Configuration/Config.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Game/Gameplay.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game/Gameplay.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GameState/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GameState/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GameState/Region.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GameState/Region.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GameState/Territory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GameState/Territory.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/PlanParser/Executable/AttackCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PlanParser/Executable/AttackCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/PlanParser/Executable/BlockStatement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PlanParser/Executable/BlockStatement.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/PlanParser/Executable/CollectCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PlanParser/Executable/CollectCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/PlanParser/Executable/Executable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PlanParser/Executable/Executable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/PlanParser/Executable/InvestCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PlanParser/Executable/InvestCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/PlanParser/Executable/MoveCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PlanParser/Executable/MoveCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/PlanParser/Executable/Relocate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PlanParser/Executable/Relocate.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/PlanParser/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PlanParser/Parser.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

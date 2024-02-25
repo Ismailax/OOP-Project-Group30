@@ -31,6 +31,10 @@ public class Player {
         ownedRegion = new ArrayList<>();
     }
 
+    public String getName(){
+        return name;
+    }
+
     public Executable eval(){
         Parser p = new Parser(new Tokenizer(plan));
         p.setPlayer(this);

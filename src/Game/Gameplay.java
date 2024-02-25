@@ -21,12 +21,13 @@ public class Gameplay {
 
     public Gameplay(Player player1, Player player2){
         config = new Config(); // read the configuration file
+
         territory = new Territory(config.getTotalRows(),config.getTotalCols());
         this.player1 = player1;
         this.player2 = player2;
         round = 1;
         currentPlayer = this.player1;
-        anotherPlayer = this .player2;
+        anotherPlayer = this.player2;
 
         // set initial budget
         this.player1.setBudget(config.getInitBudget());
@@ -40,6 +41,7 @@ public class Gameplay {
         this.player1.addRegion(territory.getRegion(p1Row,p1Col));
         this.player1.setCityCenter(territory.getRegion(p1Row,p1Col));
         territory.getRegion(p1Row,p1Col).setDeposit(config.getInitCCDep());
+        cityCrew = territory.getRegion(p1Row,p1Col);
 
         long p2Row;
         long p2Col;
@@ -52,8 +54,8 @@ public class Gameplay {
         this.player2.setCityCenter(territory.getRegion(p2Row,p2Col));
         territory.getRegion(p1Row,p1Col).setDeposit(config.getInitCCDep());
 
-//        long initPlanMin = config.getInitPlanMin();
-//        long initPlanSec = config.getInitPlanSec();
+        long initPlanMin = config.getInitPlanMin();
+        long initPlanSec = config.getInitPlanSec();
     }
 
     public Executable eval(){
@@ -97,6 +99,7 @@ public class Gameplay {
     }
 
     public void move(long direction){
+        System.out.println();
         if(currentPlayer.getBudget() < 1){
             System.out.println("Not enough budget to move.");
             return;
@@ -107,10 +110,10 @@ public class Gameplay {
             des = territory.getUp(cityCrew.getRow(), cityCrew.getCol());
             if(des == null){
                 System.out.println("Cannot move to an out-of-territory region.");
-            }else if(des.getOwner().equals(anotherPlayer)){
+            }else if(des.getOwner() == anotherPlayer){
                 System.out.println("Cannot move to an another player's region.");
             }else{
-                System.out.println("move up: (" + cityCrew.getRow() + "," + cityCrew.getCol() + ") -> ("+ des.getRow() + "," + des.getCol() + ")");
+                System.out.println(currentPlayer.getName() + " move up: (" + cityCrew.getRow() + "," + cityCrew.getCol() + ") -> ("+ des.getRow() + "," + des.getCol() + ")");
                 cityCrew = des;
             }
         } else if (direction == 2) {
