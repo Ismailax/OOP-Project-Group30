@@ -4,26 +4,6 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="58048a60-a2dd-4e70-bc89-f0cd98bfe888" name="Changes" comment="fix Config + เพิ่ม method ใน Player">
-      <change afterPath="$PROJECT_DIR$/src/PlanParser/Evaluable/SpecialVariables/Budget.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/PlanParser/Evaluable/SpecialVariables/Cols.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/PlanParser/Evaluable/SpecialVariables/Curcol.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/PlanParser/Evaluable/SpecialVariables/Currow.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/PlanParser/Evaluable/SpecialVariables/Deposit.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/PlanParser/Evaluable/SpecialVariables/Int.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/PlanParser/Evaluable/SpecialVariables/Maxdeposit.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/PlanParser/Evaluable/SpecialVariables/Rows.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Game/Gameplay.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game/Gameplay.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/PlanParser/Evaluable/BinaryArith.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PlanParser/Evaluable/BinaryArith.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/PlanParser/Evaluable/RandomValue.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PlanParser/Evaluable/SpecialVariables/Random.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/PlanParser/Executable/AttackCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PlanParser/Executable/AttackCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/PlanParser/Executable/CollectCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PlanParser/Executable/CollectCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/PlanParser/Executable/InvestCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PlanParser/Executable/InvestCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/PlanParser/Executable/MoveCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PlanParser/Executable/MoveCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/PlanParser/Executable/NoOp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PlanParser/Executable/NoOp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/PlanParser/Executable/Relocate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PlanParser/Executable/Relocate.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/PlanParser/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PlanParser/Parser.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -86,7 +66,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "nc",
+    "git-widget-placeholder": "edited-ohm",
     "onboarding.tips.debug.path": "/Users/macintosh/Desktop/OOP/OOP-Project-Group30/src/Main.java",
     "project.structure.last.edited": "Libraries",
     "project.structure.proportion": "0.0",
