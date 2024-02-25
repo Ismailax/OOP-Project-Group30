@@ -2,12 +2,16 @@ package PlanParser;
 
 import java.util.*;
 
+import Game.Gameplay;
 import GameState.Player;
 import PlanParser.Error.*;
+import PlanParser.Evaluable.SpecialVariables.*;
+import PlanParser.Evaluable.SpecialVariables.Random;
 import PlanParser.Executable.*;
 import PlanParser.Evaluable.*;
 
 public class Parser {
+    private Gameplay game;
     private Player player;
     private final Tokenizer tkz;
     private Map<String, Long> bindings;
@@ -26,6 +30,7 @@ public class Parser {
     public void setPlayer(Player player) {
         this.player = player;
     }
+    public void setGame(Gameplay game) {this.game = game;}
 
     public Executable parse(Map<String, Long> bindings) throws SyntaxError {
         this.bindings = bindings;
@@ -88,7 +93,7 @@ public class Parser {
         }
         else if(tkz.peek("relocate")){
             tkz.consume("relocate");
-            return new Relocate();
+            return new Relocate(game);
         }
         else throw new SyntaxError("Invalid command");
     }
@@ -97,14 +102,14 @@ public class Parser {
         tkz.consume("move");
         String direction = tkz.consume();
         if (!directions.contains(direction)) throw new SyntaxError("Invalid direction");
-        return new MoveCommand(player,direction);
+        return new MoveCommand(game,direction);
     }
 
     private Executable parseRegionCommand() throws SyntaxError {
         String command = tkz.consume();
         Evaluable amount = parseExpression();
-        if(command.equals("invest")) return new InvestCommand(amount, bindings);
-        else if (command.equals("collect")) return new CollectCommand(amount, bindings);
+        if(command.equals("invest")) return new InvestCommand(amount, bindings,game);
+        else if (command.equals("collect")) return new CollectCommand(amount, bindings, game);
         else throw new SyntaxError("Invalid command");
     }
 
@@ -113,17 +118,37 @@ public class Parser {
         String direction = tkz.consume();
         if (!directions.contains(direction)) throw new SyntaxError("Invalid direction");
         Evaluable expenditure = parseExpression();
-        return new AttackCommand(direction, expenditure, bindings, player);
+        return new AttackCommand(direction, expenditure, bindings, game);
     }
 
     private Executable parseAssignmentStatement() throws SyntaxError {
         String identifier = tkz.consume();
         tkz.consume("=");
-        Evaluable expression = parseExpression();
         if(specialVariables.contains(identifier)) return new NoOp();
         if(reservedWords.contains(identifier))
             throw new SyntaxError("Use reserved word as identifier: " + identifier);
+        Evaluable expression;
+        if(tkz.peek("rows") || tkz.peek("cols") || tkz.peek("currow") || tkz.peek("curcol") || tkz.peek("budget") || tkz.peek("deposit") || tkz.peek("int") || tkz.peek("maxdeposit") || tkz.peek("random")){
+            expression = parseSpecialVariable();
+        }else {
+            expression = parseExpression();
+        }
         return new AssignmentStatement(identifier, expression, bindings);
+    }
+
+    private Evaluable parseSpecialVariable() throws SyntaxError {
+        String svName  = tkz.consume();
+        return switch (svName) {
+            case "rows" -> new Rows(game);
+            case "col" -> new Cols(game);
+            case "currow" -> new Currow(game);
+            case "curcol" -> new Curcol(game);
+            case "budget" -> new Budget(game);
+            case "deposit" -> new Deposit(game);
+            case "int" -> new Int(game);
+            case "maxdeposit" -> new Maxdeposit(game);
+            default -> new Random();
+        };
     }
 
     private Evaluable parseExpression() throws SyntaxError {
@@ -154,10 +179,7 @@ public class Parser {
     }
 
     private Evaluable parsePower() throws SyntaxError {
-        if (tkz.peek("random")) {
-            tkz.consume("random");
-            return new RandomValue();
-        }else if (isNumeric(tkz.peek())){
+        if (isNumeric(tkz.peek())){
             return new Num(Long.parseLong(tkz.consume()));
         }
         else if (tkz.peek("(")) {

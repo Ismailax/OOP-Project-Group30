@@ -19,27 +19,21 @@ public class BinaryArith implements Evaluable{
         long rv = rightEval.eval(bindings);
         switch (operator) {
             case "+" -> {
-//                System.out.println(lv + " + " + rv);
                 return lv + rv;
             }
             case "-" -> {
-//                System.out.println(lv + " - " + rv);
                 return lv - rv;
             }
             case "*" -> {
-//                System.out.println(lv + " * " + rv);
                 return lv * rv;
             }
             case "/" -> {
-//                System.out.println(lv + " / " + rv);
                 return lv / rv;
             }
             case "%" -> {
-//                System.out.println(lv + " % " + rv);
                 return lv % rv;
             }
             case "^" -> {
-//                System.out.println(lv + " ^ " + rv);
                 return (int) Math.pow(lv, rv);
             }
             default -> {
