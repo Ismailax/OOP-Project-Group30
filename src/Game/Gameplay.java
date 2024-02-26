@@ -58,6 +58,10 @@ public class Gameplay {
         long initPlanSec = config.getInitPlanSec();
     }
 
+    public Config getConfig(){
+        return this.config;
+    }
+
     public Executable eval(){
         String plan;
         if(currentPlayer.equals(player1)){
@@ -88,16 +92,24 @@ public class Gameplay {
         }
     }
 
-    public boolean myRegion(Region region){ // set ค่า yourTurn ด้วย
-        return currentPlayer.getOwnedRegion().contains(region);
+    public Player getCurrentPlayer(){
+        return this.getCurrentPlayer();
+    }
+
+    public Region getCityCrew(){
+        return this.cityCrew;
+    }
+
+    public boolean isMyRegion(Region region){ // set ค่า yourTurn ด้วย
+        return region.getOwner().equals(currentPlayer);
     }
 
     public boolean otherRegion(Region region){
-        return anotherPlayer.getOwnedRegion().contains(region);
+        return region.getOwner().equals(anotherPlayer);
     }
 
     public boolean isMyRegionAroundHere(){ // แก้ isMyRegionAroundHere
-        return myRegion(territory.getUp(currentPlayer.getCurrow(), currentPlayer.getCurcol())) && myRegion(territory.getUpRight(currentPlayer.getCurrow(), currentPlayer.getCurcol())) && myRegion(territory.getDownRight(currentPlayer.getCurrow(), currentPlayer.getCurcol())) && myRegion(territory.getDownLeft(currentPlayer.getCurrow(), currentPlayer.getCurcol())) && myRegion(territory.getUpLeft(currentPlayer.getCurrow(), currentPlayer.getCurcol())) && myRegion(territory.getDown(currentPlayer.getCurrow(), currentPlayer.getCurcol()));
+        return isMyRegion(territory.getUp(currentPlayer.getCurrow(), currentPlayer.getCurcol())) && isMyRegion(territory.getUpRight(currentPlayer.getCurrow(), currentPlayer.getCurcol())) && isMyRegion(territory.getDownRight(currentPlayer.getCurrow(), currentPlayer.getCurcol())) && isMyRegion(territory.getDownLeft(currentPlayer.getCurrow(), currentPlayer.getCurcol())) && isMyRegion(territory.getUpLeft(currentPlayer.getCurrow(), currentPlayer.getCurcol())) && isMyRegion(territory.getDown(currentPlayer.getCurrow(), currentPlayer.getCurcol()));
     }
 
 
@@ -185,13 +197,13 @@ public class Gameplay {
     }
 
     public void invest(long amount){
-        if(!myRegion(cityCrew) && isMyRegionAroundHere() && !otherRegion(cityCrew)) {
-            if (currentPlayer.getBudget() < amount + 1) {
-                System.out.println("Not enough budget to invest.");
-                if (currentPlayer.getBudget() < 1) return;
-                currentPlayer.setBudget(currentPlayer.getBudget() - 1);
-                return;
-            }
+        if (currentPlayer.getBudget() < amount + 1) {
+            System.out.println("Not enough budget to invest.");
+            if (currentPlayer.getBudget() < 1) return;
+            currentPlayer.setBudget(currentPlayer.getBudget() - 1);
+            return;
+        }
+        if(!isMyRegion(cityCrew) && isMyRegionAroundHere() && !otherRegion(cityCrew)) {
             if (territory.getRegion(cityCrew.getRow(), cityCrew.getCol()).getDeposit() + amount > config.getMaxDep()) {
                 currentPlayer.setBudget(currentPlayer.getBudget() - (config.getMaxDep() - territory.getRegion(cityCrew.getRow(), cityCrew.getCol()).getDeposit() + 1));
                 territory.getRegion(cityCrew.getRow(), cityCrew.getCol()).setDeposit(config.getMaxDep());
@@ -205,14 +217,7 @@ public class Gameplay {
                 cityCrew.setOwner(currentPlayer);
                 System.out.println("Invest at (" + cityCrew.getRow() + "," + cityCrew.getCol() + "): " + amount);
             }
-        }
-        if(territory.getRegion(cityCrew.getRow(),cityCrew.getCol()).getOwner() == currentPlayer) {
-            if (currentPlayer.getBudget() < amount + 1) {
-                System.out.println("Not enough budget to invest.");
-                if (currentPlayer.getBudget() < 1) return;
-                currentPlayer.setBudget(currentPlayer.getBudget() - 1);
-                return;
-            }
+        } else if(isMyRegion(cityCrew)) {
             if (territory.getRegion(cityCrew.getRow(), cityCrew.getCol()).getDeposit() + amount > config.getMaxDep()) {
                 currentPlayer.setBudget(currentPlayer.getBudget() - (config.getMaxDep() - territory.getRegion(cityCrew.getRow(), cityCrew.getCol()).getDeposit() + 1));
                 territory.getRegion(cityCrew.getRow(), cityCrew.getCol()).setDeposit(config.getMaxDep());
@@ -228,22 +233,26 @@ public class Gameplay {
     public void collect(long amount){
         if (currentPlayer.getBudget() < 1){
             System.out.println("Not enough budget to invest.");
-        }else if(amount > territory.getRegion(cityCrew.getRow(), cityCrew.getCol()).getDeposit()){
-            currentPlayer.setBudget(currentPlayer.getBudget()-1);
-            System.out.println("The collection amount exceeds the deposit in the current region.");
-        }else {
-            territory.getRegion(cityCrew.getRow(), cityCrew.getCol()).setDeposit(territory.getRegion(cityCrew.getRow(), cityCrew.getCol()).getDeposit()-amount);
-            if(territory.getRegion(cityCrew.getRow(),cityCrew.getCol()).getDeposit() == 0){
-                territory.getRegion(cityCrew.getRow(),cityCrew.getCol()).setOwner(null);
+            return;
+        }
+        if(isMyRegion(cityCrew)){
+            if(amount > territory.getRegion(cityCrew.getRow(), cityCrew.getCol()).getDeposit()){
+                currentPlayer.setBudget(currentPlayer.getBudget()-1);
+                System.out.println("The collection amount exceeds the deposit in the current region.");
+            }else {
+                territory.getRegion(cityCrew.getRow(), cityCrew.getCol()).setDeposit(territory.getRegion(cityCrew.getRow(), cityCrew.getCol()).getDeposit()-amount);
+                if(territory.getRegion(cityCrew.getRow(),cityCrew.getCol()).getDeposit() == 0){
+                    territory.getRegion(cityCrew.getRow(),cityCrew.getCol()).setOwner(null);
+                }
+                currentPlayer.setBudget(currentPlayer.getBudget()+amount-1);
             }
-            currentPlayer.setBudget(currentPlayer.getBudget()+amount-1);
         }
     }
 
     public void opponent(){
         long distance = 0;
         String str_comb_dd;
-        Region check = cityCrew;
+        Region check = territory.getRegion(getCityCrew().getRow(),cityCrew.getCol());
         boolean opponentFound;
         while (true) { // up
             if(check == null){
@@ -413,6 +422,10 @@ public class Gameplay {
         }
     }
 
+    public void nearby2(long direction){
+
+    }
+
     public void shoot(long instantdirection , long stake) { // แก้แล้ว final
         if(currentPlayer.getBudget() < stake+1) return;
         currentPlayer.setBudget(currentPlayer.getBudget() - stake+1);
@@ -535,6 +548,34 @@ public class Gameplay {
 
         }
     }
+
+    public void relocate(){
+        if(cityCrew.getOwner() != currentPlayer){
+            System.out.println(currentPlayer.getName() + " cannot relocate the city center to an unowned region.");
+            return;
+        }
+        long CCrow = currentPlayer.getCityCenter().getRow();
+        long CCcol = currentPlayer.getCityCenter().getCol();
+        long x = (long) Math.floor(Math.sqrt(Math.pow(cityCrew.getRow()-CCrow, 2) + Math.pow(cityCrew.getCol()-CCcol, 2)));
+        long cost = 5*x+10;
+        if(currentPlayer.getBudget() < cost){
+            System.out.println(currentPlayer.getName() + " does not have enough budget to relocate the city center.");
+            return;
+        }
+        currentPlayer.setBudget(currentPlayer.getBudget()-cost);
+        currentPlayer.setCityCenter(cityCrew);
+    }
+
+    public void switchPlayer(){
+        if(currentPlayer.equals(player1)){
+            currentPlayer = player2;
+            anotherPlayer = player1;
+        }else {
+            currentPlayer = player1;
+            anotherPlayer = player2;
+        }
+    }
+
 
 
 }
