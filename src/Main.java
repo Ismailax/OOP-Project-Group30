@@ -34,10 +34,17 @@ public class Main {
 //        Random rand = new Random();
 //        System.out.println(rand.nextLong(1,10));
 
-        Player p1 = new Player("A");
-        Player p2 = new Player("B");
-        Gameplay game = new Gameplay(p1,p2);
-        game.move(1);
+//        Player p1 = new Player("A");
+//        Player p2 = new Player("B");
+//        Gameplay game = new Gameplay(p1,p2);
+//        game.move(1);
+//        long number = 1000000;
+//        long length = (long) (Math.log10(number) + 1);
+//        System.out.println(length);
+        long dis = 5;
+        String s = dis + Long.toString(6);
+        long r = Long.parseLong(s);
+        System.out.println(r);
 
 //        System.out.println(p1.getBindings("x"));
 

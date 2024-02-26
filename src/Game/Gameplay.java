@@ -64,7 +64,7 @@ public class Gameplay {
 
     public Executable eval(){
         String plan;
-        if(currentPlayer.equals(player1)){
+        if(currentPlayer == player1){
             plan = p1Plan;
         }
         else{
@@ -75,7 +75,7 @@ public class Gameplay {
     }
 
     public void setStatements(Executable statements){
-        if(currentPlayer.equals(player1)){
+        if(currentPlayer == player1 ){
             p1Statements = statements;
         }
         else{
@@ -84,7 +84,7 @@ public class Gameplay {
     }
 
     public void execStatement(){
-        if(currentPlayer.equals(player1)){
+        if(currentPlayer == player1){
             p1Statements.execute(player1.getAllBindings());
         }
         else{
@@ -101,11 +101,12 @@ public class Gameplay {
     }
 
     public boolean isMyRegion(Region region){ // set ค่า yourTurn ด้วย
-        return region.getOwner().equals(currentPlayer);
+
+        return region.getOwner() == currentPlayer;
     }
 
     public boolean otherRegion(Region region){
-        return region.getOwner().equals(anotherPlayer);
+        return region.getOwner() == anotherPlayer;
     }
 
     public boolean isMyRegionAroundHere(){ // แก้ isMyRegionAroundHere
@@ -145,7 +146,7 @@ public class Gameplay {
             des = territory.getUpRight(cityCrew.getRow(), cityCrew.getCol());
             if(des == null){
                 System.out.println("Cannot move to an out-of-territory region.");
-            }else if(des.getOwner().equals(anotherPlayer)){
+            }else if(des.getOwner() == anotherPlayer){
                 System.out.println("Cannot move to an another player's region.");
             }else{
                 System.out.println("move upright: (" + cityCrew.getRow() + "," + cityCrew.getCol() + ") -> ("+ des.getRow() + "," + des.getCol() + ")");
@@ -155,7 +156,7 @@ public class Gameplay {
             des = territory.getDownRight(cityCrew.getRow(), cityCrew.getCol());
             if(des == null){
                 System.out.println("Cannot move to an out-of-territory region.");
-            }else if(des.getOwner().equals(anotherPlayer)){
+            }else if(des.getOwner() == anotherPlayer){
                 System.out.println("Cannot move to an another player's region.");
             }else{
                 System.out.println("move downright: (" + cityCrew.getRow() + "," + cityCrew.getCol() + ") -> ("+ des.getRow() + "," + des.getCol() + ")");
@@ -165,7 +166,7 @@ public class Gameplay {
             des = territory.getDown(cityCrew.getRow(), cityCrew.getCol());
             if(des == null){
                 System.out.println("Cannot move to an out-of-territory region.");
-            }else if(des.getOwner().equals(anotherPlayer)){
+            }else if(des.getOwner() == anotherPlayer){
                 System.out.println("Cannot move to an another player's region.");
             }else{
                 System.out.println("move down: (" + cityCrew.getRow() + "," + cityCrew.getCol() + ") -> ("+ des.getRow() + "," + des.getCol() + ")");
@@ -175,7 +176,7 @@ public class Gameplay {
             des = territory.getDownLeft(cityCrew.getRow(), cityCrew.getCol());
             if(des == null){
                 System.out.println("Cannot move to an out-of-territory region.");
-            }else if(des.getOwner().equals(anotherPlayer)){
+            }else if(des.getOwner() == anotherPlayer){
                 System.out.println("Cannot move to an another player's region.");
             }else{
                 System.out.println("move downleft: (" + cityCrew.getRow() + "," + cityCrew.getCol() + ") -> ("+ des.getRow() + "," + des.getCol() + ")");
@@ -187,7 +188,7 @@ public class Gameplay {
             }
             if(des == null){
                 System.out.println("Cannot move to an out-of-territory region.");
-            }else if(des.getOwner().equals(anotherPlayer)){
+            }else if(des.getOwner() == anotherPlayer){
                 System.out.println("Cannot move to an another player's region.");
             }else{
                 System.out.println("move upleft: (" + cityCrew.getRow() + "," + cityCrew.getCol() + ") -> ("+ des.getRow() + "," + des.getCol() + ")");
@@ -422,130 +423,317 @@ public class Gameplay {
         }
     }
 
-    public void nearby2(long direction){
+    public long nearby2(long direction){
+        Region nearby;
+        long distance = 1;
+        if(direction == 1){
+            nearby = territory.getUp(cityCrew.getRow(), cityCrew.getCol());
+            while(nearby != null){
+                if(nearby.getOwner() == anotherPlayer){
+                    long deposit = nearby.getDeposit();
+                    return (100*distance) + (long) (Math.log10(deposit) + 1);
+                }
+                nearby = territory.getUp(nearby.getRow(), nearby.getCol());
+                distance++;
+            }
+        }else if(direction == 2){
+            nearby = territory.getUpRight(cityCrew.getRow(), cityCrew.getCol());
+            while(nearby != null){
+                if(nearby.getOwner() == anotherPlayer){
+                    long deposit = nearby.getDeposit();
+                    return (100*distance) + (long) (Math.log10(deposit) + 1);
+                }
+                nearby = territory.getUpRight(nearby.getRow(), nearby.getCol());
+                distance++;
+            }
+        }else if(direction == 3){
+            nearby = territory.getDownRight(cityCrew.getRow(), cityCrew.getCol());
+            while(nearby != null){
+                if(nearby.getOwner() == anotherPlayer){
+                    long deposit = nearby.getDeposit();
+                    return (100*distance) + (long) (Math.log10(deposit) + 1);
+                }
+                nearby = territory.getDownRight(nearby.getRow(), nearby.getCol());
+                distance++;
+            }
+        }else if(direction == 4){
+            nearby = territory.getDown(cityCrew.getRow(), cityCrew.getCol());
+            while(nearby != null){
+                if(nearby.getOwner() == anotherPlayer){
+                    long deposit = nearby.getDeposit();
+                    return (100*distance) + (long) (Math.log10(deposit) + 1);
+                }
+                nearby = territory.getDown(nearby.getRow(), nearby.getCol());
+                distance++;
+            }
+        }else if(direction == 5){
+            nearby = territory.getDownLeft(cityCrew.getRow(), cityCrew.getCol());
+            while(nearby != null){
+                if(nearby.getOwner() == anotherPlayer){
+                    long deposit = nearby.getDeposit();
+                    return (100*distance) + (long) (Math.log10(deposit) + 1);
+                }
+                nearby = territory.getDownLeft(nearby.getRow(), nearby.getCol());
+                distance++;
+            }
+        }else{
+            nearby = territory.getUpLeft(cityCrew.getRow(), cityCrew.getCol());
+            while(nearby != null){
+                if(nearby.getOwner() == anotherPlayer){
+                    long deposit = nearby.getDeposit();
+                    return (100*distance) + (long) (Math.log10(deposit) + 1);
+                }
+                nearby = territory.getUpLeft(nearby.getRow(), nearby.getCol());
+                distance++;
+            }
+        }
+        System.out.println("No opponent's region in a given direction.");
+        return 0;
+    }
 
+    public long opponent2(){
+        long distance = 1;
+        Region curUp = territory.getUp(cityCrew.getRow(), cityCrew.getCol());
+        Region curUpright = territory.getUpRight(cityCrew.getRow(), cityCrew.getCol());
+        Region curDownright = territory.getDownRight(cityCrew.getRow(), cityCrew.getCol());
+        Region curDown = territory.getDown(cityCrew.getRow(), cityCrew.getCol());
+        Region curDownleft = territory.getDownLeft(cityCrew.getRow(), cityCrew.getCol());
+        Region curUpleft = territory.getUpLeft(cityCrew.getRow(), cityCrew.getCol());
+        while(true){
+            if(curUp != null){
+                if(curUp.getOwner() == anotherPlayer){
+                    String value = distance + Long.toString(1);
+                    return Long.parseLong(value);
+                }
+                curUp = territory.getUp(curUp.getRow(),curUp.getCol());
+            }
+            if(curUpright != null){
+                if(curUpright.getOwner() == anotherPlayer){
+                    String value = distance + Long.toString(2);
+                    return Long.parseLong(value);
+                }
+                curUpright = territory.getUp(curUpright.getRow(),curUpright.getCol());
+            }
+            if(curDownright != null){
+                if(curDownright.getOwner() == anotherPlayer){
+                    String value = distance + Long.toString(3);
+                    return Long.parseLong(value);
+                }
+                curDownright = territory.getUp(curDownright.getRow(),curDownright.getCol());
+            }
+            if(curDown != null){
+                if(curDown.getOwner() == anotherPlayer){
+                    String value = distance + Long.toString(4);
+                    return Long.parseLong(value);
+                }
+                curDown = territory.getUp(curDown.getRow(),curDown.getCol());
+            }
+            if(curDownleft != null){
+                if(curDownleft.getOwner() == anotherPlayer){
+                    String value = distance + Long.toString(5);
+                    return Long.parseLong(value);
+                }
+                curDownleft = territory.getUp(curDownleft.getRow(),curDownleft.getCol());
+            }
+            if(curUpleft != null){
+                if(curUpleft.getOwner() == anotherPlayer){
+                    String value = distance + Long.toString(6);
+                    return Long.parseLong(value);
+                }
+                curUpleft = territory.getUp(curUpleft.getRow(),curUpleft.getCol());
+            }
+            if(curUp == null && curUpright == null && curDownright == null && curDown == null && curDownleft == null && curUpleft == null){
+                break;
+            }
+            distance++;
+        }
+        return 0;
     }
 
     public void shoot(long instantdirection , long stake) { // แก้แล้ว final
         if(currentPlayer.getBudget() < stake+1) return;
-        currentPlayer.setBudget(currentPlayer.getBudget() - stake+1);
+        Region des;
         switch ((int) instantdirection) {
             case 1: // up
-                if (currentPlayer.getBudget() < stake + 1) {
-                    System.out.println("Sorry, your money not enough to SHOOT !!!");
-                }
-                else {
-                    if(territory.getUp(cityCrew.getRow(), cityCrew.getCol()).getDeposit() - stake < territory.getUp(cityCrew.getRow(), cityCrew.getCol()).getDeposit()) {
-                        territory.getUp(cityCrew.getRow(), cityCrew.getCol()).setDeposit(territory.getUp(cityCrew.getRow(), cityCrew.getCol()).getDeposit() - stake);
-                        currentPlayer.setBudget(currentPlayer.getBudget() - stake - 1);
-                        System.out.println("You SHOOT on up with " + stake + " damage");
-                    }
-                    if(stake >= territory.getUp(cityCrew.getRow(), cityCrew.getCol()).getDeposit()){
-                        long haveLeft = config.getMaxDep() - territory.getUp(cityCrew.getRow(), cityCrew.getCol()).getDeposit(); // เลือดที่เหลือที่ควรจะตี
-                        long stackLeft = stake - haveLeft; // stake จริงๆที่ควรจะตี
-                        currentPlayer.setBudget(stake - stackLeft - 1);
-                        anotherPlayer.removeRegion(territory.getUp(cityCrew.getRow(), cityCrew.getCol()));
-                    }
-                    if(territory.getUp(cityCrew.getRow(), cityCrew.getCol()).getDeposit() <= 0){
-                        System.out.println("You have SHOOT on up and another player lose region");
+                des = territory.getUp(cityCrew.getRow(), cityCrew.getCol());
+                if(des.getOwner() == null){
+                    currentPlayer.setBudget(currentPlayer.getBudget() - stake - 1);
+                    System.out.println(currentPlayer.getName() + " attacked an unowned region.");
+                }else{
+                    long diff = des.getDeposit() - stake;
+                    currentPlayer.setBudget(currentPlayer.getBudget() - stake - 1);
+                    des.setDeposit(Math.max(0,diff));
+                    System.out.println(currentPlayer.getName() + " attacked region (" + des.getRow() + "," + des.getCol() + ").");
+                    if(des.getDeposit() == 0){
+                      if(des.getOwner() == anotherPlayer){
+                          anotherPlayer.removeRegion(des);
+                          des.setOwner(null);
+                          System.out.println(anotherPlayer.getName() + "loses region ( " + des.getRow() + "," + des.getCol() + ").");
+                          if(anotherPlayer.getCityCenter() == des){
+                              System.out.println(currentPlayer.getName() + " Win!");
+                              // แพ้
+                          }
+                      }else if(des.getOwner() == currentPlayer){
+                          currentPlayer.removeRegion(des);
+                          des.setOwner(null);
+                          System.out.println(currentPlayer.getName() + "loses region ( " + des.getRow() + "," + des.getCol() + ").");
+                          if(currentPlayer.getCityCenter() == des){
+                              System.out.println(anotherPlayer.getName() + " Win!");
+                              // แพ้
+                          }
+                      }
                     }
                 }
             case 4: // down
-                if (currentPlayer.getBudget() < stake + 1) {
-                    System.out.println("Sorry, your money not enough to SHOOT !!!");
-                } else {
-                    if(territory.getDown(cityCrew.getRow(), cityCrew.getCol()).getDeposit() - stake < territory.getDown(cityCrew.getRow(), cityCrew.getCol()).getDeposit()) {
-                        territory.getDown(cityCrew.getRow(), cityCrew.getCol()).setDeposit(territory.getDown(cityCrew.getRow(), cityCrew.getCol()).getDeposit() - stake);
-                        currentPlayer.setBudget(currentPlayer.getBudget() - stake - 1);
-                        System.out.println("You SHOOT on down with " + stake + " damage and another player not lose region");
-                    }
-                    if(stake >= territory.getDown(cityCrew.getRow(), cityCrew.getCol()).getDeposit()){
-                        long haveLeft = config.getMaxDep() - territory.getDown(cityCrew.getRow(), cityCrew.getCol()).getDeposit(); // เลือดที่เหลือที่ควรจะตี
-                        long stackLeft = stake - haveLeft; // stake จริงๆที่ควรจะตี
-                        currentPlayer.setBudget(stake - stackLeft - 1);
-                        anotherPlayer.removeRegion(territory.getDown(cityCrew.getRow(), cityCrew.getCol()));
-                    }
-                    if(territory.getUp(cityCrew.getRow(), cityCrew.getCol()).getDeposit() <= 0){
-                        System.out.println("You have SHOOT on down and another player lose region");
+                des = territory.getDown(cityCrew.getRow(), cityCrew.getCol());
+                if(des.getOwner() == null){
+                    currentPlayer.setBudget(currentPlayer.getBudget() - stake - 1);
+                    System.out.println(currentPlayer.getName() + " attacked an unowned region.");
+                }else{
+                    long diff = des.getDeposit() - stake;
+                    currentPlayer.setBudget(currentPlayer.getBudget() - stake - 1);
+                    des.setDeposit(Math.max(0,diff));
+                    System.out.println(currentPlayer.getName() + " attacked region (" + des.getRow() + "," + des.getCol() + ").");
+                    if(des.getDeposit() == 0){
+                        if(des.getOwner() == anotherPlayer){
+                            anotherPlayer.removeRegion(des);
+                            des.setOwner(null);
+                            System.out.println(anotherPlayer.getName() + "loses region ( " + des.getRow() + "," + des.getCol() + ").");
+                            if(anotherPlayer.getCityCenter() == des){
+                                System.out.println(currentPlayer.getName() + " Win!");
+                                // แพ้
+                            }
+                        }else if(des.getOwner() == currentPlayer){
+                            currentPlayer.removeRegion(des);
+                            des.setOwner(null);
+                            System.out.println(currentPlayer.getName() + "loses region ( " + des.getRow() + "," + des.getCol() + ").");
+                            if(currentPlayer.getCityCenter() == des){
+                                System.out.println(anotherPlayer.getName() + " Win!");
+                                // แพ้
+                            }
+                        }
                     }
                 }
             case 6: // upleft
-                if (currentPlayer.getBudget() < stake + 1) {
-                    System.out.println("Sorry, your money not enough to SHOOT !!!");
-                } else {
-                    if(territory.getUpLeft(cityCrew.getRow(), cityCrew.getCol()).getDeposit() - stake < territory.getUpLeft(cityCrew.getRow(), cityCrew.getCol()).getDeposit()) {
-                        territory.getUpLeft(cityCrew.getRow(), cityCrew.getCol()).setDeposit(territory.getUpLeft(cityCrew.getRow(), cityCrew.getCol()).getDeposit() - stake);
-                        currentPlayer.setBudget(currentPlayer.getBudget() - stake - 1);
-                        System.out.println("You SHOOT on upleft with " + stake + " damage and another player not lose region");
-                    }
-                    if(stake >= territory.getUpLeft(cityCrew.getRow(), cityCrew.getCol()).getDeposit()){
-                        long haveLeft = config.getMaxDep() - territory.getUpLeft(cityCrew.getRow(), cityCrew.getCol()).getDeposit(); // เลือดที่เหลือที่ควรจะตี
-                        long stackLeft = stake - haveLeft; // stake จริงๆที่ควรจะตี
-                        currentPlayer.setBudget(stake - stackLeft -1);
-                        anotherPlayer.removeRegion(territory.getUpLeft(cityCrew.getRow(), cityCrew.getCol()));
-                    }
-                    if(territory.getUp(cityCrew.getRow(), cityCrew.getCol()).getDeposit() <= 0){
-                        System.out.println("You have SHOOT on upleft and another player lose region");
+                des = territory.getUpLeft(cityCrew.getRow(), cityCrew.getCol());
+                if(des.getOwner() == null){
+                    currentPlayer.setBudget(currentPlayer.getBudget() - stake - 1);
+                    System.out.println(currentPlayer.getName() + " attacked an unowned region.");
+                }else{
+                    long diff = des.getDeposit() - stake;
+                    currentPlayer.setBudget(currentPlayer.getBudget() - stake - 1);
+                    des.setDeposit(Math.max(0,diff));
+                    System.out.println(currentPlayer.getName() + " attacked region (" + des.getRow() + "," + des.getCol() + ").");
+                    if(des.getDeposit() == 0){
+                        if(des.getOwner() == anotherPlayer){
+                            anotherPlayer.removeRegion(des);
+                            des.setOwner(null);
+                            System.out.println(anotherPlayer.getName() + "loses region ( " + des.getRow() + "," + des.getCol() + ").");
+                            if(anotherPlayer.getCityCenter() == des){
+                                System.out.println(currentPlayer.getName() + " Win!");
+                                // แพ้
+                            }
+                        }else if(des.getOwner() == currentPlayer){
+                            currentPlayer.removeRegion(des);
+                            des.setOwner(null);
+                            System.out.println(currentPlayer.getName() + "loses region ( " + des.getRow() + "," + des.getCol() + ").");
+                            if(currentPlayer.getCityCenter() == des){
+                                System.out.println(anotherPlayer.getName() + " Win!");
+                                // แพ้
+                            }
+                        }
                     }
                 }
             case 2: //upright
-                if (currentPlayer.getBudget() < stake + 1) {
-                    System.out.println("Sorry, your money not enough to SHOOT !!!");
-                } else {
-                    if(territory.getUpRight(cityCrew.getRow(), cityCrew.getCol()).getDeposit() - stake < territory.getUpRight(cityCrew.getRow(), cityCrew.getCol()).getDeposit()) {
-                        territory.getUpRight(cityCrew.getRow(), cityCrew.getCol()).setDeposit(territory.getUpRight(cityCrew.getRow(), cityCrew.getCol()).getDeposit() - stake);
-                        currentPlayer.setBudget(currentPlayer.getBudget() - stake - 1);
-                        System.out.println("You SHOOT on upright with " + stake + " damage and another player not lose region");
-                    }
-                    if(stake >= territory.getUpRight(cityCrew.getRow(), cityCrew.getCol()).getDeposit()){
-                        long haveLeft = config.getMaxDep() - territory.getUpRight(cityCrew.getRow(), cityCrew.getCol()).getDeposit(); // เลือดที่เหลือที่ควรจะตี
-                        long stackLeft = stake - haveLeft; // stake จริงๆที่ควรจะตี
-                        currentPlayer.setBudget(stake - stackLeft -1);
-                        anotherPlayer.removeRegion(territory.getUpRight(cityCrew.getRow(), cityCrew.getCol()));
-                    }
-                    if(territory.getUp(cityCrew.getRow(), cityCrew.getCol()).getDeposit() <= 0){
-                        System.out.println("You have SHOOT on upright and another player lose region");
+                des = territory.getUpRight(cityCrew.getRow(), cityCrew.getCol());
+                if(des.getOwner() == null){
+                    currentPlayer.setBudget(currentPlayer.getBudget() - stake - 1);
+                    System.out.println(currentPlayer.getName() + " attacked an unowned region.");
+                }else{
+                    long diff = des.getDeposit() - stake;
+                    currentPlayer.setBudget(currentPlayer.getBudget() - stake - 1);
+                    des.setDeposit(Math.max(0,diff));
+                    System.out.println(currentPlayer.getName() + " attacked region (" + des.getRow() + "," + des.getCol() + ").");
+                    if(des.getDeposit() == 0){
+                        if(des.getOwner() == anotherPlayer){
+                            anotherPlayer.removeRegion(des);
+                            des.setOwner(null);
+                            System.out.println(anotherPlayer.getName() + "loses region ( " + des.getRow() + "," + des.getCol() + ").");
+                            if(anotherPlayer.getCityCenter() == des){
+                                System.out.println(currentPlayer.getName() + " Win!");
+                                // แพ้
+                            }
+                        }else if(des.getOwner() == currentPlayer){
+                            currentPlayer.removeRegion(des);
+                            des.setOwner(null);
+                            System.out.println(currentPlayer.getName() + "loses region ( " + des.getRow() + "," + des.getCol() + ").");
+                            if(currentPlayer.getCityCenter() == des){
+                                System.out.println(anotherPlayer.getName() + " Win!");
+                                // แพ้
+                            }
+                        }
                     }
                 }
             case 5: //downleft
-                if (currentPlayer.getBudget() < stake + 1) {
-                    System.out.println("Sorry, your money not enough to SHOOT !!!");
-                } else {
-                    if(territory.getDownLeft(cityCrew.getRow(), cityCrew.getCol()).getDeposit() - stake < territory.getDownLeft(cityCrew.getRow(), cityCrew.getCol()).getDeposit()) {
-                        territory.getDownLeft(cityCrew.getRow(), cityCrew.getCol()).setDeposit(territory.getDownLeft(cityCrew.getRow(), cityCrew.getCol()).getDeposit() - stake);
-                        currentPlayer.setBudget(currentPlayer.getBudget() - stake - 1);
-                        System.out.println("You SHOOT on downleft with " + stake + " damage and another player not lose region");
-                    }
-                    if(stake >= territory.getDownLeft(cityCrew.getRow(), cityCrew.getCol()).getDeposit()){
-                        long haveLeft = config.getMaxDep() - territory.getDownLeft(cityCrew.getRow(), cityCrew.getCol()).getDeposit(); // เลือดที่เหลือที่ควรจะตี
-                        long stackLeft = stake - haveLeft; // stake จริงๆที่ควรจะตี
-                        currentPlayer.setBudget(stake - stackLeft -1);
-                        anotherPlayer.removeRegion(territory.getDownLeft(cityCrew.getRow(), cityCrew.getCol()));
-                    }
-                    if(territory.getUp(cityCrew.getRow(), cityCrew.getCol()).getDeposit() <= 0){
-                        System.out.println("You have SHOOT on downleft and another player lose region");
+                des = territory.getDownLeft(cityCrew.getRow(), cityCrew.getCol());
+                if(des.getOwner() == null){
+                    currentPlayer.setBudget(currentPlayer.getBudget() - stake - 1);
+                    System.out.println(currentPlayer.getName() + " attacked an unowned region.");
+                }else{
+                    long diff = des.getDeposit() - stake;
+                    currentPlayer.setBudget(currentPlayer.getBudget() - stake - 1);
+                    des.setDeposit(Math.max(0,diff));
+                    System.out.println(currentPlayer.getName() + " attacked region (" + des.getRow() + "," + des.getCol() + ").");
+                    if(des.getDeposit() == 0){
+                        if(des.getOwner() == anotherPlayer){
+                            anotherPlayer.removeRegion(des);
+                            des.setOwner(null);
+                            System.out.println(anotherPlayer.getName() + "loses region ( " + des.getRow() + "," + des.getCol() + ").");
+                            if(anotherPlayer.getCityCenter() == des){
+                                System.out.println(currentPlayer.getName() + " Win!");
+                                // แพ้
+                            }
+                        }else if(des.getOwner() == currentPlayer){
+                            currentPlayer.removeRegion(des);
+                            des.setOwner(null);
+                            System.out.println(currentPlayer.getName() + "loses region ( " + des.getRow() + "," + des.getCol() + ").");
+                            if(currentPlayer.getCityCenter() == des){
+                                System.out.println(anotherPlayer.getName() + " Win!");
+                                // แพ้
+                            }
+                        }
                     }
                 }
             case 3: //downright
-                if (currentPlayer.getBudget() < stake + 1) {
-                    System.out.println("Sorry, your money not enough to SHOOT !!!");
-                } else {
-                    if(territory.getDownRight(cityCrew.getRow(), cityCrew.getCol()).getDeposit() - stake < territory.getDownRight(cityCrew.getRow(), cityCrew.getCol()).getDeposit()) {
-                        territory.getDownRight(cityCrew.getRow(), cityCrew.getCol()).setDeposit(territory.getDownRight(cityCrew.getRow(), cityCrew.getCol()).getDeposit() - stake);
-                        currentPlayer.setBudget(currentPlayer.getBudget() - stake - 1);
-                        System.out.println("You SHOOT on downright with " + stake + " damage and another player not lose region");
-                    }
-                    if(stake >= territory.getDownRight(cityCrew.getRow(), cityCrew.getCol()).getDeposit()){
-                        long haveLeft = config.getMaxDep() - territory.getDownRight(cityCrew.getRow(), cityCrew.getCol()).getDeposit(); // เลือดที่เหลือที่ควรจะตี
-                        long stackLeft = stake - haveLeft; // stake จริงๆที่ควรจะตี
-                        currentPlayer.setBudget(stake - stackLeft -1);
-                        anotherPlayer.removeRegion(territory.getDownRight(cityCrew.getRow(), cityCrew.getCol()));
-                    }
-                    if(territory.getUp(cityCrew.getRow(), cityCrew.getCol()).getDeposit() <= 0){
-                        System.out.println("You have SHOOT on downright and another player lose region");
+                des = territory.getDownRight(cityCrew.getRow(), cityCrew.getCol());
+                if(des.getOwner() == null){
+                    currentPlayer.setBudget(currentPlayer.getBudget() - stake - 1);
+                    System.out.println(currentPlayer.getName() + " attacked an unowned region.");
+                }else{
+                    long diff = des.getDeposit() - stake;
+                    currentPlayer.setBudget(currentPlayer.getBudget() - stake - 1);
+                    des.setDeposit(Math.max(0,diff));
+                    System.out.println(currentPlayer.getName() + " attacked region (" + des.getRow() + "," + des.getCol() + ").");
+                    if(des.getDeposit() == 0){
+                        if(des.getOwner() == anotherPlayer){
+                            anotherPlayer.removeRegion(des);
+                            des.setOwner(null);
+                            System.out.println(anotherPlayer.getName() + "loses region ( " + des.getRow() + "," + des.getCol() + ").");
+                            if(anotherPlayer.getCityCenter() == des){
+                                System.out.println(currentPlayer.getName() + " Win!");
+                                // แพ้
+                            }
+                        }else if(des.getOwner() == currentPlayer){
+                            currentPlayer.removeRegion(des);
+                            des.setOwner(null);
+                            System.out.println(currentPlayer.getName() + "loses region ( " + des.getRow() + "," + des.getCol() + ").");
+                            if(currentPlayer.getCityCenter() == des){
+                                System.out.println(anotherPlayer.getName() + " Win!");
+                                // แพ้
+                            }
+                        }
                     }
                 }
-
         }
     }
 
@@ -567,7 +755,7 @@ public class Gameplay {
     }
 
     public void switchPlayer(){
-        if(currentPlayer.equals(player1)){
+        if(currentPlayer == player1){
             currentPlayer = player2;
             anotherPlayer = player1;
         }else {
@@ -575,7 +763,4 @@ public class Gameplay {
             anotherPlayer = player2;
         }
     }
-
-
-
 }
