@@ -12,7 +12,6 @@ public class MoveCommand implements Executable {
     public MoveCommand(Gameplay game,String direction) {
         this.game = game;
         this.direction = direction;
-        System.out.println("Parse move " + direction);
     }
 
     @Override

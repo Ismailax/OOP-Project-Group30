@@ -1,11 +1,15 @@
 package PlanParser.Evaluable;
 
+import Game.Gameplay;
+
 import java.util.Map;
 
 public class Nearby implements Evaluable {
+    Gameplay game;
     private String direction;
 
-    public Nearby(String direction) {
+    public Nearby(Gameplay game, String direction) {
+        this.game = game;
         this.direction = direction;
     }
 
@@ -18,7 +22,7 @@ public class Nearby implements Evaluable {
         else if (direction.equals("down")) dir = 4;
         else if ((direction.equals("downleft"))) dir = 5;
         else dir = 6;
-        // return nearby(dir)
-        return 0; // Placeholder value, actual implementation depends on game state
+
+        return game.nearby(dir);
     }
 }

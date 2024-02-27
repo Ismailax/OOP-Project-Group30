@@ -14,7 +14,6 @@ public class AttackCommand implements Executable{
         this.expenditure = expenditure;
         this.game = game;
         long value = expenditure.eval(bindings);
-        System.out.println("Parse shoot " + direction + " " + value);
     }
 
     @Override
@@ -27,6 +26,6 @@ public class AttackCommand implements Executable{
             case "downleft" -> 5;
             default -> 6;
         };
-//        game.shoot(dir,expenditure.eval(bindings));
+        game.shoot(dir,expenditure.eval(bindings));
     }
 }
