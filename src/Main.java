@@ -16,63 +16,17 @@ import java.util.Random;
 
 public class Main {
     public static void main(String[] args) {
+        Player p1 = new Player("A");
+        Player p2 = new Player("B");
 
+        Gameplay game = new Gameplay(p1,p2);
 
-//        Territory t = new Territory(10,10);
-//
-//        String constructionPlan_A = "x = 2 while(x) { relocate x = x -1 }";
-//        Player p1 = new Player("A");
-//        p1.setTerritory(t);
-//        p1.setCurrentRegion(3,4);
-//        p1.setPlan(constructionPlan_A);
-//        p1.setStatements(p1.eval());
-//        p1.executeStmt();
-//        System.out.println(p1.getBindings("x"));
+        game.setP1Plan("move up shoot upleft 100");
+        game.setP1Statements();
 
-//        System.out.println(p1.getCurrow() + " " + p1.getCurcol());
+        game.setP2Plan("move down shoot downright 200");
+        game.setP2Statements();
 
-//        Random rand = new Random();
-//        System.out.println(rand.nextLong(1,10));
-
-//        Player p1 = new Player("A");
-//        Player p2 = new Player("B");
-//        Gameplay game = new Gameplay(p1,p2);
-//        game.move(1);
-//        long number = 1000000;
-//        long length = (long) (Math.log10(number) + 1);
-//        System.out.println(length);
-        long dis = 5;
-        String s = dis + Long.toString(6);
-        long r = Long.parseLong(s);
-        System.out.println(r);
-
-//        System.out.println(p1.getBindings("x"));
-
-
+        game.turnStart();
     }
 }
-
-//        System.out.println(p1.getBindings("x"));
-
-//        for(int i = 0; i < 5; i++){
-//            p1.executeStmt();
-//        }
-
-//        Tokenizer tkz = new Tokenizer(constructionPlan_A);
-//        while (tkz.hasNextToken()) {
-//            String token = tkz.consume();
-//            System.out.println("Token: " + token);
-//        }
-
-//        Config config1 = new Config();
-//        System.out.println(config1.getTotalRows());
-//        System.out.println(config1.getTotalCols());
-//        System.out.println(config1.getInitPlanMin());
-//        System.out.println(config1.getInitPlanSec());
-//        System.out.println(config1.getInitBudget());
-//        System.out.println(config1.getInitCCDep());
-//        System.out.println(config1.getPlanRevMin());
-//        System.out.println(config1.getPlanRevSec());
-//        System.out.println(config1.getRevCost());
-//        System.out.println(config1.getMaxDep());
-//        System.out.println(config1.getInterestPct());

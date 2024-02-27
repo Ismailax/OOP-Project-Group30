@@ -14,7 +14,6 @@ public class CollectCommand implements Executable{
         this.game = game;
         this.amount = amount;
         long value = amount.eval(bindings);
-        System.out.println("Parse collect: " + value);
     }
 
     @Override

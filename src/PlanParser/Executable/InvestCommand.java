@@ -12,7 +12,6 @@ public class InvestCommand implements Executable{
         this.game = game;
         this.amount = amount;
         long value = amount.eval(bindings);
-        System.out.println("Parse invest: " + value);
     }
     @Override
     public void execute(Map<String, Long> bindings) {

@@ -200,13 +200,13 @@ public class Parser {
     private Evaluable parseInfoExpression() throws SyntaxError {
         if(tkz.peek("opponent")){
             tkz.consume();
-            return new Opponent();
+            return new Opponent(game);
         }
         else if (tkz.peek("nearby")) {
             tkz.consume("nearby");
             String direction = tkz.consume();
             if (!directions.contains(direction)) throw new SyntaxError("Invalid direction");
-            return new Nearby(direction);
+            return new Nearby(game, direction);
         }
         else throw new SyntaxError("Invalid expression");
     }
