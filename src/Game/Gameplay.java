@@ -136,7 +136,6 @@ public class Gameplay {
             interest += (long) (r.getDeposit() * rate / 100);
         }
         currentPlayer.setBudget(currentPlayer.getBudget()+interest);
-        System.out.println(currentPlayer.getBudget());
         System.out.println(currentPlayer.getName() + " receives total interest: $" + interest + ".");
     }
 
@@ -661,9 +660,10 @@ public class Gameplay {
 
         collectInterest();
         execStatement();
-        System.out.println();
+        System.out.println("******************************************************************");
         checkWinner();
         if(winner != null){
+            System.out.println();
             System.out.println(winner.getName() + " Win!");
             return;
         }
@@ -675,7 +675,9 @@ public class Gameplay {
 
         collectInterest();
         execStatement();
+        System.out.println("******************************************************************");
         if(winner != null){
+            System.out.println();
             System.out.println(winner.getName() + " Win!");
             return;
         }

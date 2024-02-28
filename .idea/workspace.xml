@@ -4,19 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="58048a60-a2dd-4e70-bc89-f0cd98bfe888" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/PlanParser/Executable/PlanExecutor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/p1Plan.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/p2Plan.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/plan.txt" afterDir="false" />
+    <list default="true" id="58048a60-a2dd-4e70-bc89-f0cd98bfe888" name="Changes" comment="fix AST nodes, Parser, Gameplay">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Configuration/Configuration.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/Configuration/Configuration.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Game/Gameplay.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game/Gameplay.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GameState/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GameState/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GameState/cityCen.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/PlanParser/Executable/BlockStatement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PlanParser/Executable/BlockStatement.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/PlanParser/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PlanParser/Parser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/PlanParser/Executable/Done.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PlanParser/Executable/Done.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -202,7 +193,15 @@
       <option name="project" value="LOCAL" />
       <updated>1708954633201</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="fix AST nodes, Parser, Gameplay">
+      <option name="closed" value="true" />
+      <created>1709110214583</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1709110214583</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -217,7 +216,8 @@
     <MESSAGE value="drafting class #4" />
     <MESSAGE value="fix Config + เพิ่ม method ใน Player" />
     <MESSAGE value="fix shoot, nearby, opponent" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix shoot, nearby, opponent" />
+    <MESSAGE value="fix AST nodes, Parser, Gameplay" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix AST nodes, Parser, Gameplay" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
