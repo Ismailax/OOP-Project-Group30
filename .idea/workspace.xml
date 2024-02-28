@@ -4,19 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="58048a60-a2dd-4e70-bc89-f0cd98bfe888" name="Changes" comment="fix shoot, nearby, opponent">
+    <list default="true" id="58048a60-a2dd-4e70-bc89-f0cd98bfe888" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/PlanParser/Executable/PlanExecutor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/p1Plan.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/p2Plan.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/plan.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Configuration/Configuration.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/Configuration/Configuration.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Game/Gameplay.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game/Gameplay.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GameState/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GameState/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GameState/cityCen.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/PlanParser/Evaluable/Nearby.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PlanParser/Evaluable/Nearby.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/PlanParser/Evaluable/Opponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PlanParser/Evaluable/Opponent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/PlanParser/Executable/AttackCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PlanParser/Executable/AttackCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/PlanParser/Executable/CollectCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PlanParser/Executable/CollectCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/PlanParser/Executable/Done.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PlanParser/Executable/Done.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/PlanParser/Executable/InvestCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PlanParser/Executable/InvestCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/PlanParser/Executable/MoveCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PlanParser/Executable/MoveCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/PlanParser/Executable/Relocate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PlanParser/Executable/Relocate.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/PlanParser/Executable/BlockStatement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PlanParser/Executable/BlockStatement.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/PlanParser/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PlanParser/Parser.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -35,7 +34,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="master" />
+        <entry key="$PROJECT_DIR$" value="nc" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -106,6 +105,8 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Main" />
+        <item itemvalue="Application.Main" />
         <item itemvalue="Application.Main" />
         <item itemvalue="Application.Main" />
         <item itemvalue="Application.Main" />

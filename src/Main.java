@@ -21,12 +21,39 @@ public class Main {
 
         Gameplay game = new Gameplay(p1,p2);
 
-        game.setP1Plan("move up shoot upleft 100");
+        game.setP1Plan(readFile("src/p1Plan.txt"));
         game.setP1Statements();
 
-        game.setP2Plan("move down shoot downright 200");
+        game.setP2Plan(readFile("src/p2Plan.txt"));
         game.setP2Statements();
 
-        game.turnStart();
+        do{
+          game.turnStart();
+        }while(!Gameplay.getWinner());
+
+    }
+
+    public static String readFile(String filename){
+        StringBuilder s = new StringBuilder();
+        try(Scanner reader = new Scanner(new File(filename))){
+            if(!reader.hasNextLine()){
+                System.out.println("File is empty");
+            }
+            while(reader.hasNextLine()) {
+                String line = reader.nextLine();
+                if (line.isEmpty()) continue;
+                s.append(line);
+            }
+        }catch(FileNotFoundException e){
+            System.out.println("File not found");
+        }
+        return s.toString();
     }
 }
+
+
+//        for (int i = 0; i < 100; i++){
+//            game.turnStart();
+//            if(game.checkWinner() != null) break;
+//            System.out.println();
+//        }

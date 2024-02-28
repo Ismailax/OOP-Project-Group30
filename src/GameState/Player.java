@@ -5,10 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import PlanParser.Executable.Executable;
-import PlanParser.Parser;
-import PlanParser.Tokenizer;
-
 public class Player {
     private final String name;
     private Map<String, Long> bindings;
@@ -38,7 +34,7 @@ public class Player {
 
     public void addRegion(Region region){
         ownedRegion.add(region);
-        region.setOwner(this); // set owner ของแต่ละ region เมื่อ addRegion
+        region.setOwner(this);
     }
 
     public void removeRegion(Region region){

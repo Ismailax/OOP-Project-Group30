@@ -3,7 +3,6 @@ package PlanParser;
 import java.util.*;
 
 import Game.Gameplay;
-import GameState.Player;
 import PlanParser.Error.*;
 import PlanParser.Evaluable.SpecialVariables.*;
 import PlanParser.Evaluable.SpecialVariables.Random;
@@ -12,7 +11,6 @@ import PlanParser.Evaluable.*;
 
 public class Parser {
     private Gameplay game;
-    private Player player;
     private final Tokenizer tkz;
     private Map<String, Long> bindings;
     private final String[] reservedWordList = {"collect", "done", "down", "downleft", "downright", "else", "if", "invest", "move", "nearby", "opponent", "relocate", "shoot", "then", "up", "upleft", "upright", "while"};
@@ -27,9 +25,6 @@ public class Parser {
         this.bindings = new HashMap<>();
     }
 
-    public void setPlayer(Player player) {
-        this.player = player;
-    }
     public void setGame(Gameplay game) {this.game = game;}
 
     public Executable parse(Map<String, Long> bindings) throws SyntaxError {
@@ -101,7 +96,7 @@ public class Parser {
     private Executable parseMoveCommand() throws SyntaxError {
         tkz.consume("move");
         String direction = tkz.consume();
-        if (!directions.contains(direction)) throw new SyntaxError("Invalid direction");
+        if (!directions.contains(direction)) throw new SyntaxError("Invalid direction : " + direction);
         return new MoveCommand(game,direction);
     }
 
@@ -127,12 +122,7 @@ public class Parser {
         if(specialVariables.contains(identifier)) return new NoOp();
         if(reservedWords.contains(identifier))
             throw new SyntaxError("Use reserved word as identifier: " + identifier);
-        Evaluable expression;
-        if(tkz.peek("rows") || tkz.peek("cols") || tkz.peek("currow") || tkz.peek("curcol") || tkz.peek("budget") || tkz.peek("deposit") || tkz.peek("int") || tkz.peek("maxdeposit") || tkz.peek("random")){
-            expression = parseSpecialVariable();
-        }else {
-            expression = parseExpression();
-        }
+        Evaluable expression = parseExpression();
         return new AssignmentStatement(identifier, expression, bindings);
     }
 
@@ -147,7 +137,7 @@ public class Parser {
             case "deposit" -> new Deposit(game);
             case "int" -> new Int(game);
             case "maxdeposit" -> new Maxdeposit(game);
-            default -> new Random();
+            default -> null;
         };
     }
 
@@ -179,22 +169,49 @@ public class Parser {
     }
 
     private Evaluable parsePower() throws SyntaxError {
-        if (isNumeric(tkz.peek())){
+        if(tkz.peek("rows")){
+            tkz.consume("rows");
+            return new Rows(game);
+        }else if (tkz.peek("cols")) {
+            tkz.consume("cols");
+            return new Cols(game);
+        }else if (tkz.peek("currow")) {
+            tkz.consume("currow");
+            return new Currow(game);
+        }else if (tkz.peek("curcol")) {
+            tkz.consume("curcol");
+            return new Curcol(game);
+        }else if (tkz.peek("budget")) {
+            tkz.consume("budget");
+            return new Budget(game);
+        }else if (tkz.peek("deposit")) {
+            tkz.consume("deposit");
+            return new Deposit(game);
+        }else if (tkz.peek("int")) {
+            tkz.consume("int");
+            return new Int(game);
+        }else if (tkz.peek("maxdeposit")) {
+            tkz.consume("cols");
+            return new Maxdeposit(game);
+        }else if (tkz.peek("random")) {
+            tkz.consume("random");
+            return new Random();
+        }else if (isNumeric(tkz.peek())){
             return new Num(Long.parseLong(tkz.consume()));
-        }
-        else if (tkz.peek("(")) {
+        }else if (tkz.peek("(")) {
             tkz.consume("(");
             Evaluable expression = parseExpression();
             tkz.consume(")");
             return expression;
-        } else if (tkz.peek("opponent") || tkz.peek("nearby")) return parseInfoExpression();
-        else if (tkz.hasNextToken() && !tkz.peek(")")) {
+        }else if (tkz.peek("opponent") || tkz.peek("nearby")){
+            return parseInfoExpression();
+        }else if (tkz.hasNextToken() && !tkz.peek(")")) {
             String identifier = tkz.consume();
             if (reservedWords.contains(identifier))
                 throw new SyntaxError("Use reserved word as variable name: " + identifier);
             return new Identifier(identifier,bindings);
-        } else
-            throw new SyntaxError("");
+        }else
+            throw new SyntaxError("Invalid expression");
     }
 
     private Evaluable parseInfoExpression() throws SyntaxError {
@@ -205,7 +222,7 @@ public class Parser {
         else if (tkz.peek("nearby")) {
             tkz.consume("nearby");
             String direction = tkz.consume();
-            if (!directions.contains(direction)) throw new SyntaxError("Invalid direction");
+            if (!directions.contains(direction)) throw new SyntaxError("Invalid direction: " + direction);
             return new Nearby(game, direction);
         }
         else throw new SyntaxError("Invalid expression");

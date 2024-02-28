@@ -16,7 +16,7 @@ public class Gameplay {
     private final Player player1, player2;
     private Player currentPlayer;
     private Player anotherPlayer;
-    private Player winner;
+    private static Player winner;
     private long round;
     private String p1Plan, p2Plan;
     private Executable p1Statements, p2Statements;
@@ -39,10 +39,12 @@ public class Gameplay {
         Random rand = new Random();
         long p1Row = rand.nextLong(1,config.getTotalRows());
         long p1Col = rand.nextLong(1,config.getTotalCols());
-        territory.getRegion(p1Row,p1Col).setOwner(this.player1);
-        this.player1.addRegion(territory.getRegion(p1Row,p1Col));
-        this.player1.setCityCenter(territory.getRegion(p1Row,p1Col));
-        territory.getRegion(p1Row,p1Col).setDeposit(config.getInitCCDep());
+        Region p1CC = territory.getRegion(p1Row,p1Col);
+        p1CC.setOwner(this.player1);
+        this.player1.addRegion(p1CC);
+        this.player1.setCityCenter(p1CC);
+        p1CC.setDeposit(config.getInitCCDep());
+        cityCrew =  territory.getRegion(p1Row,p1Col);
 
         long p2Row;
         long p2Col;
@@ -50,10 +52,11 @@ public class Gameplay {
             p2Row = rand.nextLong(1,config.getTotalRows());
             p2Col = rand.nextLong(1,config.getTotalCols());
         }while(p2Row == p1Row && p2Col == p1Col);
-        territory.getRegion(p1Row,p1Col).setOwner(this.player2);
-        this.player2.addRegion(territory.getRegion(p1Row,p1Col));
-        this.player2.setCityCenter(territory.getRegion(p2Row,p2Col));
-        territory.getRegion(p1Row,p1Col).setDeposit(config.getInitCCDep());
+        Region p2CC = territory.getRegion(p2Row,p2Col);
+        p2CC.setOwner(this.player2);
+        this.player2.addRegion(p2CC);
+        this.player2.setCityCenter(p2CC);
+        p2CC.setDeposit(config.getInitCCDep());
 
         long initPlanMin = config.getInitPlanMin();
         long initPlanSec = config.getInitPlanSec();
@@ -112,8 +115,8 @@ public class Gameplay {
     public Region getCityCrew(){
         return this.cityCrew;
     }
-
     public boolean isMyRegion(Region region){ // set ค่า yourTurn ด้วย
+        if(region == null) return false;
         return region.getOwner() == currentPlayer;
     }
 
@@ -133,12 +136,14 @@ public class Gameplay {
             interest += (long) (r.getDeposit() * rate / 100);
         }
         currentPlayer.setBudget(currentPlayer.getBudget()+interest);
+        System.out.println(currentPlayer.getBudget());
         System.out.println(currentPlayer.getName() + " receives total interest: $" + interest + ".");
     }
 
     public void move(long direction){
         if(currentPlayer.getBudget() < 1){
             System.out.println(currentPlayer.getName() + " doesn't have enough budget to move.");
+            checkWinner();
             return;
         }
         currentPlayer.setBudget(currentPlayer.getBudget()-1);
@@ -210,6 +215,7 @@ public class Gameplay {
         if (currentPlayer.getBudget() < amount + 1) {
             System.out.println(currentPlayer.getName() + " doesn't have enough budget to invest.");
             if (currentPlayer.getBudget() < 1){
+                checkWinner();
                 return;
             }
             currentPlayer.setBudget(currentPlayer.getBudget() - 1);
@@ -243,6 +249,7 @@ public class Gameplay {
     public void collect(long amount){
         if (currentPlayer.getBudget() < 1){
             System.out.println(currentPlayer.getName() + " doesn't have enough budget to collect.");
+            checkWinner();
             return;
         }
         if(isMyRegion(cityCrew)){
@@ -256,6 +263,7 @@ public class Gameplay {
                     currentPlayer.removeRegion(territory.getRegion(cityCrew.getRow(),cityCrew.getCol()));
                     if(territory.getRegion(cityCrew.getRow(), cityCrew.getCol()) == currentPlayer.getCityCenter()){
                         currentPlayer.setCityCenter(null);
+                        checkWinner();
                     }
                 }
                 currentPlayer.setBudget(currentPlayer.getBudget()+amount);
@@ -407,6 +415,7 @@ public class Gameplay {
         if(currentPlayer.getBudget() < stake+1){
             System.out.println("Not enough budget to attack.");
             if (currentPlayer.getBudget() < 1){
+                checkWinner();
                 return;
             }
             return;
@@ -430,14 +439,14 @@ public class Gameplay {
                     if(des.getOwner() == anotherPlayer){
                         anotherPlayer.removeRegion(des);
                         des.setOwner(null);
-                        System.out.println(anotherPlayer.getName() + "loses region ( " + des.getRow() + "," + des.getCol() + ").");
+                        System.out.println(anotherPlayer.getName() + " loses region (" + des.getRow() + "," + des.getCol() + ").");
                         if(anotherPlayer.getCityCenter() == des){
                             anotherPlayer.setCityCenter(null);
                         }
                     }else if(des.getOwner() == currentPlayer){
                         currentPlayer.removeRegion(des);
                         des.setOwner(null);
-                        System.out.println(currentPlayer.getName() + "loses region ( " + des.getRow() + "," + des.getCol() + ").");
+                        System.out.println(currentPlayer.getName() + " loses region (" + des.getRow() + "," + des.getCol() + ").");
                         if(currentPlayer.getCityCenter() == des){
                             currentPlayer.setCityCenter(null);
                         }
@@ -462,14 +471,14 @@ public class Gameplay {
                     if(des.getOwner() == anotherPlayer){
                         anotherPlayer.removeRegion(des);
                         des.setOwner(null);
-                        System.out.println(anotherPlayer.getName() + "loses region ( " + des.getRow() + "," + des.getCol() + ").");
+                        System.out.println(anotherPlayer.getName() + " loses region (" + des.getRow() + "," + des.getCol() + ").");
                         if(anotherPlayer.getCityCenter() == des){
                             anotherPlayer.setCityCenter(null);
                         }
                     }else if(des.getOwner() == currentPlayer){
                         currentPlayer.removeRegion(des);
                         des.setOwner(null);
-                        System.out.println(currentPlayer.getName() + "loses region ( " + des.getRow() + "," + des.getCol() + ").");
+                        System.out.println(currentPlayer.getName() + " loses region (" + des.getRow() + "," + des.getCol() + ").");
                         if(currentPlayer.getCityCenter() == des){
                             currentPlayer.setCityCenter(null);
                         }
@@ -494,14 +503,14 @@ public class Gameplay {
                     if(des.getOwner() == anotherPlayer){
                         anotherPlayer.removeRegion(des);
                         des.setOwner(null);
-                        System.out.println(anotherPlayer.getName() + "loses region ( " + des.getRow() + "," + des.getCol() + ").");
+                        System.out.println(anotherPlayer.getName() + " loses region (" + des.getRow() + "," + des.getCol() + ").");
                         if(anotherPlayer.getCityCenter() == des){
                             anotherPlayer.setCityCenter(null);
                         }
                     }else if(des.getOwner() == currentPlayer){
                         currentPlayer.removeRegion(des);
                         des.setOwner(null);
-                        System.out.println(currentPlayer.getName() + "loses region ( " + des.getRow() + "," + des.getCol() + ").");
+                        System.out.println(currentPlayer.getName() + " loses region (" + des.getRow() + "," + des.getCol() + ").");
                         if(currentPlayer.getCityCenter() == des){
                             currentPlayer.setCityCenter(null);
                         }
@@ -526,14 +535,14 @@ public class Gameplay {
                     if(des.getOwner() == anotherPlayer){
                         anotherPlayer.removeRegion(des);
                         des.setOwner(null);
-                        System.out.println(anotherPlayer.getName() + "loses region ( " + des.getRow() + "," + des.getCol() + ").");
+                        System.out.println(anotherPlayer.getName() + " loses region (" + des.getRow() + "," + des.getCol() + ").");
                         if(anotherPlayer.getCityCenter() == des){
                             anotherPlayer.setCityCenter(null);
                         }
                     }else if(des.getOwner() == currentPlayer){
                         currentPlayer.removeRegion(des);
                         des.setOwner(null);
-                        System.out.println(currentPlayer.getName() + "loses region ( " + des.getRow() + "," + des.getCol() + ").");
+                        System.out.println(currentPlayer.getName() + " loses region (" + des.getRow() + "," + des.getCol() + ").");
                         if(currentPlayer.getCityCenter() == des){
                             currentPlayer.setCityCenter(null);
                         }
@@ -559,14 +568,14 @@ public class Gameplay {
                     if(des.getOwner() == anotherPlayer){
                         anotherPlayer.removeRegion(des);
                         des.setOwner(null);
-                        System.out.println(anotherPlayer.getName() + "loses region ( " + des.getRow() + "," + des.getCol() + ").");
+                        System.out.println(anotherPlayer.getName() + " loses region (" + des.getRow() + "," + des.getCol() + ").");
                         if(anotherPlayer.getCityCenter() == des){
                             anotherPlayer.setCityCenter(null);
                         }
                     }else if(des.getOwner() == currentPlayer){
                         currentPlayer.removeRegion(des);
                         des.setOwner(null);
-                        System.out.println(currentPlayer.getName() + "loses region ( " + des.getRow() + "," + des.getCol() + ").");
+                        System.out.println(currentPlayer.getName() + " loses region (" + des.getRow() + "," + des.getCol() + ").");
                         if(currentPlayer.getCityCenter() == des){
                             currentPlayer.setCityCenter(null);
                         }
@@ -591,14 +600,14 @@ public class Gameplay {
                     if(des.getOwner() == anotherPlayer){
                         anotherPlayer.removeRegion(des);
                         des.setOwner(null);
-                        System.out.println(anotherPlayer.getName() + "loses region ( " + des.getRow() + "," + des.getCol() + ").");
+                        System.out.println(anotherPlayer.getName() + " loses region (" + des.getRow() + "," + des.getCol() + ").");
                         if(anotherPlayer.getCityCenter() == des){
                             anotherPlayer.setCityCenter(null);
                         }
                     }else if(des.getOwner() == currentPlayer){
                         currentPlayer.removeRegion(des);
                         des.setOwner(null);
-                        System.out.println(currentPlayer.getName() + "loses region ( " + des.getRow() + "," + des.getCol() + ").");
+                        System.out.println(currentPlayer.getName() + " loses region (" + des.getRow() + "," + des.getCol() + ").");
                         if(currentPlayer.getCityCenter() == des){
                             currentPlayer.setCityCenter(null);
                         }
@@ -606,6 +615,7 @@ public class Gameplay {
                 }
             }
         }
+        checkWinner();
     }
 
     public void relocate(){
@@ -625,48 +635,49 @@ public class Gameplay {
         currentPlayer.setCityCenter(cityCrew);
     }
 
+    public static Boolean getWinner(){
+        return winner != null;
+    }
+
     public Player checkWinner(){
-        if(player1.getBudget() <= 0){
+        if(player1.getBudget() <= 0 || player1.getCityCenter() == null){
             winner = player2;
-            System.out.println(player2.getName() + " Win!");
             return player2;
-        }else if(player2.getBudget() <= 0){
+        }else if(player2.getBudget() <= 0 || player2.getCityCenter() == null){
             winner = player1;
-            System.out.println(player1.getName() + " Win!");
-            return player1;
-        }
-        if(player1.getCityCenter() == null){
-            winner = player2;
-            System.out.println(player2.getName() + " Win!");
-            return player2;
-        }else if(player2.getCityCenter() == null){
-            winner = player1;
-            System.out.println(player1.getName() + " Win!");
             return player1;
         }
         return null;
     }
 
     public void turnStart(){
-        if(winner != null) return;
         round++;
         System.out.println("------------------------------------------------------------------");
-        System.out.println("                          Round " + round);
+        System.out.println("                           Round " + round);
         System.out.println("------------------------------------------------------------------");
         currentPlayer = player1;
         anotherPlayer = player2;
         cityCrew = currentPlayer.getCityCenter();
+
         collectInterest();
         execStatement();
         System.out.println();
         checkWinner();
-        if(winner != null) return;
+        if(winner != null){
+            System.out.println(winner.getName() + " Win!");
+            return;
+        }
 
         currentPlayer = player2;
         anotherPlayer = player1;
         cityCrew = currentPlayer.getCityCenter();
+
+
         collectInterest();
         execStatement();
-        checkWinner();
+        if(winner != null){
+            System.out.println(winner.getName() + " Win!");
+            return;
+        }
     }
 }
