@@ -441,6 +441,7 @@ public class Gameplay {
                         System.out.println(anotherPlayer.getName() + " loses region (" + des.getRow() + "," + des.getCol() + ").");
                         if(anotherPlayer.getCityCenter() == des){
                             anotherPlayer.setCityCenter(null);
+                            System.out.println(anotherPlayer.getName() + " loses the city center.");
                         }
                     }else if(des.getOwner() == currentPlayer){
                         currentPlayer.removeRegion(des);
@@ -448,6 +449,7 @@ public class Gameplay {
                         System.out.println(currentPlayer.getName() + " loses region (" + des.getRow() + "," + des.getCol() + ").");
                         if(currentPlayer.getCityCenter() == des){
                             currentPlayer.setCityCenter(null);
+                            System.out.println(currentPlayer.getName() + " loses the city center.");
                         }
                     }
                 }
@@ -473,6 +475,7 @@ public class Gameplay {
                         System.out.println(anotherPlayer.getName() + " loses region (" + des.getRow() + "," + des.getCol() + ").");
                         if(anotherPlayer.getCityCenter() == des){
                             anotherPlayer.setCityCenter(null);
+                            System.out.println(anotherPlayer.getName() + " loses the city center.");
                         }
                     }else if(des.getOwner() == currentPlayer){
                         currentPlayer.removeRegion(des);
@@ -480,6 +483,7 @@ public class Gameplay {
                         System.out.println(currentPlayer.getName() + " loses region (" + des.getRow() + "," + des.getCol() + ").");
                         if(currentPlayer.getCityCenter() == des){
                             currentPlayer.setCityCenter(null);
+                            System.out.println(currentPlayer.getName() + " loses the city center.");
                         }
                     }
                 }
@@ -505,6 +509,7 @@ public class Gameplay {
                         System.out.println(anotherPlayer.getName() + " loses region (" + des.getRow() + "," + des.getCol() + ").");
                         if(anotherPlayer.getCityCenter() == des){
                             anotherPlayer.setCityCenter(null);
+                            System.out.println(anotherPlayer.getName() + " loses the city center.");
                         }
                     }else if(des.getOwner() == currentPlayer){
                         currentPlayer.removeRegion(des);
@@ -512,6 +517,7 @@ public class Gameplay {
                         System.out.println(currentPlayer.getName() + " loses region (" + des.getRow() + "," + des.getCol() + ").");
                         if(currentPlayer.getCityCenter() == des){
                             currentPlayer.setCityCenter(null);
+                            System.out.println(currentPlayer.getName() + " loses the city center.");
                         }
                     }
                 }
@@ -537,6 +543,7 @@ public class Gameplay {
                         System.out.println(anotherPlayer.getName() + " loses region (" + des.getRow() + "," + des.getCol() + ").");
                         if(anotherPlayer.getCityCenter() == des){
                             anotherPlayer.setCityCenter(null);
+                            System.out.println(anotherPlayer.getName() + " loses the city center.");
                         }
                     }else if(des.getOwner() == currentPlayer){
                         currentPlayer.removeRegion(des);
@@ -544,6 +551,7 @@ public class Gameplay {
                         System.out.println(currentPlayer.getName() + " loses region (" + des.getRow() + "," + des.getCol() + ").");
                         if(currentPlayer.getCityCenter() == des){
                             currentPlayer.setCityCenter(null);
+                            System.out.println(currentPlayer.getName() + " loses the city center.");
                         }
                     }
                 }
@@ -570,6 +578,7 @@ public class Gameplay {
                         System.out.println(anotherPlayer.getName() + " loses region (" + des.getRow() + "," + des.getCol() + ").");
                         if(anotherPlayer.getCityCenter() == des){
                             anotherPlayer.setCityCenter(null);
+                            System.out.println(anotherPlayer.getName() + " loses the city center.");
                         }
                     }else if(des.getOwner() == currentPlayer){
                         currentPlayer.removeRegion(des);
@@ -577,6 +586,7 @@ public class Gameplay {
                         System.out.println(currentPlayer.getName() + " loses region (" + des.getRow() + "," + des.getCol() + ").");
                         if(currentPlayer.getCityCenter() == des){
                             currentPlayer.setCityCenter(null);
+                            System.out.println(currentPlayer.getName() + " loses the city center.");
                         }
                     }
                 }
@@ -602,6 +612,7 @@ public class Gameplay {
                         System.out.println(anotherPlayer.getName() + " loses region (" + des.getRow() + "," + des.getCol() + ").");
                         if(anotherPlayer.getCityCenter() == des){
                             anotherPlayer.setCityCenter(null);
+                            System.out.println(anotherPlayer.getName() + " loses the city center.");
                         }
                     }else if(des.getOwner() == currentPlayer){
                         currentPlayer.removeRegion(des);
@@ -609,6 +620,7 @@ public class Gameplay {
                         System.out.println(currentPlayer.getName() + " loses region (" + des.getRow() + "," + des.getCol() + ").");
                         if(currentPlayer.getCityCenter() == des){
                             currentPlayer.setCityCenter(null);
+                            System.out.println(currentPlayer.getName() + " loses the city center.");
                         }
                     }
                 }
@@ -639,10 +651,10 @@ public class Gameplay {
     }
 
     public Player checkWinner(){
-        if(player1.getBudget() <= 0 || player1.getCityCenter() == null){
+        if(player1.getBudget() <= 0 || player1.getCityCenter() == null || player1.getOwnedRegion().isEmpty()){
             winner = player2;
             return player2;
-        }else if(player2.getBudget() <= 0 || player2.getCityCenter() == null){
+        }else if(player2.getBudget() <= 0 || player2.getCityCenter() == null || player2.getOwnedRegion().isEmpty()){
             winner = player1;
             return player1;
         }

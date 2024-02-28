@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="58048a60-a2dd-4e70-bc89-f0cd98bfe888" name="Changes" comment="fix AST nodes, Parser, Gameplay">
+    <list default="true" id="58048a60-a2dd-4e70-bc89-f0cd98bfe888" name="Changes" comment="fix Gameplay, Done">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Game/Gameplay.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game/Gameplay.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/PlanParser/Executable/Done.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PlanParser/Executable/Done.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -201,7 +200,15 @@
       <option name="project" value="LOCAL" />
       <updated>1709110214583</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="fix Gameplay, Done">
+      <option name="closed" value="true" />
+      <created>1709117365005</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1709117365006</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -217,7 +224,8 @@
     <MESSAGE value="fix Config + เพิ่ม method ใน Player" />
     <MESSAGE value="fix shoot, nearby, opponent" />
     <MESSAGE value="fix AST nodes, Parser, Gameplay" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix AST nodes, Parser, Gameplay" />
+    <MESSAGE value="fix Gameplay, Done" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix Gameplay, Done" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
