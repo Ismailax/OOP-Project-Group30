@@ -8,22 +8,24 @@ import PlanParser.Executable.Executable;
 import PlanParser.Parser;
 import PlanParser.Tokenizer;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Random;
+import java.util.Scanner;
 
 public class Gameplay {
     private final Config config;
     private final Territory territory;
     private final Player player1, player2;
-    private Player currentPlayer;
-    private Player anotherPlayer;
+    private Player currentPlayer, anotherPlayer;
     private static Player winner;
     private long round;
     private String p1Plan, p2Plan;
     private Executable p1Statements, p2Statements;
     private Region cityCrew;
 
-    public Gameplay(Player player1, Player player2){
-        config = new Config(); // read the configuration file
+    public Gameplay(Player player1, Player player2, Config cf){
+        config = cf; // read the configuration file
 
         territory = new Territory(config.getTotalRows(),config.getTotalCols());
         this.player1 = player1;
@@ -79,8 +81,16 @@ public class Gameplay {
         return p.parse(currentPlayer.getAllBindings());
     }
 
+    public String getP1Plan(){
+        return p1Plan;
+    }
+
     public void setP1Plan(String plan){
         p1Plan = plan;
+    }
+
+    public String getP2Plan(){
+        return p2Plan;
     }
 
     public void setP2Plan(String plan){
@@ -106,6 +116,17 @@ public class Gameplay {
         else{
             p2Statements.execute(player2.getAllBindings());
         }
+    }
+
+    public Territory getTerritory(){
+        return territory;
+    }
+
+    public Player getPlayer1(){
+        return player1;
+    }
+    public Player getPlayer2(){
+        return player2;
     }
 
     public Player getCurrentPlayer(){
@@ -442,6 +463,7 @@ public class Gameplay {
                         if(anotherPlayer.getCityCenter() == des){
                             anotherPlayer.setCityCenter(null);
                             System.out.println(anotherPlayer.getName() + " loses the city center.");
+                            checkWinner();
                         }
                     }else if(des.getOwner() == currentPlayer){
                         currentPlayer.removeRegion(des);
@@ -450,6 +472,7 @@ public class Gameplay {
                         if(currentPlayer.getCityCenter() == des){
                             currentPlayer.setCityCenter(null);
                             System.out.println(currentPlayer.getName() + " loses the city center.");
+                            checkWinner();
                         }
                     }
                 }
@@ -476,6 +499,7 @@ public class Gameplay {
                         if(anotherPlayer.getCityCenter() == des){
                             anotherPlayer.setCityCenter(null);
                             System.out.println(anotherPlayer.getName() + " loses the city center.");
+                            checkWinner();
                         }
                     }else if(des.getOwner() == currentPlayer){
                         currentPlayer.removeRegion(des);
@@ -484,6 +508,7 @@ public class Gameplay {
                         if(currentPlayer.getCityCenter() == des){
                             currentPlayer.setCityCenter(null);
                             System.out.println(currentPlayer.getName() + " loses the city center.");
+                            checkWinner();
                         }
                     }
                 }
@@ -510,6 +535,7 @@ public class Gameplay {
                         if(anotherPlayer.getCityCenter() == des){
                             anotherPlayer.setCityCenter(null);
                             System.out.println(anotherPlayer.getName() + " loses the city center.");
+                            checkWinner();
                         }
                     }else if(des.getOwner() == currentPlayer){
                         currentPlayer.removeRegion(des);
@@ -518,6 +544,7 @@ public class Gameplay {
                         if(currentPlayer.getCityCenter() == des){
                             currentPlayer.setCityCenter(null);
                             System.out.println(currentPlayer.getName() + " loses the city center.");
+                            checkWinner();
                         }
                     }
                 }
@@ -544,6 +571,7 @@ public class Gameplay {
                         if(anotherPlayer.getCityCenter() == des){
                             anotherPlayer.setCityCenter(null);
                             System.out.println(anotherPlayer.getName() + " loses the city center.");
+                            checkWinner();
                         }
                     }else if(des.getOwner() == currentPlayer){
                         currentPlayer.removeRegion(des);
@@ -552,6 +580,7 @@ public class Gameplay {
                         if(currentPlayer.getCityCenter() == des){
                             currentPlayer.setCityCenter(null);
                             System.out.println(currentPlayer.getName() + " loses the city center.");
+                            checkWinner();
                         }
                     }
                 }
@@ -579,6 +608,7 @@ public class Gameplay {
                         if(anotherPlayer.getCityCenter() == des){
                             anotherPlayer.setCityCenter(null);
                             System.out.println(anotherPlayer.getName() + " loses the city center.");
+                            checkWinner();
                         }
                     }else if(des.getOwner() == currentPlayer){
                         currentPlayer.removeRegion(des);
@@ -587,6 +617,7 @@ public class Gameplay {
                         if(currentPlayer.getCityCenter() == des){
                             currentPlayer.setCityCenter(null);
                             System.out.println(currentPlayer.getName() + " loses the city center.");
+                            checkWinner();
                         }
                     }
                 }
@@ -613,6 +644,7 @@ public class Gameplay {
                         if(anotherPlayer.getCityCenter() == des){
                             anotherPlayer.setCityCenter(null);
                             System.out.println(anotherPlayer.getName() + " loses the city center.");
+                            checkWinner();
                         }
                     }else if(des.getOwner() == currentPlayer){
                         currentPlayer.removeRegion(des);
@@ -621,6 +653,7 @@ public class Gameplay {
                         if(currentPlayer.getCityCenter() == des){
                             currentPlayer.setCityCenter(null);
                             System.out.println(currentPlayer.getName() + " loses the city center.");
+                            checkWinner();
                         }
                     }
                 }
@@ -661,7 +694,7 @@ public class Gameplay {
         return null;
     }
 
-    public void turnStart(){
+    public void gameTest(){
         round++;
         System.out.println("------------------------------------------------------------------");
         System.out.println("                           Round " + round);
@@ -688,10 +721,79 @@ public class Gameplay {
         collectInterest();
         execStatement();
         System.out.println("******************************************************************");
+        checkWinner();
         if(winner != null){
             System.out.println();
             System.out.println(winner.getName() + " Win!");
             return;
         }
+    }
+
+    public void play(){
+        round++;
+        System.out.println("                               Turn " + round);
+        System.out.println("---------------------------------------------------------------------------");
+        System.out.println("                               " + player1.getName() + "'s turn");
+        System.out.println();
+        System.out.println("Enter your construction plan in p1Plan.txt. If the construction plan is completed, press Enter.");
+        currentPlayer = player1;
+        anotherPlayer = player2;
+        cityCrew = currentPlayer.getCityCenter();
+
+        Scanner n = new Scanner(System.in);
+        n.nextLine();
+
+        setP1Plan(readFile("src/p1Plan.txt"));
+        setP1Statements();
+        collectInterest();
+        execStatement();
+        System.out.println("---------------------------------------------------------------------------");
+
+        checkWinner();
+        if(winner != null){
+            System.out.println();
+            System.out.println(winner.getName() + " Win!");
+            n.close();
+            return;
+        }
+
+        System.out.println("                               " + player2.getName() + "'s turn");
+        System.out.println();
+        System.out.println("Enter your construction plan in p2Plan.txt. If the construction plan is completed, press Enter.");
+
+        currentPlayer = player2;
+        anotherPlayer = player1;
+        cityCrew = currentPlayer.getCityCenter();
+
+        n.nextLine();
+
+        setP2Plan(readFile("src/p2Plan.txt"));
+        setP2Statements();
+        collectInterest();
+        execStatement();
+        System.out.println("***************************************************************************");
+        if(winner != null){
+            System.out.println();
+            System.out.println(winner.getName() + " Win!");
+            n.close();
+            return;
+        }
+    }
+
+    public static String readFile(String filename){
+        StringBuilder s = new StringBuilder();
+        try(Scanner reader = new Scanner(new File(filename))){
+            if(!reader.hasNextLine()){
+                System.out.println("File is empty");
+            }
+            while(reader.hasNextLine()) {
+                String line = reader.nextLine();
+                if (line.isEmpty()) continue;
+                s.append(line);
+            }
+        }catch(FileNotFoundException e){
+            System.out.println("File not found");
+        }
+        return s.toString();
     }
 }
