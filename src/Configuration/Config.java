@@ -67,8 +67,16 @@ public class Config {
         return this.totalRows;
     }
 
+    public void setTotalRows(long totalRows) {
+        this.totalRows = totalRows;
+    }
+
     public long getTotalCols() {
         return totalCols;
+    }
+
+    public void setTotalCols(long totalCols) {
+        this.totalCols = totalCols;
     }
 
     public long getInitPlanMin() {
@@ -106,4 +114,15 @@ public class Config {
     public long getInterestPct() {
         return interestPct;
     }
+
+    public void setMin(long min){
+        this.initPlanMin = min;
+        this.planRevMin = min;
+    }
+
+    public void setSec(long sec){
+        this.initPlanSec = sec;
+        this.planRevSec = sec;
+    }
+
 }

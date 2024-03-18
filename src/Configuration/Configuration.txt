@@ -1,10 +1,10 @@
-totalRows=6
-totalCols=6
+totalRows=5
+totalCols=5
 initPlanMin=5
 initPlanSec=0
 initBudget=10000
 initCCDep=100
-planRevMin=30
+planRevMin=5
 planRevSec=0
 revCost=100
 maxDep=1000000

@@ -126,21 +126,6 @@ public class Parser {
         return new AssignmentStatement(identifier, expression, bindings);
     }
 
-    private Evaluable parseSpecialVariable() throws SyntaxError {
-        String svName  = tkz.consume();
-        return switch (svName) {
-            case "rows" -> new Rows(game);
-            case "col" -> new Cols(game);
-            case "currow" -> new Currow(game);
-            case "curcol" -> new Curcol(game);
-            case "budget" -> new Budget(game);
-            case "deposit" -> new Deposit(game);
-            case "int" -> new Int(game);
-            case "maxdeposit" -> new Maxdeposit(game);
-            default -> null;
-        };
-    }
-
     private Evaluable parseExpression() throws SyntaxError {
         Evaluable term = parseTerm();
         while (tkz.peek("+") || tkz.peek("-")) {

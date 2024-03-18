@@ -22,9 +22,9 @@ public class BlockStatement implements Executable{
     @Override
     public void execute(Map<String, Long> bindings) {
         for (Executable statement : statements) {
+            if (Gameplay.getWinner()) return;
             statement.execute(bindings);
             if(statement instanceof Done) return;
-            if (Gameplay.getWinner()) return;
         }
     }
 }

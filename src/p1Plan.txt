@@ -1,6 +1,6 @@
 t = t + 1
 m = 0
-while (deposit-1) {
+while (deposit - 1) {
   if (deposit - 100)
   then collect (deposit / 4)
   else if (budget - 25) then invest 25
